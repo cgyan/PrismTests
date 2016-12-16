@@ -81,9 +81,9 @@ HasCapacityOfZero) {
 
 TEST_F(DefaultVector,
 HasCapacityOfTenAfterReservingMemoryForTenElements) {
-	v.reserve(5);
+	v.reserve(10);
 
-	ASSERT_EQ(5, v.capacity());
+	ASSERT_EQ(10, v.capacity());
 }
 
 TEST_F(DefaultVector,
