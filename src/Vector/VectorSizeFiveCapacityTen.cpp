@@ -165,11 +165,25 @@ AnswersCountOfOneForNumberOfOccurrencesOfValueOfFive) {
 }
 
 TEST_F(VectorSizeFiveCapacityTen,
-AnswersCountOfTwoForNumberOfOccurrencesOfValueOfOne) {
+AnswersCountOfTwoForNumberOfOccurrencesOfValueOfOneAfterAddingAnotherValueOfOne) {
 	v.addAtEnd(1);
 	int numOccurrencesOfValueOfOne = v.count(1);
 
 	ASSERT_EQ(2, numOccurrencesOfValueOfOne);
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueIfTheLastElementEqualsFive) {
+	bool lastElementEqualsFive = v.endsWith(5);
+
+	ASSERT_TRUE(lastElementEqualsFive);
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersFalseIfTheLastElementDoesNotEqualFive) {
+	bool lastElementEqualsOne = v.endsWith(1);
+
+	ASSERT_FALSE(lastElementEqualsOne);
 }
 
 PRISM_END_TEST_NAMESPACE
