@@ -36,7 +36,20 @@ public:
 	PVector<int> v;
 	static const int InvalidNegativeIndex = -1;
 	static const int InvalidPositiveIndex = 15;
+	static const int InvalidNegativeSize = -1;
 };
+
+TEST_F(PopulatedVector,
+IsEmptyWhenSizeIsZero) {
+	v.clear();
+
+	ASSERT_TRUE(v.empty());
+}
+
+TEST_F(PopulatedVector,
+IsNotEmptyWhenSizeIsNonZero) {
+	ASSERT_FALSE(v.empty());
+}
 
 TEST_F(PopulatedVector,
 AnswersWithElementAtSpecifiedIndex) {
@@ -58,6 +71,16 @@ ThrowsWhenAccessingNegativeIndex) {
 TEST_F(PopulatedVector,
 ThrowsWhenAccessingIndexGreaterThanNumberOfElements) {
 	ASSERT_THROW(v.at(InvalidPositiveIndex), prism::OutOfBoundsException);
+}
+
+TEST_F(PopulatedVector,
+ThrowsWhenResizingToNegativeSize) {
+	ASSERT_THROW(v.resize(InvalidNegativeSize), prism::OutOfBoundsException);
+}
+
+TEST_F(PopulatedVector,
+ThrowsWhenReservingNegativeAmountOfMemory) {
+	ASSERT_ANY_THROW(v.reserve(InvalidNegativeSize));
 }
 
 TEST_F(PopulatedVector,
@@ -85,15 +108,12 @@ CapacityRemainsUnchangedAfterRemovingAllElements) {
 }
 
 TEST_F(PopulatedVector,
-IsNotEmptyWhenSizeIsNonZero) {
-	ASSERT_FALSE(v.empty());
-}
+CapacityRemainsUnchangedWhenTryingToReserveZeroMemory) {
+	int capacityBeforeReserve = v.capacity();
+	v.reserve(0);
+	int capacityAfterReserve = v.capacity();
 
-TEST_F(PopulatedVector,
-IsEmptyWhenSizeIsZero) {
-	v.clear();
-
-	ASSERT_TRUE(v.empty());
+	ASSERT_EQ(capacityBeforeReserve, capacityAfterReserve);
 }
 
 TEST_F(PopulatedVector,
@@ -187,12 +207,52 @@ AnswersFalseIfTheLastElementDoesNotEqualFive) {
 }
 
 TEST_F(PopulatedVector,
-CapacityRemainsUnchangedWhenTryingToReserveZeroMemory) {
-	int capacityBeforeReserve = v.capacity();
-	v.reserve(0);
-	int capacityAfterReserve = v.capacity();
+AnswersTrueIfTheFirstElementEqualsOne) {
+	bool firstElementEqualsOne = v.startsWith(1);
 
-	ASSERT_EQ(capacityBeforeReserve, capacityAfterReserve);
+	ASSERT_TRUE(firstElementEqualsOne);
+}
+
+TEST_F(PopulatedVector,
+AnswersFalseIfTheFirstElementDoesNotEqualOne) {
+	bool firstElementEqualsFive = v.startsWith(5);
+
+	ASSERT_FALSE(firstElementEqualsFive);
+}
+
+TEST_F(PopulatedVector,
+AnswersZeroWhenSearchingForTheFirstIndexContainingTheValueOfOne) {
+	int firstIndexContainingValueOfOne = v.indexOf(1);
+
+	ASSERT_EQ(0, firstIndexContainingValueOfOne);
+}
+
+TEST_F(PopulatedVector,
+AnswersOneWhenSearchingForTheFirstIndexContainingTheValueOfTwo) {
+	int firstIndexContainingValueOfTwo = v.indexOf(2);
+
+	ASSERT_EQ(1, firstIndexContainingValueOfTwo);
+}
+
+TEST_F(PopulatedVector,
+AnswersTwoWhenSearchingForTheFirstIndexContainingTheValueOfThree) {
+	int firstIndexContainingValueOfThree = v.indexOf(3);
+
+	ASSERT_EQ(2, firstIndexContainingValueOfThree);
+}
+
+TEST_F(PopulatedVector,
+AnswersThreeWhenSearchingForTheFirstIndexContainingTheValueOfFour) {
+	int firstIndexContainingValueOfFour = v.indexOf(4);
+
+	ASSERT_EQ(3, firstIndexContainingValueOfFour);
+}
+
+TEST_F(PopulatedVector,
+AnswersFourWhenSearchingForTheFirstIndexContainingTheValueOfFive) {
+	int firstIndexContainingValueOfFive = v.indexOf(5);
+
+	ASSERT_EQ(4, firstIndexContainingValueOfFive);
 }
 
 PRISM_END_TEST_NAMESPACE

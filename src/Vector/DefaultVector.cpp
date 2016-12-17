@@ -18,14 +18,12 @@ class DefaultVector : public Test {
 public:
 	void SetUp() {
 		ArbitraryValue = 10;
-		InvalidNegativeSize = -1;
 		PositiveSize = 5;
 		SomeValueToFindInVector = 34;
 	}
 
 	PVector<int> v;
 	int ArbitraryValue;
-	int InvalidNegativeSize;
 	int PositiveSize;
 	int SomeValueToFindInVector;
 };
@@ -55,15 +53,6 @@ HasSizeOfOneAfterSingleElementAdded) {
 }
 
 TEST_F(DefaultVector,
-HasSizeOfThreeAfterAddingThreeElements) {
-	v.addAtEnd(1);
-	v.addAtEnd(2);
-	v.addAtEnd(3);
-
-	ASSERT_EQ(3, v.size());
-}
-
-TEST_F(DefaultVector,
 HasSizeOfFiveWhenResizingToPositiveFive) {
 	v.resize(5);
 
@@ -71,8 +60,12 @@ HasSizeOfFiveWhenResizingToPositiveFive) {
 }
 
 TEST_F(DefaultVector,
-ThrowsWhenResizingToNegativeSize) {
-	ASSERT_THROW(v.resize(InvalidNegativeSize), prism::OutOfBoundsException);
+HasSizeOfThreeAfterAddingThreeElements) {
+	v.addAtEnd(1);
+	v.addAtEnd(2);
+	v.addAtEnd(3);
+
+	ASSERT_EQ(3, v.size());
 }
 
 TEST_F(DefaultVector,
@@ -88,11 +81,6 @@ HasCapacityOfTenAfterReservingMemoryForTenElements) {
 }
 
 TEST_F(DefaultVector,
-ThrowsWhenReservingNegativeAmountOfMemory) {
-	ASSERT_ANY_THROW(v.reserve(InvalidNegativeSize));
-}
-
-TEST_F(DefaultVector,
 AnswersFalseWhenCheckingIfElementExists) {
 	bool vectorContainsValue = v.contains(SomeValueToFindInVector);
 
@@ -103,6 +91,21 @@ TEST_F(DefaultVector,
 AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
 	int numOcurrencesInVector = v.count(SomeValueToFindInVector);
 	ASSERT_EQ(0, numOcurrencesInVector);
+}
+
+TEST_F(DefaultVector,
+AnswersFalseWhenAskedIfTheFirstElementEqualsSpecifiedValue) {
+	ASSERT_FALSE(v.startsWith(ArbitraryValue));
+}
+
+TEST_F(DefaultVector,
+AnswersFalseWhenAskedIfTheLastElementEqualsSpecifiedValue) {
+	ASSERT_FALSE(v.endsWith(ArbitraryValue));
+}
+
+TEST_F(DefaultVector,
+AnswersNegativeOneWhenSearchingForFirstIndexOfSpecifiedValue) {
+	ASSERT_EQ(-1, v.indexOf(ArbitraryValue));
 }
 
 PRISM_END_TEST_NAMESPACE
