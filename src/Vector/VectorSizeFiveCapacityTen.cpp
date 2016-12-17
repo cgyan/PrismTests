@@ -139,6 +139,39 @@ AnswersFalseWhenCheckingIfValueOfSixExists) {
 	ASSERT_FALSE(v.contains(6));
 }
 
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfOneForNumberOfOccurrencesOfValueOfOne) {
+	ASSERT_EQ(1, v.count(1));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfOneForNumberOfOccurrencesOfValueOfTwo) {
+	ASSERT_EQ(1, v.count(2));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfOneForNumberOfOccurrencesOfValueOfThree) {
+	ASSERT_EQ(1, v.count(3));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfOneForNumberOfOccurrencesOfValueOfFour) {
+	ASSERT_EQ(1, v.count(4));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfOneForNumberOfOccurrencesOfValueOfFive) {
+	ASSERT_EQ(1, v.count(5));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersCountOfTwoForNumberOfOccurrencesOfValueOfOne) {
+	v.addAtEnd(1);
+	int numOccurrencesOfValueOfOne = v.count(1);
+
+	ASSERT_EQ(2, numOccurrencesOfValueOfOne);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
