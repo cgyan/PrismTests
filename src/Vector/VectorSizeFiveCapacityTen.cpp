@@ -26,16 +26,11 @@ public:
 	}
 
 	void addElementsOneToFive() {
-		v.add(1);
-		v.add(2);
-		v.add(3);
-		v.add(4);
-		v.add(5);
-	}
-
-	void removeAllElements() {
-		for (int i=0; i<5; i++)
-			v.removeLast();
+		v.addAtEnd(1);
+		v.addAtEnd(2);
+		v.addAtEnd(3);
+		v.addAtEnd(4);
+		v.addAtEnd(5);
 	}
 
 	PVector<int> v;
@@ -74,7 +69,7 @@ HasSizeOfFourAfterRemovingSingleElement) {
 
 TEST_F(VectorSizeFiveCapacityTen,
 HasSizeOfZeroAfterRemovingAllElements) {
-	this->removeAllElements();
+	v.clear();
 
 	ASSERT_EQ(0, v.size());
 }
@@ -82,9 +77,11 @@ HasSizeOfZeroAfterRemovingAllElements) {
 TEST_F(VectorSizeFiveCapacityTen,
 CapacityRemainsUnchangedAfterRemovingAllElements) {
 	int capacityBeforeRemovals = v.capacity();
-	this->removeAllElements();
 
-	ASSERT_EQ(capacityBeforeRemovals, v.capacity());
+	v.clear();
+	int capacityAfterRemovals = v.capacity();
+
+	ASSERT_EQ(capacityBeforeRemovals, capacityAfterRemovals);
 }
 
 TEST_F(VectorSizeFiveCapacityTen,
@@ -94,9 +91,52 @@ IsNotEmptyWhenSizeIsNonZero) {
 
 TEST_F(VectorSizeFiveCapacityTen,
 IsEmptyWhenSizeIsZero) {
-	this->removeAllElements();
+	v.clear();
 
 	ASSERT_TRUE(v.empty());
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+SetsEachElementEqualToSpecifiedValue) {
+	int arbitraryValue = 23;
+
+	v.fill(arbitraryValue);
+
+	ASSERT_TRUE(arbitraryValue == v.at(0));
+	ASSERT_TRUE(arbitraryValue == v.at(1));
+	ASSERT_TRUE(arbitraryValue == v.at(2));
+	ASSERT_TRUE(arbitraryValue == v.at(3));
+	ASSERT_TRUE(arbitraryValue == v.at(4));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueWhenCheckingIfValueOfOneExists) {
+	ASSERT_TRUE(v.contains(1));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueWhenCheckingIfValueOfTwoExists) {
+	ASSERT_TRUE(v.contains(2));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueWhenCheckingIfValueOfThreeExists) {
+	ASSERT_TRUE(v.contains(3));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueWhenCheckingIfValueOfFourExists) {
+	ASSERT_TRUE(v.contains(4));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersTrueWhenCheckingIfValueOfFiveExists) {
+	ASSERT_TRUE(v.contains(5));
+}
+
+TEST_F(VectorSizeFiveCapacityTen,
+AnswersFalseWhenCheckingIfValueOfSixExists) {
+	ASSERT_FALSE(v.contains(6));
 }
 
 PRISM_END_TEST_NAMESPACE

@@ -36,7 +36,7 @@ IsEmptyOnConstruction) {
 
 TEST_F(DefaultVector,
 IsNotEmptyAfterElementAdded) {
-	v.add(ArbitraryValue);
+	v.addAtEnd(ArbitraryValue);
 
 	ASSERT_FALSE(v.empty());
 }
@@ -48,16 +48,16 @@ HasSizeOfZero) {
 
 TEST_F(DefaultVector,
 HasSizeOfOneAfterSingleElementAdded) {
-	v.add(ArbitraryValue);
+	v.addAtEnd(ArbitraryValue);
 
 	ASSERT_EQ(1, v.size());
 }
 
 TEST_F(DefaultVector,
 HasSizeOfThreeAfterAddingThreeElements) {
-	v.add(1);
-	v.add(2);
-	v.add(3);
+	v.addAtEnd(1);
+	v.addAtEnd(2);
+	v.addAtEnd(3);
 
 	ASSERT_EQ(3, v.size());
 }
@@ -89,6 +89,15 @@ HasCapacityOfTenAfterReservingMemoryForTenElements) {
 TEST_F(DefaultVector,
 ThrowsWhenReservingNegativeAmountOfMemory) {
 	ASSERT_ANY_THROW(v.reserve(InvalidNegativeSize));
+}
+
+TEST_F(DefaultVector,
+AnswersFalseWhenCheckingIfElementExists) {
+	int someValueToFindInVector = 34;
+
+	bool vectorContainsValue = v.contains(someValueToFindInVector);
+
+	ASSERT_FALSE(vectorContainsValue);
 }
 
 PRISM_END_TEST_NAMESPACE
