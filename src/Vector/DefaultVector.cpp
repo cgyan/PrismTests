@@ -101,7 +101,8 @@ AnswersFalseWhenCheckingIfElementExists) {
 
 TEST_F(DefaultVector,
 AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
-	ASSERT_EQ(0, v.count(SomeValueToFindInVector));
+	int numOcurrencesInVector = v.count(SomeValueToFindInVector);
+	ASSERT_EQ(0, numOcurrencesInVector);
 }
 
 PRISM_END_TEST_NAMESPACE
