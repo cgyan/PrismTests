@@ -100,7 +100,7 @@ AnswersFalseWhenCheckingIfElementExists) {
 }
 
 TEST_F(DefaultVector,
-AnswersZeroToNumberOfOccurrencesOfElement) {
+AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
 	ASSERT_EQ(0, v.count(SomeValueToFindInVector));
 }
 
