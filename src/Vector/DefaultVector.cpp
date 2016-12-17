@@ -20,13 +20,14 @@ public:
 		ArbitraryValue = 10;
 		InvalidNegativeSize = -1;
 		PositiveSize = 5;
+		SomeValueToFindInVector = 34;
 	}
 
 	PVector<int> v;
 	int ArbitraryValue;
 	int InvalidNegativeSize;
 	int PositiveSize;
-
+	int SomeValueToFindInVector;
 };
 
 TEST_F(DefaultVector,
@@ -93,11 +94,14 @@ ThrowsWhenReservingNegativeAmountOfMemory) {
 
 TEST_F(DefaultVector,
 AnswersFalseWhenCheckingIfElementExists) {
-	int someValueToFindInVector = 34;
-
-	bool vectorContainsValue = v.contains(someValueToFindInVector);
+	bool vectorContainsValue = v.contains(SomeValueToFindInVector);
 
 	ASSERT_FALSE(vectorContainsValue);
+}
+
+TEST_F(DefaultVector,
+AnswersZeroToNumberOfOccurrencesOfElement) {
+	ASSERT_EQ(0, v.count(SomeValueToFindInVector));
 }
 
 PRISM_END_TEST_NAMESPACE
