@@ -283,6 +283,13 @@ AnswersIndexThreeWhenSearchingForLastValueOfFour) {
 	ASSERT_EQ(lastIndexThatContainsValueOfFour, v.lastIndexOf(4));
 }
 
+TEST_F(PopulatedVector,
+AnswersIndexFourWhenSearchingForLastValueOfFive) {
+	int lastIndexThatContainsValueOfFive = 4;
+
+	ASSERT_EQ(lastIndexThatContainsValueOfFive, v.lastIndexOf(5));
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
