@@ -15,7 +15,7 @@ PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
 //=============================================================================
-// UniqueVector is a vector that contains unique elements
+// UniqueVector is a test vector that contains unique elements
 // (i.e. no duplicates)
 //=============================================================================
 class UniqueVector : public Test {
@@ -225,38 +225,48 @@ AnswersFalseIfTheFirstElementDoesNotEqualOne) {
 }
 
 TEST_F(UniqueVector,
-AnswersZeroWhenSearchingForTheFirstIndexContainingTheValueOfOne) {
-	int firstIndexContainingValueOfOne = v.indexOf(1);
+AnswersIndexZeroWhenSearchingForwardFromIndexZeroForValueOfOne) {
+	int indexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind);
 
-	ASSERT_EQ(0, firstIndexContainingValueOfOne);
+	ASSERT_EQ(indexZero, returnedIndex);
 }
 
 TEST_F(UniqueVector,
-AnswersOneWhenSearchingForTheFirstIndexContainingTheValueOfTwo) {
-	int firstIndexContainingValueOfTwo = v.indexOf(2);
+AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfTwo) {
+	int indexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind);
 
-	ASSERT_EQ(1, firstIndexContainingValueOfTwo);
+	ASSERT_EQ(indexZero, returnedIndex);
 }
 
 TEST_F(UniqueVector,
-AnswersTwoWhenSearchingForTheFirstIndexContainingTheValueOfThree) {
-	int firstIndexContainingValueOfThree = v.indexOf(3);
+AnswersIndexTwoWhenSearchingForwardFromIndexZeroForValueOfThree) {
+	int indexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind);
 
-	ASSERT_EQ(2, firstIndexContainingValueOfThree);
+	ASSERT_EQ(indexZero, returnedIndex);
 }
 
 TEST_F(UniqueVector,
-AnswersThreeWhenSearchingForTheFirstIndexContainingTheValueOfFour) {
-	int firstIndexContainingValueOfFour = v.indexOf(4);
+AnswersIndexThreeWhenSearchingForwardFromIndexZeroForValueOfFour) {
+	int indexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind);
 
-	ASSERT_EQ(3, firstIndexContainingValueOfFour);
+	ASSERT_EQ(indexZero, returnedIndex);
 }
 
 TEST_F(UniqueVector,
-AnswersFourWhenSearchingForTheFirstIndexContainingTheValueOfFive) {
-	int firstIndexContainingValueOfFive = v.indexOf(5);
+AnswersIndexFourWhenSearchingForwardFromIndexZeroForValueOfFive) {
+	int indexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind);
 
-	ASSERT_EQ(4, firstIndexContainingValueOfFive);
+	ASSERT_EQ(indexZero, returnedIndex);
 }
 
 TEST_F(UniqueVector,
@@ -292,6 +302,14 @@ AnswersIndexFourWhenSearchingForLastValueOfFive) {
 	int lastIndexThatContainsValueOfFive = 4;
 
 	ASSERT_EQ(lastIndexThatContainsValueOfFive, v.lastIndexOf(5));
+}
+
+TEST_F(UniqueVector,
+AnswersIndexNotFoundWhenSearchingForwardFromIndexZeroForElementNotFound) {
+	int indexNotFound = -1;
+	int valueNotInVector = 50;
+
+	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
 }
 
 PRISM_END_TEST_NAMESPACE
