@@ -50,7 +50,15 @@ AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfOfOne) {
 	ASSERT_EQ(indexOne, returnedIndex);
 }
 
+TEST_F(DuplicatesVector,
+AnswersIndexFourWhenSearchingForwardFromIndexTwoForValueOfOfOne) {
+	int indexFour = 4;
+	int startSearchFromIndexTwo = 2;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexTwo);
 
+	ASSERT_EQ(indexFour, returnedIndex);
+}
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
