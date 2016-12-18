@@ -1,4 +1,4 @@
-src/Vector/PopulatedVector.o: ../src/Vector/PopulatedVector.cpp \
+src/Vector/UniqueVector.o: ../src/Vector/UniqueVector.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \

@@ -14,6 +14,10 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
+//=============================================================================
+// DefaultVector is a test class that owns a vector with size and capacity of
+// zero. It has just been instantiated and no actions have been performed on it.
+//=============================================================================
 class DefaultVector : public Test {
 public:
 	void SetUp() {
