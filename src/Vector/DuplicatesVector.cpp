@@ -79,6 +79,16 @@ AnswersIndexFourWhenSearchingBackwardsFromLastIndexForValueOfOne) {
 	ASSERT_EQ(indexFour, returnedIndex);
 }
 
+TEST_F(DuplicatesVector,
+AnswersIndexFourWhenSearchingBackwardsFromIndexFourForValueOfOne) {
+	int indexFour = 4;
+	int indexToStartSearchFrom = 4;
+	int valueToFind = 1;
+	int returnedIndex = v.lastIndexOf(valueToFind, indexToStartSearchFrom);
+
+	ASSERT_EQ(indexFour, returnedIndex);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
