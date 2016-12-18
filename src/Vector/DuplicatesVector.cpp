@@ -51,6 +51,16 @@ AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfOfOne) {
 }
 
 TEST_F(DuplicatesVector,
+AnswersIndexOneWhenSearchingForwardFromIndexOneForValueOfOfOne) {
+	int indexOne = 1;
+	int startSearchFromIndexOne = 1;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexOne);
+
+	ASSERT_EQ(indexOne, returnedIndex);
+}
+
+TEST_F(DuplicatesVector,
 AnswersIndexFourWhenSearchingForwardFromIndexTwoForValueOfOfOne) {
 	int indexFour = 4;
 	int startSearchFromIndexTwo = 2;
