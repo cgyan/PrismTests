@@ -312,6 +312,14 @@ AnswersIndexNotFoundWhenSearchingForwardFromIndexZeroForElementNotFound) {
 	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
 }
 
+TEST_F(UniqueVector,
+AnswersIndexNotFoundWhenSearchingBackwardFromIndexFourForElementNotFound) {
+	int indexNotFound = -1;
+	int valueNotInVector = 50;
+
+	ASSERT_EQ(indexNotFound, v.lastIndexOf(valueNotInVector));
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
