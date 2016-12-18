@@ -262,6 +262,13 @@ AnswersIndexZeroWhenSearchingForLastValueOfOne) {
 	ASSERT_EQ(lastIndexThatContainsValueOfOne, v.lastIndexOf(1));
 }
 
+TEST_F(PopulatedVector,
+AnswersIndexOneWhenSearchingForLastValueOfTwo) {
+	int lastIndexThatContainsValueOfTwo = 1;
+
+	ASSERT_EQ(lastIndexThatContainsValueOfTwo, v.lastIndexOf(2));
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
