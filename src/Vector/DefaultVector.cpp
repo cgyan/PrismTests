@@ -19,13 +19,15 @@ public:
 	void SetUp() {
 		ArbitraryValue = 10;
 		PositiveSize = 5;
-		SomeValueToFindInVector = 34;
+		SomeValueNotInVector = 34;
+		IndexNotFound = -1;
 	}
 
 	PVector<int> v;
 	int ArbitraryValue;
 	int PositiveSize;
-	int SomeValueToFindInVector;
+	int SomeValueNotInVector;
+	int IndexNotFound;
 };
 
 TEST_F(DefaultVector,
@@ -82,14 +84,14 @@ HasCapacityOfTenAfterReservingMemoryForTenElements) {
 
 TEST_F(DefaultVector,
 AnswersFalseWhenCheckingIfElementExists) {
-	bool vectorContainsValue = v.contains(SomeValueToFindInVector);
+	bool vectorContainsValue = v.contains(SomeValueNotInVector);
 
 	ASSERT_FALSE(vectorContainsValue);
 }
 
 TEST_F(DefaultVector,
 AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
-	int numOcurrencesInVector = v.count(SomeValueToFindInVector);
+	int numOcurrencesInVector = v.count(SomeValueNotInVector);
 	ASSERT_EQ(0, numOcurrencesInVector);
 }
 
@@ -104,8 +106,13 @@ AnswersFalseWhenAskedIfTheLastElementEqualsSpecifiedValue) {
 }
 
 TEST_F(DefaultVector,
-AnswersNegativeOneWhenSearchingForFirstIndexOfSpecifiedValue) {
-	ASSERT_EQ(-1, v.indexOf(ArbitraryValue));
+AnswersIndexNotFoundWhenSearchingForFirstIndexOfSpecifiedValue) {
+	ASSERT_EQ(IndexNotFound, v.indexOf(SomeValueNotInVector));
+}
+
+TEST_F(DefaultVector,
+AnswersIndexNotFoundWhenSearchingForLastIndexOfSpecifiedValue) {
+	ASSERT_EQ(IndexNotFound, v.lastIndexOf(ArbitraryValue));
 }
 
 PRISM_END_TEST_NAMESPACE
