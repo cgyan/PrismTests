@@ -17,7 +17,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 //=============================================================================
 // DuplicatesVector is a class that contains duplicate elements
 //=============================================================================
-class DuplicateVector : public Test {
+class DuplicatesVector : public Test {
 public:
 	PVector<int> v;
 
@@ -40,6 +40,29 @@ public:
 	}
 };
 
+TEST_F(DuplicatesVector,
+AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfOfOne) {
+	int indexOne = 1;
+	int startSearchFromIndexZero = 0;
+	int valueToFind = 1;
+	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexZero);
+
+	ASSERT_EQ(indexOne, returnedIndex);
+}
+
+
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
+
+
+
+
+
+
+
+
+
+
+
 
