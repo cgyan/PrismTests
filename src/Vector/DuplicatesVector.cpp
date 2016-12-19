@@ -54,35 +54,6 @@ AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
 	ASSERT_EQ(indexFour, v.indexOf(valueToFind, startIndex));
 }
 
-TEST_F(DuplicatesVector,
-AnswersIndexFourWhenSearchingBackwardsFromLastIndexForValueOfOne) {
-	int indexFour = 4;
-	int valueToFind = 1;
-	int returnedIndex = v.lastIndexOf(valueToFind);
-
-	ASSERT_EQ(indexFour, returnedIndex);
-}
-
-TEST_F(DuplicatesVector,
-AnswersIndexFourWhenSearchingBackwardsFromIndexFourForValueOfOne) {
-	int indexFour = 4;
-	int indexToStartSearchFrom = 4;
-	int valueToFind = 1;
-	int returnedIndex = v.lastIndexOf(valueToFind, indexToStartSearchFrom);
-
-	ASSERT_EQ(indexFour, returnedIndex);
-}
-
-TEST_F(DuplicatesVector,
-AnswersIndexOneWhenSearchingBackwardsFromIndexThreeForValueOfOne) {
-	int indexOne = 1;
-	int indexToStartSearchFrom = 3;
-	int valueToFind = 1;
-	int returnedIndex = v.lastIndexOf(valueToFind, indexToStartSearchFrom);
-
-	ASSERT_EQ(indexOne, returnedIndex);
-}
-
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
