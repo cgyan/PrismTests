@@ -100,7 +100,7 @@ AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
 }
 
 TEST_F(DefaultVector,
-AnswersFalseWhenAskedIfTheFirstElementEqualsSpecifiedValue) {
+AnswersFalseWhenAskedIfTheFirstElementEqualsValue) {
 	ASSERT_FALSE(v.startsWith(ArbitraryValue));
 }
 
@@ -116,7 +116,7 @@ AnswersIndexNotFoundForFirstIndexOfValue) {
 
 TEST_F(DefaultVector,
 AnswersIndexNotFoundForLastIndexOfValue) {
-	ASSERT_EQ(IndexNotFound, v.lastIndexOf(ArbitraryValue));
+	ASSERT_EQ(IndexNotFound, v.lastIndexOf(SomeValueNotInVector));
 }
 
 PRISM_END_TEST_NAMESPACE
