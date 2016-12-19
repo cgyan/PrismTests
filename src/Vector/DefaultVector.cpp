@@ -105,7 +105,7 @@ AnswersFalseWhenAskedIfTheFirstElementEqualsValue) {
 }
 
 TEST_F(DefaultVector,
-AnswersFalseWhenAskedIfTheLastElementEqualsSpecifiedValue) {
+AnswersFalseWhenAskedIfTheLastElementEqualsValue) {
 	ASSERT_FALSE(v.endsWith(ArbitraryValue));
 }
 
