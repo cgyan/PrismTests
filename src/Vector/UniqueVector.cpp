@@ -20,6 +20,19 @@ PRISM_BEGIN_TEST_NAMESPACE
 //=============================================================================
 class UniqueVector : public Test {
 public:
+	UniqueVector()
+	: 	InvalidNegativeIndex(-1),
+		InvalidPositiveIndex(15),
+		InvalidNegativeSize(-1),
+		SomeValueNotInVector(8),
+		IndexNotFound(-1),
+		IndexZero(0),
+		IndexOne(1),
+		IndexTwo(2),
+		IndexThree(3),
+		IndexFour(4)
+		{}
+
 	void SetUp() {
 		setCapacityToTen();
 		addFiveElements_intsOneToFive();
@@ -38,9 +51,16 @@ public:
 	}
 
 	PVector<int> v;
-	static const int InvalidNegativeIndex = -1;
-	static const int InvalidPositiveIndex = 15;
-	static const int InvalidNegativeSize = -1;
+	int InvalidNegativeIndex;
+	int InvalidPositiveIndex;
+	int InvalidNegativeSize;
+	int SomeValueNotInVector;
+	int IndexNotFound;
+	int IndexZero;
+	int IndexOne;
+	int IndexTwo ;
+	int IndexThree;
+	int IndexFour;
 };
 
 TEST_F(UniqueVector,
@@ -57,14 +77,14 @@ IsNotEmptyWhenSizeIsNonZero) {
 
 TEST_F(UniqueVector,
 AnswersWithElementAtSpecifiedIndex) {
-	ASSERT_EQ(3, v.at(2));
+	ASSERT_EQ(3, v.at(IndexTwo));
 }
 
 TEST_F(UniqueVector,
 ModifiesElementAtSpecifiedIndexByReference) {
 	v.at(2) = 10;
 
-	ASSERT_EQ(10, v.at(2));
+	ASSERT_EQ(10, v.at(IndexTwo));
 }
 
 TEST_F(UniqueVector,
@@ -91,14 +111,14 @@ TEST_F(UniqueVector,
 HasSizeOfFourAfterRemovingSingleElement) {
 	v.removeLast();
 
-	ASSERT_EQ(4, v.size());
+	ASSERT_TRUE(v.size() == 4);
 }
 
 TEST_F(UniqueVector,
 HasSizeOfZeroAfterRemovingAllElements) {
 	v.clear();
 
-	ASSERT_EQ(0, v.size());
+	ASSERT_TRUE(v.size() == 0);
 }
 
 TEST_F(UniqueVector,
@@ -126,66 +146,71 @@ SetsEachElementEqualToSpecifiedValue) {
 
 	v.fill(arbitraryValue);
 
-	ASSERT_TRUE(arbitraryValue == v.at(0));
-	ASSERT_TRUE(arbitraryValue == v.at(1));
-	ASSERT_TRUE(arbitraryValue == v.at(2));
-	ASSERT_TRUE(arbitraryValue == v.at(3));
-	ASSERT_TRUE(arbitraryValue == v.at(4));
+	ASSERT_TRUE(arbitraryValue == v.at(IndexZero));
+	ASSERT_TRUE(arbitraryValue == v.at(IndexOne));
+	ASSERT_TRUE(arbitraryValue == v.at(IndexTwo));
+	ASSERT_TRUE(arbitraryValue == v.at(IndexThree));
+	ASSERT_TRUE(arbitraryValue == v.at(IndexFour));
 }
 
 TEST_F(UniqueVector,
 AnswersTrueWhenCheckingIfValueOfOneExists) {
-	ASSERT_TRUE(v.contains(1));
+	int valueToFind = 1;
+	ASSERT_TRUE(v.contains(valueToFind));
 }
 
 TEST_F(UniqueVector,
 AnswersTrueWhenCheckingIfValueOfTwoExists) {
-	ASSERT_TRUE(v.contains(2));
+	int valueToFind = 2;
+	ASSERT_TRUE(v.contains(valueToFind));
 }
 
 TEST_F(UniqueVector,
 AnswersTrueWhenCheckingIfValueOfThreeExists) {
-	ASSERT_TRUE(v.contains(3));
+	int valueToFind = 3;
+	ASSERT_TRUE(v.contains(valueToFind));
 }
 
 TEST_F(UniqueVector,
 AnswersTrueWhenCheckingIfValueOfFourExists) {
-	ASSERT_TRUE(v.contains(4));
+	int valueToFind = 4;
+	ASSERT_TRUE(v.contains(valueToFind));
 }
 
 TEST_F(UniqueVector,
 AnswersTrueWhenCheckingIfValueOfFiveExists) {
-	ASSERT_TRUE(v.contains(5));
+	int valueToFind = 5;
+	ASSERT_TRUE(v.contains(valueToFind));
 }
 
 TEST_F(UniqueVector,
-AnswersFalseWhenCheckingIfValueOfSixExists) {
-	ASSERT_FALSE(v.contains(6));
+AnswersFalseWhenCheckingIfNonExistentValueExists) {
+	ASSERT_FALSE(v.contains(SomeValueNotInVector));
 }
 
 TEST_F(UniqueVector,
 AnswersCountOfOneForNumberOfOccurrencesOfValueOfOne) {
-	ASSERT_EQ(1, v.count(1));
+	ASSERT_TRUE(1 == v.count(1));
 }
 
 TEST_F(UniqueVector,
 AnswersCountOfOneForNumberOfOccurrencesOfValueOfTwo) {
-	ASSERT_EQ(1, v.count(2));
+	ASSERT_TRUE(1 == v.count(2));
 }
 
 TEST_F(UniqueVector,
 AnswersCountOfOneForNumberOfOccurrencesOfValueOfThree) {
-	ASSERT_EQ(1, v.count(3));
+	ASSERT_TRUE(1 == v.count(3));
 }
 
 TEST_F(UniqueVector,
 AnswersCountOfOneForNumberOfOccurrencesOfValueOfFour) {
-	ASSERT_EQ(1, v.count(4));
+	ASSERT_TRUE(1 ==v.count(4));
 }
 
 TEST_F(UniqueVector,
 AnswersCountOfOneForNumberOfOccurrencesOfValueOfFive) {
-	ASSERT_EQ(1, v.count(5));
+	ASSERT_TRUE(1 ==v.count(5));
 }
 
 TEST_F(UniqueVector,
@@ -226,27 +251,25 @@ AnswersFalseIfTheFirstElementDoesNotEqualOne) {
 
 TEST_F(UniqueVector,
 AnswersFirstIndexOfValue) {
-	ASSERT_EQ(0, v.indexOf(1));
-	ASSERT_EQ(1, v.indexOf(2));
-	ASSERT_EQ(2, v.indexOf(3));
-	ASSERT_EQ(3, v.indexOf(4));
-	ASSERT_EQ(4, v.indexOf(5));
+	ASSERT_EQ(IndexZero, v.indexOf(1));
+	ASSERT_EQ(IndexOne, v.indexOf(2));
+	ASSERT_EQ(IndexTwo, v.indexOf(3));
+	ASSERT_EQ(IndexThree, v.indexOf(4));
+	ASSERT_EQ(IndexFour, v.indexOf(5));
 }
 
 TEST_F(UniqueVector,
-AnswersIndexNotFoundWhenValueNotFound) {
-	int indexNotFound = -1;
-	int valueNotInVector = 50;
-
-	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
+AnswersLastIndexOfValue) {
+	ASSERT_EQ(IndexZero, v.lastIndexOf(1));
+	ASSERT_EQ(IndexOne, v.lastIndexOf(2));
+	ASSERT_EQ(IndexTwo, v.lastIndexOf(3));
+	ASSERT_EQ(IndexThree, v.lastIndexOf(4));
+	ASSERT_EQ(IndexFour, v.lastIndexOf(5));
 }
 
 TEST_F(UniqueVector,
-AnswersIndexNotFoundWhenSearchingBackwardFromIndexFourForElementNotFound) {
-	int indexNotFound = -1;
-	int valueNotInVector = 50;
-
-	ASSERT_EQ(indexNotFound, v.lastIndexOf(valueNotInVector));
+AnswersFirstIndexNotFoundForNonExistentValue) {
+	ASSERT_EQ(IndexNotFound, v.indexOf(SomeValueNotInVector));
 }
 
 PRISM_END_TEST_NAMESPACE
