@@ -41,33 +41,17 @@ public:
 };
 
 TEST_F(DuplicatesVector,
-AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfOfOne) {
+AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
 	int indexOne = 1;
-	int startSearchFromIndexZero = 0;
 	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexZero);
+	int startIndex = 1;
 
-	ASSERT_EQ(indexOne, returnedIndex);
-}
+	ASSERT_EQ(indexOne, v.indexOf(valueToFind, startIndex));
 
-TEST_F(DuplicatesVector,
-AnswersIndexOneWhenSearchingForwardFromIndexOneForValueOfOfOne) {
-	int indexOne = 1;
-	int startSearchFromIndexOne = 1;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexOne);
-
-	ASSERT_EQ(indexOne, returnedIndex);
-}
-
-TEST_F(DuplicatesVector,
-AnswersIndexFourWhenSearchingForwardFromIndexTwoForValueOfOfOne) {
 	int indexFour = 4;
-	int startSearchFromIndexTwo = 2;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind, startSearchFromIndexTwo);
+	startIndex = 2;
 
-	ASSERT_EQ(indexFour, returnedIndex);
+	ASSERT_EQ(indexFour, v.indexOf(valueToFind, startIndex));
 }
 
 TEST_F(DuplicatesVector,
