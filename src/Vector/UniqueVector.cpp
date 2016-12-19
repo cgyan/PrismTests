@@ -234,55 +234,12 @@ AnswersFirstIndexOfValue) {
 }
 
 TEST_F(UniqueVector,
-AnswersIndexZeroWhenSearchingForLastValueOfOne) {
-	int lastIndexThatContainsValueOfOne = 0;
-
-	ASSERT_EQ(lastIndexThatContainsValueOfOne, v.lastIndexOf(1));
-}
-
-TEST_F(UniqueVector,
-AnswersIndexOneWhenSearchingForLastValueOfTwo) {
-	int lastIndexThatContainsValueOfTwo = 1;
-
-	ASSERT_EQ(lastIndexThatContainsValueOfTwo, v.lastIndexOf(2));
-}
-
-TEST_F(UniqueVector,
-AnswersIndexTwoWhenSearchingForLastValueOfThree) {
-	int lastIndexThatContainsValueOfThree = 2;
-
-	ASSERT_EQ(lastIndexThatContainsValueOfThree, v.lastIndexOf(3));
-}
-
-TEST_F(UniqueVector,
-AnswersIndexThreeWhenSearchingForLastValueOfFour) {
-	int lastIndexThatContainsValueOfFour = 3;
-
-	ASSERT_EQ(lastIndexThatContainsValueOfFour, v.lastIndexOf(4));
-}
-
-TEST_F(UniqueVector,
-AnswersIndexFourWhenSearchingForLastValueOfFive) {
-	int lastIndexThatContainsValueOfFive = 4;
-
-	ASSERT_EQ(lastIndexThatContainsValueOfFive, v.lastIndexOf(5));
-}
-
-TEST_F(UniqueVector,
 AnswersIndexNotFoundWhenValueNotFound) {
 	int indexNotFound = -1;
 	int valueNotInVector = 50;
 
 	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
 }
-
-//TEST_F(UniqueVector,
-//AnswersIndexNotFoundWhenSearchingForwardFromIndexZeroForElementNotFound) {
-//	int indexNotFound = -1;
-//	int valueNotInVector = 50;
-//
-//	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
-//}
 
 TEST_F(UniqueVector,
 AnswersIndexNotFoundWhenSearchingBackwardFromIndexFourForElementNotFound) {
