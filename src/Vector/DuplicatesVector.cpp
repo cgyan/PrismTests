@@ -19,7 +19,13 @@ PRISM_BEGIN_TEST_NAMESPACE
 //=============================================================================
 class DuplicatesVector : public Test {
 public:
-	PVector<int> v;
+	DuplicatesVector()
+	: IndexZero(0),
+	  IndexOne(1),
+	  IndexTwo(2),
+	  IndexThree(3),
+	  IndexFour(4)
+	{}
 
 	void SetUp() {
 		setCapacityToTen();
@@ -38,20 +44,37 @@ public:
 		v.addAtEnd(1);
 		v.addAtEnd(33);
 	}
+
+	PVector<int> v;
+	int IndexZero;
+	int IndexOne;
+	int IndexTwo;
+	int IndexThree;
+	int IndexFour;
 };
 
 TEST_F(DuplicatesVector,
 AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
-	int indexOne = 1;
 	int valueToFind = 1;
-	int startIndex = 1;
+	int startIndex = IndexOne;
 
-	ASSERT_EQ(indexOne, v.indexOf(valueToFind, startIndex));
+	ASSERT_TRUE(v.indexOf(valueToFind, startIndex) == IndexOne);
 
-	int indexFour = 4;
-	startIndex = 2;
+	startIndex = IndexTwo;
 
-	ASSERT_EQ(indexFour, v.indexOf(valueToFind, startIndex));
+	ASSERT_TRUE(v.indexOf(valueToFind, startIndex) == IndexFour);
+}
+
+TEST_F(DuplicatesVector,
+AnswersLastIndexOfValueSearchingFromSpecifiedIndex) {
+	int valueToFind = 1;
+	int startIndex = IndexFour;
+
+	ASSERT_TRUE(v.lastIndexOf(valueToFind, startIndex) == IndexFour);
+
+	startIndex = IndexThree;
+
+	ASSERT_TRUE(v.lastIndexOf(valueToFind, startIndex) == IndexOne);
 }
 
 PRISM_END_TEST_NAMESPACE
