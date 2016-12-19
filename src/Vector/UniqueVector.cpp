@@ -225,49 +225,58 @@ AnswersFalseIfTheFirstElementDoesNotEqualOne) {
 }
 
 TEST_F(UniqueVector,
-AnswersIndexZeroWhenSearchingForwardFromIndexZeroForValueOfOne) {
-	int indexZero = 0;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind);
-
-	ASSERT_EQ(indexZero, returnedIndex);
+AnswersFirstIndexOfValue) {
+	ASSERT_EQ(0, v.indexOf(1));
+	ASSERT_EQ(1, v.indexOf(2));
+	ASSERT_EQ(2, v.indexOf(3));
+	ASSERT_EQ(3, v.indexOf(4));
+	ASSERT_EQ(4, v.indexOf(5));
 }
 
-TEST_F(UniqueVector,
-AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfTwo) {
-	int indexZero = 0;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind);
+//TEST_F(UniqueVector,
+//AnswersIndexZeroWhenSearchingForwardFromIndexZeroForValueOfOne) {
+//	int indexZero = 0;
+//	int valueToFind = 1;
+//	int returnedIndex = v.indexOf(valueToFind);
+//
+//	ASSERT_EQ(indexZero, returnedIndex);
+//}
 
-	ASSERT_EQ(indexZero, returnedIndex);
-}
+//TEST_F(UniqueVector,
+//AnswersIndexOneWhenSearchingForwardFromIndexZeroForValueOfTwo) {
+//	int indexZero = 0;
+//	int valueToFind = 1;
+//	int returnedIndex = v.indexOf(valueToFind);
+//
+//	ASSERT_EQ(indexZero, returnedIndex);
+//}
 
-TEST_F(UniqueVector,
-AnswersIndexTwoWhenSearchingForwardFromIndexZeroForValueOfThree) {
-	int indexZero = 0;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind);
+//TEST_F(UniqueVector,
+//AnswersIndexTwoWhenSearchingForwardFromIndexZeroForValueOfThree) {
+//	int indexZero = 0;
+//	int valueToFind = 1;
+//	int returnedIndex = v.indexOf(valueToFind);
+//
+//	ASSERT_EQ(indexZero, returnedIndex);
+//}
 
-	ASSERT_EQ(indexZero, returnedIndex);
-}
+//TEST_F(UniqueVector,
+//AnswersIndexThreeWhenSearchingForwardFromIndexZeroForValueOfFour) {
+//	int indexZero = 0;
+//	int valueToFind = 1;
+//	int returnedIndex = v.indexOf(valueToFind);
+//
+//	ASSERT_EQ(indexZero, returnedIndex);
+//}
 
-TEST_F(UniqueVector,
-AnswersIndexThreeWhenSearchingForwardFromIndexZeroForValueOfFour) {
-	int indexZero = 0;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind);
-
-	ASSERT_EQ(indexZero, returnedIndex);
-}
-
-TEST_F(UniqueVector,
-AnswersIndexFourWhenSearchingForwardFromIndexZeroForValueOfFive) {
-	int indexZero = 0;
-	int valueToFind = 1;
-	int returnedIndex = v.indexOf(valueToFind);
-
-	ASSERT_EQ(indexZero, returnedIndex);
-}
+//TEST_F(UniqueVector,
+//AnswersIndexFourWhenSearchingForwardFromIndexZeroForValueOfFive) {
+//	int indexZero = 0;
+//	int valueToFind = 1;
+//	int returnedIndex = v.indexOf(valueToFind);
+//
+//	ASSERT_EQ(indexZero, returnedIndex);
+//}
 
 TEST_F(UniqueVector,
 AnswersIndexZeroWhenSearchingForLastValueOfOne) {
@@ -304,13 +313,13 @@ AnswersIndexFourWhenSearchingForLastValueOfFive) {
 	ASSERT_EQ(lastIndexThatContainsValueOfFive, v.lastIndexOf(5));
 }
 
-TEST_F(UniqueVector,
-AnswersIndexNotFoundWhenSearchingForwardFromIndexZeroForElementNotFound) {
-	int indexNotFound = -1;
-	int valueNotInVector = 50;
-
-	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
-}
+//TEST_F(UniqueVector,
+//AnswersIndexNotFoundWhenSearchingForwardFromIndexZeroForElementNotFound) {
+//	int indexNotFound = -1;
+//	int valueNotInVector = 50;
+//
+//	ASSERT_EQ(indexNotFound, v.indexOf(valueNotInVector));
+//}
 
 TEST_F(UniqueVector,
 AnswersIndexNotFoundWhenSearchingBackwardFromIndexFourForElementNotFound) {
