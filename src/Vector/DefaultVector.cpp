@@ -110,13 +110,12 @@ AnswersFalseWhenAskedIfTheLastElementEqualsSpecifiedValue) {
 }
 
 TEST_F(DefaultVector,
-//AnswersIndexNotFoundWhenSearchingForFirstIndexOfSpecifiedValue) {
 AnswersIndexNotFoundForFirstIndexOfValue) {
 	ASSERT_EQ(IndexNotFound, v.indexOf(SomeValueNotInVector));
 }
 
 TEST_F(DefaultVector,
-AnswersIndexNotFoundWhenSearchingForLastIndexOfSpecifiedValue) {
+AnswersIndexNotFoundForLastIndexOfValue) {
 	ASSERT_EQ(IndexNotFound, v.lastIndexOf(ArbitraryValue));
 }
 
