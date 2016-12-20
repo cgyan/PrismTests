@@ -302,6 +302,13 @@ IsNotEqualToVectorWithDifferentElements) {
 	ASSERT_TRUE(v != other);
 }
 
+TEST_F(UniqueVector,
+CapacityEqualsSizeAfterDestroyingUnusedMemory) {
+	v.squeeze();
+
+	ASSERT_TRUE(v.capacity() == v.size());
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
