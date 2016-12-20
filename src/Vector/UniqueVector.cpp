@@ -279,7 +279,7 @@ AnswersLastIndexNotFoundForNonExistentValue) {
 }
 
 TEST_F(UniqueVector,
-IsEqualToOtherVector) {
+IsEqualToVectorWithSameElementsInSameOrder) {
 	PVector<int> other;
 	other.append(1);
 	other.append(2);
@@ -288,6 +288,18 @@ IsEqualToOtherVector) {
 	other.append(5);
 
 	ASSERT_TRUE(v == other);
+}
+
+TEST_F(UniqueVector,
+IsNotEqualToOtherVector) {
+	PVector<int> other;
+	other.append(15);
+	other.append(16);
+	other.append(17);
+	other.append(18);
+	other.append(19);
+
+	ASSERT_FALSE(v == other);
 }
 
 PRISM_END_TEST_NAMESPACE
