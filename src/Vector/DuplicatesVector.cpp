@@ -24,7 +24,9 @@ public:
 	  IndexOne(1),
 	  IndexTwo(2),
 	  IndexThree(3),
-	  IndexFour(4)
+	  IndexFour(4),
+	  valueToFind(0),
+	  startIndex(0)
 	{}
 
 	void SetUp() {
@@ -51,12 +53,14 @@ public:
 	int IndexTwo;
 	int IndexThree;
 	int IndexFour;
+	int valueToFind;
+	int startIndex;
 };
 
 TEST_F(DuplicatesVector,
 AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
-	int valueToFind = 1;
-	int startIndex = IndexOne;
+	valueToFind = 1;
+	startIndex = IndexOne;
 
 	ASSERT_TRUE(v.indexOf(valueToFind, startIndex) == IndexOne);
 
@@ -67,8 +71,8 @@ AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
 
 TEST_F(DuplicatesVector,
 AnswersLastIndexOfValueSearchingFromSpecifiedIndex) {
-	int valueToFind = 1;
-	int startIndex = IndexFour;
+	valueToFind = 1;
+	startIndex = IndexFour;
 
 	ASSERT_TRUE(v.lastIndexOf(valueToFind, startIndex) == IndexFour);
 

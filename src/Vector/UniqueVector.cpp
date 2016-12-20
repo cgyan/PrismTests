@@ -272,6 +272,11 @@ AnswersFirstIndexNotFoundForNonExistentValue) {
 	ASSERT_EQ(IndexNotFound, v.indexOf(SomeValueNotInVector));
 }
 
+TEST_F(UniqueVector,
+AnswersLastIndexNotFoundForNonExistentValue) {
+	ASSERT_EQ(IndexNotFound, v.lastIndexOf(SomeValueNotInVector));
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
