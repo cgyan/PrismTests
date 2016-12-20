@@ -16,6 +16,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 //=============================================================================
 // DuplicatesVector is a class that contains duplicate elements
+// The vector contains the values: { 30, 1, 31, 32, 1, 33 }
 //=============================================================================
 class DuplicatesVector : public Test {
 public:
@@ -39,12 +40,12 @@ public:
 	}
 
 	void addElementsToVector() {
-		v.addAtEnd(30);
-		v.addAtEnd(1);
-		v.addAtEnd(31);
-		v.addAtEnd(32);
-		v.addAtEnd(1);
-		v.addAtEnd(33);
+		v.append(30);
+		v.append(1);
+		v.append(31);
+		v.append(32);
+		v.append(1);
+		v.append(33);
 	}
 
 	PVector<int> v;
