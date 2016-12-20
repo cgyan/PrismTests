@@ -41,7 +41,7 @@ IsEmptyOnConstruction) {
 
 TEST_F(DefaultVector,
 IsNotEmptyAfterElementAdded) {
-	v.addAtEnd(ArbitraryValue);
+	v.append(ArbitraryValue);
 
 	ASSERT_FALSE(v.empty());
 }
@@ -53,7 +53,7 @@ HasSizeOfZero) {
 
 TEST_F(DefaultVector,
 HasSizeOfOneAfterSingleElementAdded) {
-	v.addAtEnd(ArbitraryValue);
+	v.append(ArbitraryValue);
 
 	ASSERT_EQ(1, v.size());
 }
@@ -67,9 +67,9 @@ HasSizeOfFiveWhenResizingToPositiveFive) {
 
 TEST_F(DefaultVector,
 HasSizeOfThreeAfterAddingThreeElements) {
-	v.addAtEnd(1);
-	v.addAtEnd(2);
-	v.addAtEnd(3);
+	v.append(1);
+	v.append(2);
+	v.append(3);
 
 	ASSERT_EQ(3, v.size());
 }
