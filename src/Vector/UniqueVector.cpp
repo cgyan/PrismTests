@@ -299,7 +299,7 @@ IsNotEqualToVectorWithDifferentElements) {
 	other.append(18);
 	other.append(19);
 
-	ASSERT_FALSE(v == other);
+	ASSERT_TRUE(v != other);
 }
 
 PRISM_END_TEST_NAMESPACE
