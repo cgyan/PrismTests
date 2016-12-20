@@ -291,7 +291,7 @@ IsEqualToVectorWithSameElementsInSameOrder) {
 }
 
 TEST_F(UniqueVector,
-IsNotEqualToOtherVector) {
+IsNotEqualToVectorWithDifferentElements) {
 	PVector<int> other;
 	other.append(15);
 	other.append(16);
