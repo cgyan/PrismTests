@@ -17,6 +17,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 //=============================================================================
 // UniqueVector is a test vector that contains unique elements
 // (i.e. no duplicates)
+// The vector contains the values: { 1, 2, 3, 4, 5 }
 //=============================================================================
 class UniqueVector : public Test {
 public:
@@ -43,11 +44,11 @@ public:
 	}
 
 	void addFiveElements_intsOneToFive() {
-		v.addAtEnd(1);
-		v.addAtEnd(2);
-		v.addAtEnd(3);
-		v.addAtEnd(4);
-		v.addAtEnd(5);
+		v.append(1);
+		v.append(2);
+		v.append(3);
+		v.append(4);
+		v.append(5);
 	}
 
 	PVector<int> v;
@@ -215,7 +216,7 @@ AnswersCountOfOneForNumberOfOccurrencesOfValueOfFive) {
 
 TEST_F(UniqueVector,
 AnswersCountOfTwoForNumberOfOccurrencesOfValueOfOneAfterAddingAnotherValueOfOne) {
-	v.addAtEnd(1);
+	v.append(1);
 	int numOccurrencesOfValueOfOne = v.count(1);
 
 	ASSERT_EQ(2, numOccurrencesOfValueOfOne);
@@ -275,6 +276,18 @@ AnswersFirstIndexNotFoundForNonExistentValue) {
 TEST_F(UniqueVector,
 AnswersLastIndexNotFoundForNonExistentValue) {
 	ASSERT_EQ(IndexNotFound, v.lastIndexOf(SomeValueNotInVector));
+}
+
+TEST_F(UniqueVector,
+IsEqualToOtherVector) {
+	PVector<int> other;
+	other.append(1);
+	other.append(2);
+	other.append(3);
+	other.append(4);
+	other.append(5);
+
+	ASSERT_TRUE(v == other);
 }
 
 PRISM_END_TEST_NAMESPACE
