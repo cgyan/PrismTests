@@ -348,6 +348,13 @@ ThrowsWhenInsertingValueAtInvalidNegativeIndex) {
 			prism::OutOfBoundsException);
 }
 
+TEST_F(UniqueVector,
+ThrowsWhenInsertingValueAtInvalidPositiveIndex) {
+	int newValue = 500;
+	ASSERT_THROW(v.insert(InvalidPositiveIndex, newValue),
+			prism::OutOfBoundsException);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
