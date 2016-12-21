@@ -341,6 +341,13 @@ ShiftsElementsUpWhenValueIsInserted) {
 	ASSERT_TRUE(v.at(IndexFive) == 5);
 }
 
+TEST_F(UniqueVector,
+ThrowsWhenInsertingValueAtInvalidNegativeIndex) {
+	int newValue = 500;
+	ASSERT_THROW(v.insert(InvalidNegativeIndex, newValue),
+			prism::OutOfBoundsException);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
