@@ -34,6 +34,7 @@ public:
 	int IndexNotFound;
 };
 
+
 TEST_F(DefaultVector,
 IsEmptyOnConstruction) {
 	ASSERT_TRUE(v.empty());
@@ -117,6 +118,15 @@ AnswersIndexNotFoundForFirstIndexOfValue) {
 TEST_F(DefaultVector,
 AnswersIndexNotFoundForLastIndexOfValue) {
 	ASSERT_EQ(IndexNotFound, v.lastIndexOf(SomeValueNotInVector));
+}
+
+TEST_F(DefaultVector,
+InsertsValueAtIndexZero) {
+	int IndexZero = 0;
+	int newValue = 500;
+	v.insert(IndexZero, newValue);
+
+	ASSERT_TRUE(v.at(IndexZero == newValue));
 }
 
 PRISM_END_TEST_NAMESPACE
