@@ -31,7 +31,8 @@ public:
 		IndexOne(1),
 		IndexTwo(2),
 		IndexThree(3),
-		IndexFour(4)
+		IndexFour(4),
+		IndexFive(5)
 		{}
 
 	void SetUp() {
@@ -62,6 +63,7 @@ public:
 	int IndexTwo ;
 	int IndexThree;
 	int IndexFour;
+	int IndexFive;
 };
 
 TEST_F(UniqueVector,
@@ -327,6 +329,16 @@ InsertsValueAtIndexTwo) {
 	v.insert(IndexTwo, newValue);
 
 	ASSERT_TRUE(v.at(IndexTwo) == newValue);
+}
+
+TEST_F(UniqueVector,
+ShiftsElementsUpWhenValueIsInserted) {
+	int newValue = 500;
+	v.insert(IndexTwo, newValue);
+
+	ASSERT_TRUE(v.at(IndexThree) == 3);
+	ASSERT_TRUE(v.at(IndexFour) == 4);
+	ASSERT_TRUE(v.at(IndexFive) == 5);
 }
 
 PRISM_END_TEST_NAMESPACE
