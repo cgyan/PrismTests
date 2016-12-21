@@ -309,6 +309,18 @@ CapacityEqualsSizeAfterDestroyingUnusedMemory) {
 	ASSERT_TRUE(v.capacity() == v.size());
 }
 
+TEST_F(UniqueVector,
+ReplacesValueAtIndexWithNewValue) {
+	int newValue = 500;
+	v.replace(IndexTwo, newValue);
+
+	ASSERT_TRUE(v.at(IndexZero) 	== 1);
+	ASSERT_TRUE(v.at(IndexOne) 		== 2);
+	ASSERT_TRUE(v.at(IndexTwo) 		== newValue);
+	ASSERT_TRUE(v.at(IndexThree) 	== 4);
+	ASSERT_TRUE(v.at(IndexFour) 	== 5);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
