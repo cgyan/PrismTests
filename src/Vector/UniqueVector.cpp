@@ -321,6 +321,14 @@ ReplacesValueAtIndexWithNewValue) {
 	ASSERT_TRUE(v.at(IndexFour) 	== 5);
 }
 
+TEST_F(UniqueVector,
+InsertsValueAtIndexTwo) {
+	int newValue = 500;
+	v.insert(IndexTwo, newValue);
+
+	ASSERT_TRUE(v.at(IndexTwo) == newValue);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
