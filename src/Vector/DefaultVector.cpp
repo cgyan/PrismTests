@@ -53,13 +53,6 @@ HasSizeOfZero) {
 }
 
 TEST_F(DefaultVector,
-HasSizeOfOneAfterSingleElementAdded) {
-	v.append(ArbitraryValue);
-
-	ASSERT_EQ(1, v.size());
-}
-
-TEST_F(DefaultVector,
 HasSizeOfFiveWhenResizingToPositiveFive) {
 	v.resize(5);
 
@@ -127,6 +120,13 @@ InsertsValueAtIndexZero) {
 	v.insert(IndexZero, newValue);
 
 	ASSERT_TRUE(v.at(IndexZero == newValue));
+}
+
+TEST_F(DefaultVector,
+HasSizeOfOneAfterSingleElementAdded) {
+	v.append(ArbitraryValue);
+
+	ASSERT_EQ(1, v.size());
 }
 
 PRISM_END_TEST_NAMESPACE
