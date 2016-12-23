@@ -34,6 +34,17 @@ InitialisedWithFiveLotsOfValueOfTen) {
 	ASSERT_TRUE(10 == v.at(4));
 }
 
+TEST_F(NewVector,
+InitialisedWithFiveLotsOfValueOfTenHasSizeOfFive) {
+	int numElements = 5;
+	int value = 10;
+
+	PVector<int> v(numElements, value);
+	int expectedSize = 5;
+
+	ASSERT_TRUE(expectedSize == v.size());
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
