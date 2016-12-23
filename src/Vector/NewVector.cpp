@@ -17,15 +17,20 @@ PRISM_BEGIN_TEST_NAMESPACE
 //=============================================================================
 // NewVector is a fixture that tests the vector's various constructors
 //=============================================================================
-class NewVector : public Test
-{};
+class NewVector : public Test {
+public:
+	int numElements;
+	int singleValue;
+
+	void SetUp() {
+		numElements = 5;
+		singleValue = 10;
+	}
+};
 
 TEST_F(NewVector,
 InitialisedWithFiveLotsOfValueOfTen) {
-	int numElements = 5;
-	int value = 10;
-
-	PVector<int> v(numElements, value);
+	PVector<int> v(numElements, singleValue);
 
 	ASSERT_TRUE(10 == v.at(0));
 	ASSERT_TRUE(10 == v.at(1));
@@ -36,13 +41,18 @@ InitialisedWithFiveLotsOfValueOfTen) {
 
 TEST_F(NewVector,
 InitialisedWithFiveLotsOfValueOfTenHasSizeOfFive) {
-	int numElements = 5;
-	int value = 10;
-
-	PVector<int> v(numElements, value);
+	PVector<int> v(numElements, singleValue);
 	int expectedSize = 5;
 
 	ASSERT_TRUE(expectedSize == v.size());
+}
+
+TEST_F(NewVector,
+InitialisedWithValuesHasCapacityEqualToSize) {
+	PVector<int> v(numElements, singleValue);
+	int expectedCapacity = 5;
+
+	ASSERT_TRUE(expectedCapacity == v.capacity());
 }
 
 PRISM_END_TEST_NAMESPACE
