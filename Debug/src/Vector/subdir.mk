@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../src/Vector/DefaultVector.cpp \
 ../src/Vector/DuplicatesVector.cpp \
+../src/Vector/NewVector.cpp \
 ../src/Vector/UniqueVector.cpp 
 
 OBJS += \
 ./src/Vector/DefaultVector.o \
 ./src/Vector/DuplicatesVector.o \
+./src/Vector/NewVector.o \
 ./src/Vector/UniqueVector.o 
 
 CPP_DEPS += \
 ./src/Vector/DefaultVector.d \
 ./src/Vector/DuplicatesVector.d \
+./src/Vector/NewVector.d \
 ./src/Vector/UniqueVector.d 
 
 

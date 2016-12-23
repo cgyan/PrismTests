@@ -20,39 +20,40 @@ PRISM_BEGIN_TEST_NAMESPACE
 class NewVector : public Test {
 public:
 	int numElements;
-	int singleValue;
+	int value;
 
 	void SetUp() {
 		numElements = 5;
-		singleValue = 10;
+		value = 10;
 	}
 };
 
 TEST_F(NewVector,
 InitialisedWithFiveLotsOfValueOfTen) {
-	PVector<int> v(numElements, singleValue);
+	PVector<int> v(numElements, value);
 
-	ASSERT_TRUE(10 == v.at(0));
-	ASSERT_TRUE(10 == v.at(1));
-	ASSERT_TRUE(10 == v.at(2));
-	ASSERT_TRUE(10 == v.at(3));
-	ASSERT_TRUE(10 == v.at(4));
+	ASSERT_TRUE(value == v.at(0));
+	ASSERT_TRUE(value == v.at(1));
+	ASSERT_TRUE(value == v.at(2));
+	ASSERT_TRUE(value == v.at(3));
+	ASSERT_TRUE(value == v.at(4));
 }
 
 TEST_F(NewVector,
-InitialisedWithFiveLotsOfValueOfTenHasSizeOfFive) {
-	PVector<int> v(numElements, singleValue);
+InitialisedWithCountAmountOfValueHasSizeEqualToCount) {
+	PVector<int> v(numElements, value);
 	int expectedSize = 5;
 
 	ASSERT_TRUE(expectedSize == v.size());
 }
 
 TEST_F(NewVector,
-InitialisedWithValuesHasCapacityEqualToSize) {
-	PVector<int> v(numElements, singleValue);
-	int expectedCapacity = 5;
+InitialisedWithCountAmountOfValueHasCapacityEqualToSize) {
+	PVector<int> v(numElements, value);
+	int expectedSize = 5;
+	int expectedCapacity = expectedSize;
 
-	ASSERT_TRUE(expectedCapacity == v.capacity());
+	ASSERT_TRUE(expectedCapacity == expectedSize);
 }
 
 PRISM_END_TEST_NAMESPACE

@@ -1,4 +1,4 @@
-src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
+src/Vector/NewVector.o: ../src/Vector/NewVector.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
@@ -13,7 +13,8 @@ src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/type_traits_wrappers.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
@@ -44,3 +45,5 @@ src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
