@@ -355,6 +355,22 @@ ThrowsWhenInsertingValueAtInvalidPositiveIndex) {
 			prism::OutOfBoundsException);
 }
 
+TEST_F(UniqueVector,
+InsertsCountOfValueAtIndex) {
+	int numCopies = 3;
+	int newValue = 500;
+	v.insert(IndexTwo, numCopies, newValue);
+
+	ASSERT_TRUE(1 == v.at(0));
+	ASSERT_TRUE(2 == v.at(1));
+	ASSERT_TRUE(newValue == v.at(2));
+	ASSERT_TRUE(newValue == v.at(3));
+	ASSERT_TRUE(newValue == v.at(4));
+	ASSERT_TRUE(3 == v.at(5));
+	ASSERT_TRUE(4 == v.at(6));
+	ASSERT_TRUE(5 == v.at(7));
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
