@@ -359,6 +359,7 @@ TEST_F(UniqueVector,
 InsertsCountOfValueAtIndex) {
 	int numCopies = 3;
 	int newValue = 500;
+
 	v.insert(IndexTwo, numCopies, newValue);
 
 	ASSERT_TRUE(1 == v.at(0));
@@ -369,6 +370,17 @@ InsertsCountOfValueAtIndex) {
 	ASSERT_TRUE(3 == v.at(5));
 	ASSERT_TRUE(4 == v.at(6));
 	ASSERT_TRUE(5 == v.at(7));
+}
+
+TEST_F(UniqueVector,
+ThatInsertedCountOfValueAtIndexHasSizeEqualToOldSizePlusCount) {
+	int numCopies = 3;
+	int newValue = 500;
+
+	v.insert(IndexTwo, numCopies, newValue);
+	int expectedSize = 8;
+
+	ASSERT_TRUE(expectedSize == v.size());
 }
 
 PRISM_END_TEST_NAMESPACE
