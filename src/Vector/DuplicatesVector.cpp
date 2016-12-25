@@ -16,7 +16,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 //=============================================================================
 // DuplicatesVector is a class that contains duplicate elements
-// The vector contains the values: { 30, 1, 31, 32, 1, 33 }
+// The vector contains the values: { 30, 1, 31, 1, 32 }
 //=============================================================================
 class DuplicatesVector : public Test {
 public:
@@ -27,25 +27,21 @@ public:
 	  IndexThree(3),
 	  IndexFour(4),
 	  valueToFind(0),
-	  startIndex(0)
+	  startIndex(0),
+	  expectedIndex(0),
+	  actualIndex(0)
 	{}
 
 	void SetUp() {
-		setCapacityToTen();
 		addElementsToVector();
-	}
-
-	void setCapacityToTen() {
-		v.reserve(10);
 	}
 
 	void addElementsToVector() {
 		v.append(30);
 		v.append(1);
 		v.append(31);
-		v.append(32);
 		v.append(1);
-		v.append(33);
+		v.append(32);
 	}
 
 	PVector<int> v;
@@ -56,30 +52,40 @@ public:
 	int IndexFour;
 	int valueToFind;
 	int startIndex;
+	int expectedIndex;
+	int actualIndex;
 };
 
 TEST_F(DuplicatesVector,
 AnswersFirstIndexOfValueSearchingFromSpecifiedIndex) {
 	valueToFind = 1;
 	startIndex = IndexOne;
+	expectedIndex = IndexOne;
+	actualIndex = v.indexOf(valueToFind, startIndex);
 
-	ASSERT_TRUE(v.indexOf(valueToFind, startIndex) == IndexOne);
+	ASSERT_EQ(expectedIndex, actualIndex);
 
 	startIndex = IndexTwo;
+	expectedIndex = IndexThree;
+	actualIndex = v.indexOf(valueToFind, startIndex);
 
-	ASSERT_TRUE(v.indexOf(valueToFind, startIndex) == IndexFour);
+	ASSERT_EQ(expectedIndex, actualIndex);
 }
 
 TEST_F(DuplicatesVector,
 AnswersLastIndexOfValueSearchingFromSpecifiedIndex) {
 	valueToFind = 1;
 	startIndex = IndexFour;
+	expectedIndex = IndexThree;
+	actualIndex = v.lastIndexOf(valueToFind, startIndex);
 
-	ASSERT_TRUE(v.lastIndexOf(valueToFind, startIndex) == IndexFour);
+	ASSERT_EQ(expectedIndex, actualIndex);
 
-	startIndex = IndexThree;
+	startIndex = IndexTwo;
+	expectedIndex = IndexOne;
+	actualIndex = v.lastIndexOf(valueToFind, startIndex);
 
-	ASSERT_TRUE(v.lastIndexOf(valueToFind, startIndex) == IndexOne);
+	ASSERT_EQ(expectedIndex, actualIndex);
 }
 
 PRISM_END_TEST_NAMESPACE

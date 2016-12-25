@@ -21,7 +21,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 class DefaultVector : public Test {
 public:
 	void SetUp() {
-		ArbitraryValue = 10;
+		ArbitraryValue = 500;
 		PositiveSize = 5;
 		SomeValueNotInVector = 34;
 		IndexNotFound = -1;
@@ -64,8 +64,10 @@ HasSizeOfThreeAfterAddingThreeElements) {
 	v.append(1);
 	v.append(2);
 	v.append(3);
+	int expectedSize = 3;
+	int actualSize = v.size();
 
-	ASSERT_EQ(3, v.size());
+	ASSERT_EQ(expectedSize, actualSize);
 }
 
 TEST_F(DefaultVector,
@@ -89,8 +91,10 @@ AnswersFalseWhenCheckingIfElementExists) {
 
 TEST_F(DefaultVector,
 AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
-	int numOcurrencesInVector = v.count(SomeValueNotInVector);
-	ASSERT_EQ(0, numOcurrencesInVector);
+	int expectedOccurrences = 0;
+	int actualOcurrences = v.count(SomeValueNotInVector);
+
+	ASSERT_EQ(expectedOccurrences, actualOcurrences);
 }
 
 TEST_F(DefaultVector,
@@ -116,10 +120,9 @@ AnswersIndexNotFoundForLastIndexOfValue) {
 TEST_F(DefaultVector,
 InsertsValueAtIndexZero) {
 	int IndexZero = 0;
-	int newValue = 500;
-	v.insert(IndexZero, newValue);
+	v.insert(IndexZero, ArbitraryValue);
 
-	ASSERT_TRUE(v.at(IndexZero == newValue));
+	ASSERT_TRUE(v.at(IndexZero) == ArbitraryValue);
 }
 
 TEST_F(DefaultVector,

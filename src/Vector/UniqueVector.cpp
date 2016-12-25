@@ -26,6 +26,7 @@ public:
 		InvalidPositiveIndex(15),
 		InvalidNegativeSize(-1),
 		SomeValueNotInVector(8),
+		ValueToInsert(500),
 		IndexNotFound(-1),
 		IndexZero(0),
 		IndexOne(1),
@@ -36,12 +37,7 @@ public:
 		{}
 
 	void SetUp() {
-		setCapacityToTen();
 		addFiveElements_intsOneToFive();
-	}
-
-	void setCapacityToTen() {
-		v.reserve(10);
 	}
 
 	void addFiveElements_intsOneToFive() {
@@ -57,6 +53,7 @@ public:
 	int InvalidPositiveIndex;
 	int InvalidNegativeSize;
 	int SomeValueNotInVector;
+	int ValueToInsert;
 	int IndexNotFound;
 	int IndexZero;
 	int IndexOne;
@@ -313,28 +310,25 @@ CapacityEqualsSizeAfterDestroyingUnusedMemory) {
 
 TEST_F(UniqueVector,
 ReplacesValueAtIndexWithNewValue) {
-	int newValue = 500;
-	v.replace(IndexTwo, newValue);
+	v.replace(IndexTwo, ValueToInsert);
 
 	ASSERT_TRUE(v.at(IndexZero) 	== 1);
 	ASSERT_TRUE(v.at(IndexOne) 		== 2);
-	ASSERT_TRUE(v.at(IndexTwo) 		== newValue);
+	ASSERT_TRUE(v.at(IndexTwo) 		== ValueToInsert);
 	ASSERT_TRUE(v.at(IndexThree) 	== 4);
 	ASSERT_TRUE(v.at(IndexFour) 	== 5);
 }
 
 TEST_F(UniqueVector,
 InsertsValueAtIndexTwo) {
-	int newValue = 500;
-	v.insert(IndexTwo, newValue);
+	v.insert(IndexTwo, ValueToInsert);
 
-	ASSERT_TRUE(v.at(IndexTwo) == newValue);
+	ASSERT_TRUE(v.at(IndexTwo) == ValueToInsert);
 }
 
 TEST_F(UniqueVector,
 ShiftsElementsUpWhenValueIsInserted) {
-	int newValue = 500;
-	v.insert(IndexTwo, newValue);
+	v.insert(IndexTwo, ValueToInsert);
 
 	ASSERT_TRUE(v.at(IndexThree) == 3);
 	ASSERT_TRUE(v.at(IndexFour) == 4);
@@ -343,41 +337,37 @@ ShiftsElementsUpWhenValueIsInserted) {
 
 TEST_F(UniqueVector,
 ThrowsWhenInsertingValueAtInvalidNegativeIndex) {
-	int newValue = 500;
-	ASSERT_THROW(v.insert(InvalidNegativeIndex, newValue),
+	ASSERT_THROW(v.insert(InvalidNegativeIndex, ValueToInsert),
 			prism::OutOfBoundsException);
 }
 
 TEST_F(UniqueVector,
 ThrowsWhenInsertingValueAtInvalidPositiveIndex) {
-	int newValue = 500;
-	ASSERT_THROW(v.insert(InvalidPositiveIndex, newValue),
+	ASSERT_THROW(v.insert(InvalidPositiveIndex, ValueToInsert),
 			prism::OutOfBoundsException);
 }
 
 TEST_F(UniqueVector,
 InsertsCountOfValueAtIndex) {
 	int numCopies = 3;
-	int newValue = 500;
 
-	v.insert(IndexTwo, numCopies, newValue);
+	v.insert(IndexTwo, numCopies, ValueToInsert);
 
 	ASSERT_TRUE(1 == v.at(0));
 	ASSERT_TRUE(2 == v.at(1));
-	ASSERT_TRUE(newValue == v.at(2));
-	ASSERT_TRUE(newValue == v.at(3));
-	ASSERT_TRUE(newValue == v.at(4));
+	ASSERT_TRUE(ValueToInsert == v.at(2));
+	ASSERT_TRUE(ValueToInsert == v.at(3));
+	ASSERT_TRUE(ValueToInsert == v.at(4));
 	ASSERT_TRUE(3 == v.at(5));
 	ASSERT_TRUE(4 == v.at(6));
 	ASSERT_TRUE(5 == v.at(7));
 }
 
 TEST_F(UniqueVector,
-ThatInsertedCountOfValueAtIndexHasSizeEqualToOldSizePlusCount) {
+HasSizeEqualToOldSizePlusCountAfterInsertingCountOfValueAtIndex) {
 	int numCopies = 3;
-	int newValue = 500;
 
-	v.insert(IndexTwo, numCopies, newValue);
+	v.insert(IndexTwo, numCopies, ValueToInsert);
 	int expectedSize = 8;
 
 	ASSERT_TRUE(expectedSize == v.size());

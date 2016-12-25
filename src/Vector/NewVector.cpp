@@ -43,17 +43,18 @@ TEST_F(NewVector,
 InitialisedWithCountAmountOfValueHasSizeEqualToCount) {
 	PVector<int> v(numElements, value);
 	int expectedSize = 5;
+	int actualSize = v.size();
 
-	ASSERT_TRUE(expectedSize == v.size());
+	ASSERT_TRUE(expectedSize == actualSize);
 }
 
 TEST_F(NewVector,
 InitialisedWithCountAmountOfValueHasCapacityEqualToSize) {
 	PVector<int> v(numElements, value);
-	int expectedSize = 5;
-	int expectedCapacity = expectedSize;
+	int actualSize = v.size();
+	int expectedCapacity = actualSize;
 
-	ASSERT_TRUE(expectedCapacity == expectedSize);
+	ASSERT_TRUE(expectedCapacity == actualSize);
 }
 
 PRISM_END_TEST_NAMESPACE
