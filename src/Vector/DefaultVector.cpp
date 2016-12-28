@@ -7,129 +7,192 @@
 
 #include "gtest/gtest.h"
 #include <prism/PVector>
+#include <prism/global>
 #include <prism/OutOfBoundsException>
-#include <prism/h/global.h>
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-//=============================================================================
-// DefaultVector is a test class that owns a vector with size and capacity of
-// zero. It has just been instantiated and no actions have been performed on it.
-//=============================================================================
 class DefaultVector : public Test {
 public:
-	void SetUp() {
-		ArbitraryValue = 500;
-		PositiveSize = 5;
-		SomeValueNotInVector = 34;
-		IndexNotFound = -1;
-	}
-
-	PVector<int> v;
-	int ArbitraryValue;
-	int PositiveSize;
-	int SomeValueNotInVector;
-	int IndexNotFound;
+	PVector v;
+	int expectedSize;
+	int actualSize;
+	int expectedCapacity;
+	int actualCapacity;
+	int expectedValue;
+	int actualValue;
+	static const int InvalidNegativeIndex = -1;
+	static const int InvalidPositiveIndex = 15;
+	static const int IndexZero = 0;
+	static const int IndexOne = 1;
+	static const int IndexTwo = 2;
 };
 
-
 TEST_F(DefaultVector,
-IsEmptyOnConstruction) {
-	ASSERT_TRUE(v.empty());
+DataIsNull) {
+	std::nullptr_t expected = nullptr;
+	ASSERT_EQ(expected, v.data());
 }
 
 TEST_F(DefaultVector,
-IsNotEmptyAfterElementAdded) {
-	v.append(ArbitraryValue);
+IsEmptyOnConstruction) {
+	bool expected = true;
+	bool actual = v.empty();
+
+	ASSERT_EQ(expected, actual);
+}
+
+TEST_F(DefaultVector,
+IsNotEmptyAfterInsertion) {
+	v.insert(500);
 
 	ASSERT_FALSE(v.empty());
 }
 
 TEST_F(DefaultVector,
-HasSizeOfZero) {
-	ASSERT_EQ(0, v.size());
+HasSizeZero) {
+	expectedSize = 0;
+	actualSize = v.size();
+	ASSERT_EQ(expectedSize, actualSize);
 }
 
 TEST_F(DefaultVector,
-HasSizeOfFiveWhenResizingToPositiveFive) {
-	v.resize(5);
-
-	ASSERT_EQ(5, v.size());
+HasCapacityZero) {
+	expectedCapacity = 0;
+	actualCapacity = v.capacity();
+	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
 TEST_F(DefaultVector,
-HasSizeOfThreeAfterAddingThreeElements) {
-	v.append(1);
-	v.append(2);
-	v.append(3);
-	int expectedSize = 3;
-	int actualSize = v.size();
+HasCapacityEqualToReservedMemorySize) {
+	v.reserve(10);
+	expectedCapacity = 10;
+	actualCapacity = v.capacity();
+
+	ASSERT_EQ(expectedCapacity, actualCapacity);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenReservingNegativeMemory) {
+	int negativeMemory = -1;
+	ASSERT_THROW(v.reserve(negativeMemory), std::bad_alloc);
+}
+
+TEST_F(DefaultVector,
+DataIsNotNullAfterReservingMemory) {
+	v.reserve(10);
+
+	ASSERT_FALSE(v.data() == nullptr);
+}
+
+TEST_F(DefaultVector,
+IgnoresRequestToReserveLessMemoryThanCapacity) {
+	v.reserve(10);
+	v.reserve(5);
+	expectedCapacity = 10;
+	actualCapacity = v.capacity();
+
+	ASSERT_EQ(expectedCapacity, actualCapacity);
+}
+
+TEST_F(DefaultVector,
+IgnoresRequestToReserveZeroMemory) {
+	v.reserve(10);
+	v.reserve(0);
+	expectedCapacity = 10;
+	actualCapacity = v.capacity();
+
+	ASSERT_EQ(expectedCapacity, actualCapacity);
+}
+
+TEST_F(DefaultVector,
+PreservesExistingElementsAfterReservingMoreMemory) {
+	v.insert(1);
+	v.insert(2);
+	v.insert(3);
+
+	v.reserve(20);
+
+	ASSERT_EQ(1, v.at(IndexZero));
+	ASSERT_EQ(2, v.at(IndexOne));
+	ASSERT_EQ(3, v.at(IndexTwo));
+}
+
+TEST_F(DefaultVector,
+DataIsNotNullAfterInsert) {
+	v.insert(500);
+
+	ASSERT_FALSE(v.data() == nullptr);
+}
+
+TEST_F(DefaultVector,
+HasSizeOneAfterSingleElementInsert) {
+	v.insert(500);
+	expectedSize = 1;
+	actualSize = v.size();
 
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
 TEST_F(DefaultVector,
-HasCapacityOfZero) {
-	ASSERT_EQ(0, v.capacity());
+HasCapacityOneAfterSingleElementInsert) {
+	v.insert(500);
+	expectedCapacity = 1;
+	actualCapacity = v.capacity();
+
+	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
 TEST_F(DefaultVector,
-HasCapacityOfTenAfterReservingMemoryForTenElements) {
-	v.reserve(10);
+ReturnsValueAtIndex) {
+	v.insert(500);
+	v.insert(501);
+	v.insert(502);
 
-	ASSERT_EQ(10, v.capacity());
+	ASSERT_EQ(500, v.at(IndexZero));
+	ASSERT_EQ(501, v.at(IndexOne));
+	ASSERT_EQ(502, v.at(IndexTwo));
+
+	ASSERT_EQ(500, v[IndexZero]);
+	ASSERT_EQ(501, v[IndexOne]);
+	ASSERT_EQ(502, v[IndexTwo]);
 }
 
 TEST_F(DefaultVector,
-AnswersFalseWhenCheckingIfElementExists) {
-	bool vectorContainsValue = v.contains(SomeValueNotInVector);
-
-	ASSERT_FALSE(vectorContainsValue);
+ThrowsWhenAccessingNegativeIndex) {
+	ASSERT_THROW(v.at(InvalidNegativeIndex), prism::OutOfBoundsException);
 }
 
 TEST_F(DefaultVector,
-AnswersCountOfZeroForNumberOfOccurrencesOfElement) {
-	int expectedOccurrences = 0;
-	int actualOcurrences = v.count(SomeValueNotInVector);
-
-	ASSERT_EQ(expectedOccurrences, actualOcurrences);
+ThrowsWhenAccessingInvalidPositiveIndex) {
+	v.insert(500);
+	ASSERT_THROW(v.at(InvalidPositiveIndex), prism::OutOfBoundsException);
 }
 
 TEST_F(DefaultVector,
-AnswersFalseWhenAskedIfTheFirstElementEqualsValue) {
-	ASSERT_FALSE(v.startsWith(ArbitraryValue));
+ThrowsWhenAccessingEmptyVector) {
+	ASSERT_THROW(v.at(IndexZero), prism::OutOfBoundsException);
 }
 
 TEST_F(DefaultVector,
-AnswersFalseWhenAskedIfTheLastElementEqualsValue) {
-	ASSERT_FALSE(v.endsWith(ArbitraryValue));
-}
+ReturnsModifiableReferenceFromIndex) {
+	int initialValue = 501;
+	int newValue = 502;
+	v.insert(initialValue);
 
-TEST_F(DefaultVector,
-AnswersIndexNotFoundForFirstIndexOfValue) {
-	ASSERT_EQ(IndexNotFound, v.indexOf(SomeValueNotInVector));
-}
+	v.at(IndexZero) = newValue;
+	expectedValue = newValue;
+	actualValue = v.at(IndexZero);
 
-TEST_F(DefaultVector,
-AnswersIndexNotFoundForLastIndexOfValue) {
-	ASSERT_EQ(IndexNotFound, v.lastIndexOf(SomeValueNotInVector));
-}
+	ASSERT_EQ(expectedValue, actualValue);
 
-TEST_F(DefaultVector,
-InsertsValueAtIndexZero) {
-	int IndexZero = 0;
-	v.insert(IndexZero, ArbitraryValue);
+	v[IndexZero] = newValue;
+	expectedValue = newValue;
+	actualValue = v[IndexZero];
 
-	ASSERT_TRUE(v.at(IndexZero) == ArbitraryValue);
-}
-
-TEST_F(DefaultVector,
-HasSizeOfOneAfterSingleElementAdded) {
-	v.append(ArbitraryValue);
-
-	ASSERT_EQ(1, v.size());
+	ASSERT_EQ(expectedValue, actualValue);
 }
 
 PRISM_END_TEST_NAMESPACE
