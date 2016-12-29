@@ -25,9 +25,15 @@ public:
 	int actualValue;
 	static const int InvalidNegativeIndex = -1;
 	static const int InvalidPositiveIndex = 15;
-	static const int IndexZero = 0;
-	static const int IndexOne = 1;
-	static const int IndexTwo = 2;
+	static const int AtIndexZero = 0;
+	static const int AtIndexOne = 1;
+	static const int AtIndexTwo = 2;
+	static const int AtIndexThree = 3;
+	static const int AtIndexFour = 4;
+	static const int AtIndexFive = 5;
+	static const int AtIndexSix = 6;
+	static const int AtIndexSeven = 7;
+	static const int AtIndexEight = 8;
 };
 
 TEST_F(DefaultVector,
@@ -46,7 +52,7 @@ IsEmptyOnConstruction) {
 
 TEST_F(DefaultVector,
 IsNotEmptyAfterInsertion) {
-	v.insert(500);
+	v.insert(AtIndexZero, 500);
 
 	ASSERT_FALSE(v.empty());
 }
@@ -109,27 +115,27 @@ IgnoresRequestToReserveZeroMemory) {
 
 TEST_F(DefaultVector,
 PreservesExistingElementsAfterReservingMoreMemory) {
-	v.insert(1);
-	v.insert(2);
-	v.insert(3);
+	v.insert(AtIndexZero, 1);
+	v.insert(AtIndexOne, 2);
+	v.insert(AtIndexTwo, 3);
 
 	v.reserve(20);
 
-	ASSERT_EQ(1, v.at(IndexZero));
-	ASSERT_EQ(2, v.at(IndexOne));
-	ASSERT_EQ(3, v.at(IndexTwo));
+	ASSERT_EQ(1, v.at(AtIndexZero));
+	ASSERT_EQ(2, v.at(AtIndexOne));
+	ASSERT_EQ(3, v.at(AtIndexTwo));
 }
 
 TEST_F(DefaultVector,
 DataIsNotNullAfterInsert) {
-	v.insert(500);
+	v.insert(AtIndexZero, 500);
 
 	ASSERT_FALSE(v.data() == nullptr);
 }
 
 TEST_F(DefaultVector,
 HasSizeOneAfterSingleElementInsert) {
-	v.insert(500);
+	v.insert(AtIndexZero, 500);
 	expectedSize = 1;
 	actualSize = v.size();
 
@@ -138,7 +144,7 @@ HasSizeOneAfterSingleElementInsert) {
 
 TEST_F(DefaultVector,
 HasCapacityOneAfterSingleElementInsert) {
-	v.insert(500);
+	v.insert(AtIndexZero, 500);
 	expectedCapacity = 1;
 	actualCapacity = v.capacity();
 
@@ -147,17 +153,17 @@ HasCapacityOneAfterSingleElementInsert) {
 
 TEST_F(DefaultVector,
 ReturnsValueAtIndex) {
-	v.insert(500);
-	v.insert(501);
-	v.insert(502);
+	v.insert(AtIndexZero, 500);
+	v.insert(AtIndexOne, 501);
+	v.insert(AtIndexTwo, 502);
 
-	ASSERT_EQ(500, v.at(IndexZero));
-	ASSERT_EQ(501, v.at(IndexOne));
-	ASSERT_EQ(502, v.at(IndexTwo));
+	ASSERT_EQ(500, v.at(AtIndexZero));
+	ASSERT_EQ(501, v.at(AtIndexOne));
+	ASSERT_EQ(502, v.at(AtIndexTwo));
 
-	ASSERT_EQ(500, v[IndexZero]);
-	ASSERT_EQ(501, v[IndexOne]);
-	ASSERT_EQ(502, v[IndexTwo]);
+	ASSERT_EQ(500, v[AtIndexZero]);
+	ASSERT_EQ(501, v[AtIndexOne]);
+	ASSERT_EQ(502, v[AtIndexTwo]);
 }
 
 TEST_F(DefaultVector,
@@ -167,32 +173,113 @@ ThrowsWhenAccessingNegativeIndex) {
 
 TEST_F(DefaultVector,
 ThrowsWhenAccessingInvalidPositiveIndex) {
-	v.insert(500);
+	v.insert(AtIndexZero, 500);
 	ASSERT_THROW(v.at(InvalidPositiveIndex), prism::OutOfBoundsException);
 }
 
 TEST_F(DefaultVector,
 ThrowsWhenAccessingEmptyVector) {
-	ASSERT_THROW(v.at(IndexZero), prism::OutOfBoundsException);
+	ASSERT_THROW(v.at(AtIndexZero), prism::OutOfBoundsException);
 }
 
 TEST_F(DefaultVector,
 ReturnsModifiableReferenceFromIndex) {
 	int initialValue = 501;
 	int newValue = 502;
-	v.insert(initialValue);
+	v.insert(AtIndexZero, initialValue);
 
-	v.at(IndexZero) = newValue;
+	v.at(AtIndexZero) = newValue;
 	expectedValue = newValue;
-	actualValue = v.at(IndexZero);
+	actualValue = v.at(AtIndexZero);
 
 	ASSERT_EQ(expectedValue, actualValue);
 
-	v[IndexZero] = newValue;
+	v[AtIndexZero] = newValue;
 	expectedValue = newValue;
-	actualValue = v[IndexZero];
+	actualValue = v[AtIndexZero];
 
 	ASSERT_EQ(expectedValue, actualValue);
+}
+
+TEST_F(DefaultVector,
+ReplacesValueAtIndex) {
+	int originalValue = 500;
+	int newValue = 501;
+	v.insert(AtIndexZero, originalValue);
+
+	v.replace(AtIndexZero, newValue);
+
+	ASSERT_EQ(newValue, v.at(AtIndexZero));
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenReplacingValueAtNegativeIndex) {
+	ASSERT_THROW(v.replace(InvalidNegativeIndex, 501), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenReplacingValueAtInvalidPositiveIndex) {
+	ASSERT_THROW(v.replace(InvalidPositiveIndex, 501), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+ShiftsSuccessiveElementsUpByAmountCopiesInserted) {
+	v.insert(AtIndexZero, 0);
+	v.insert(AtIndexOne, 1);
+	v.insert(AtIndexTwo, 2);
+
+	int numCopies = 5;
+	int value = 500;
+	v.insert(AtIndexZero, numCopies, value);
+
+	ASSERT_EQ(0, v[AtIndexFive]);
+	ASSERT_EQ(1, v[AtIndexSix]);
+	ASSERT_EQ(2, v[AtIndexSeven]);
+}
+
+TEST_F(DefaultVector,
+PreservesElementsBeforeInsertionPoint) {
+	v.insert(AtIndexZero, 0);
+	v.insert(AtIndexOne, 1);
+	v.insert(AtIndexTwo, 2);
+
+	int numCopies = 3;
+	int value = 500;
+	v.insert(AtIndexTwo, numCopies, value);
+
+	ASSERT_EQ(0, v[AtIndexZero]);
+	ASSERT_EQ(1, v[AtIndexOne]);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenInsertingAtNegativeIndex) {
+	ASSERT_THROW(v.insert(InvalidNegativeIndex, 500), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenInsertingAtInvalidPositiveIndex) {
+	ASSERT_THROW(v.insert(InvalidPositiveIndex, 500), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+IncreasesSizeByAmountOfCopiesInserted) {
+	int numCopiesOf = 4;
+	int value = 500;
+
+	v.insert(AtIndexZero, numCopiesOf, value);
+	expectedSize = 4;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+AddsElementToEnd) {
+	v.insert(AtIndexZero, 5, 123);
+
+	v.append(500);
+
+	ASSERT_EQ(500, v.at(5));
 }
 
 PRISM_END_TEST_NAMESPACE

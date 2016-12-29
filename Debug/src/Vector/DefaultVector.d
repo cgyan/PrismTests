@@ -3,8 +3,7 @@ src/Vector/DefaultVector.o: ../src/Vector/DefaultVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/algorithm_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/iterator \
@@ -14,7 +13,12 @@ src/Vector/DefaultVector.o: ../src/Vector/DefaultVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/OutOfBoundsException
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/OutOfBoundsException \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
@@ -24,9 +28,7 @@ src/Vector/DefaultVector.o: ../src/Vector/DefaultVector.cpp \
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
 
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h:
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h:
 
@@ -47,3 +49,13 @@ src/Vector/DefaultVector.o: ../src/Vector/DefaultVector.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/OutOfBoundsException:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:

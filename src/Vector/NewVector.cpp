@@ -7,54 +7,61 @@
  */
 
 #include "gtest/gtest.h"
+#include <list>
 #include <prism/PVector>
 #include <prism/global>
+
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-//=============================================================================
-// NewVector is a fixture that tests the vector's various constructors
-//=============================================================================
 class NewVector : public Test {
 public:
-	int numElements;
-	int value;
+	PVector v_default;
+	PVector v_size_value;
 
-	void SetUp() {
-		numElements = 5;
-		value = 10;
-	}
+	NewVector()
+	: v_default(),
+	  v_size_value(3, 123)
+	{}
 };
 
 TEST_F(NewVector,
-InitialisedWithFiveLotsOfValueOfTen) {
-	PVector<int> v(numElements, value);
-
-	ASSERT_TRUE(value == v.at(0));
-	ASSERT_TRUE(value == v.at(1));
-	ASSERT_TRUE(value == v.at(2));
-	ASSERT_TRUE(value == v.at(3));
-	ASSERT_TRUE(value == v.at(4));
+VDefaultHasSizeZero) {
+	ASSERT_EQ(0, v_default.size());
 }
 
 TEST_F(NewVector,
-InitialisedWithCountAmountOfValueHasSizeEqualToCount) {
-	PVector<int> v(numElements, value);
-	int expectedSize = 5;
-	int actualSize = v.size();
-
-	ASSERT_TRUE(expectedSize == actualSize);
+VDefaultHasCapacityZero) {
+	ASSERT_EQ(0, v_default.capacity());
 }
 
 TEST_F(NewVector,
-InitialisedWithCountAmountOfValueHasCapacityEqualToSize) {
-	PVector<int> v(numElements, value);
-	int actualSize = v.size();
-	int expectedCapacity = actualSize;
+VDefaultIsEmpty) {
+	ASSERT_TRUE(v_default.empty());
+}
 
-	ASSERT_TRUE(expectedCapacity == actualSize);
+TEST_F(NewVector,
+VSizeValueHasSizeThree) {
+	ASSERT_EQ(3, v_size_value.size());
+}
+
+TEST_F(NewVector,
+VSizeValueHasCapacityThree) {
+	ASSERT_EQ(3, v_size_value.capacity());
+}
+
+TEST_F(NewVector,
+VSizeValueIsNotEmpty) {
+	ASSERT_FALSE(v_size_value.empty());
+}
+
+TEST_F(NewVector,
+VSizeValueHasEachElementEqualToValue) {
+	ASSERT_EQ(123, v_size_value.at(0));
+	ASSERT_EQ(123, v_size_value.at(1));
+	ASSERT_EQ(123, v_size_value.at(2));
 }
 
 PRISM_END_TEST_NAMESPACE

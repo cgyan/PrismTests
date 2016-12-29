@@ -6,6 +6,7 @@
  */
 
 #include "gtest/gtest.h"
+#include <iostream>
 using namespace ::testing;
 
 int main(int argc, char * argv[]) {
