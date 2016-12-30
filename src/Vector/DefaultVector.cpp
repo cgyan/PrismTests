@@ -16,6 +16,9 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 class DefaultVector : public Test {
 public:
+	using iterator = prism::SequenceIterator<int, false>;
+	using const_iterator = prism::SequenceIterator<int, true>;
+
 	PVector v;
 	int expectedSize;
 	int actualSize;
@@ -34,6 +37,14 @@ public:
 	static const int AtIndexSix = 6;
 	static const int AtIndexSeven = 7;
 	static const int AtIndexEight = 8;
+	std::function<bool(int)> oddPred;
+
+	DefaultVector()
+	: expectedSize(0), actualSize(0),
+	  expectedCapacity(0), actualCapacity(0),
+	  expectedValue(0), actualValue(0),
+	  oddPred([](int i) { return i % 2 == 1; })
+	{}
 };
 
 TEST_F(DefaultVector,
@@ -178,7 +189,7 @@ ThrowsWhenAccessingInvalidPositiveIndex) {
 }
 
 TEST_F(DefaultVector,
-ThrowsWhenAccessingEmptyVector) {
+ThrowsWhenAccessingEmptyVectorByIndex) {
 	ASSERT_THROW(v.at(AtIndexZero), prism::OutOfBoundsException);
 }
 
@@ -274,12 +285,260 @@ IncreasesSizeByAmountOfCopiesInserted) {
 }
 
 TEST_F(DefaultVector,
-AddsElementToEnd) {
+AppendsElement) {
 	v.insert(AtIndexZero, 5, 123);
 
 	v.append(500);
+	expectedSize = 6;
+	actualSize = v.size();
 
-	ASSERT_EQ(500, v.at(5));
+	ASSERT_EQ(500, v[AtIndexFive]);
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PrependsElement) {
+	v.insert(AtIndexZero, 5, 123);
+
+	v.prepend(500);
+	expectedSize = 6;
+	actualSize = v.size();
+
+	ASSERT_EQ(500, v[AtIndexZero]);
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeByOneWhenRemovingElement) {
+	v.insert(AtIndexZero, 5, 123);
+
+	v.remove(AtIndexZero);
+	expectedSize = 4;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PreservesOtherElementsWhenRemovingElement) {
+	v.append(500);
+	v.append(501);
+	v.append(502);
+	v.append(503);
+
+	v.remove(AtIndexOne);
+
+	ASSERT_EQ(500, v[AtIndexZero]);
+	ASSERT_EQ(502, v[AtIndexOne]);
+	ASSERT_EQ(503, v[AtIndexTwo]);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeByThreeWhenRemovingCountOfElements) {
+	v.append(500);
+	v.append(501);
+	v.append(502);
+	v.append(503);
+
+	int numValues = 3;
+	v.remove(AtIndexOne, numValues);
+	expectedSize = 1;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenRemovingNegativeIndex) {
+	ASSERT_THROW(v.remove(InvalidNegativeIndex), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenRemovingInvalidPositiveIndex) {
+	ASSERT_THROW(v.remove(InvalidPositiveIndex), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeWhenRemovingAllElementsEqualToValue) {
+	v.append(0);
+	v.append(1);
+	v.append(0);
+	v.append(2);
+	v.append(0);
+
+	int valueToRemove = 0;
+	v.removeAll(valueToRemove);
+	expectedSize = 2;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PreservesOtherElementsWhenRemovingAllElementsEqualToValue) {
+	v.append(0);
+	v.append(1);
+	v.append(0);
+	v.append(2);
+	v.append(0);
+
+	int valueToRemove = 0;
+	v.removeAll(valueToRemove);
+
+	ASSERT_EQ(1, v[AtIndexZero]);
+	ASSERT_EQ(2, v[AtIndexOne]);
+}
+
+TEST_F(DefaultVector,
+SizeUnchangedWhenRemovingAllElementsEqualToNonExistentValue) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+	v.append(4);
+	v.append(5);
+
+	int NonExistentValue = 789;
+	v.removeAll(NonExistentValue);
+	expectedSize = 5;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeWhenRemovingFirstElement) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+
+	v.removeFirst();
+	expectedSize = 2;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PreservesOtherElementsWhenRemovingFirstElement) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+
+	v.removeFirst();
+
+	ASSERT_EQ(2, v[AtIndexZero]);
+	ASSERT_EQ(3, v[AtIndexOne]);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenRemovingFirstElementWhenEmpty) {
+	ASSERT_THROW(v.removeFirst(), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeWhenRemovingLastElement) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+
+	v.removeLast();
+	expectedSize = 2;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PreservesOtherElementsWhenRemovingLastElement) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+
+	v.removeLast();
+
+	ASSERT_EQ(1, v[AtIndexZero]);
+	ASSERT_EQ(2, v[AtIndexOne]);
+}
+
+TEST_F(DefaultVector,
+ThrowsWhenRemovingLastElementWhenEmpty) {
+	ASSERT_THROW(v.removeLast(), prism::OutOfBoundsException);
+}
+
+TEST_F(DefaultVector,
+DecreasesSizeWhenRemovingOddValuesWithLambdaPredicate) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+	v.append(4);
+	v.append(5);
+
+	v.removeIf(oddPred);
+	expectedSize = 2;
+	actualSize = v.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(DefaultVector,
+PreservesOtherElementsWhenRemovingOddValuesWithLambdaPredicate) {
+	v.append(1);
+	v.append(2);
+	v.append(3);
+	v.append(4);
+	v.append(5);
+
+	v.removeIf(oddPred);
+
+	ASSERT_EQ(2, v[AtIndexZero]);
+	ASSERT_EQ(4, v[AtIndexOne]);
+}
+
+TEST_F(DefaultVector,
+BeginIteratorPointsToFirstElement) {
+	v.append(1);
+	v.append(2);
+	int* ptrToFirstElement = v.data();
+	iterator beginIter(ptrToFirstElement);
+
+	ASSERT_TRUE(beginIter == v.begin());
+	ASSERT_EQ(1, *beginIter);
+}
+
+TEST_F(DefaultVector,
+EndIteratorPointsToOnePositionPastLastElement) {
+	v.append(1);
+	v.append(2);
+	int* ptrToPosAfterLastElement = v.data() + v.size();
+	iterator endIter(ptrToPosAfterLastElement);
+
+	ASSERT_TRUE(endIter == v.end());
+}
+
+TEST_F(DefaultVector,
+EndIteratorEqualsBeginIteratorWhenEmpty) {
+	ASSERT_TRUE(v.begin() == v.end());
+}
+
+TEST_F(DefaultVector,
+ConstBeginIteratorPointsToFirstElement) {
+	v.append(1);
+	v.append(2);
+	int* ptrToFirstElement = v.data();
+	const_iterator cBeginIter(ptrToFirstElement);
+
+	ASSERT_TRUE(cBeginIter == v.cbegin());
+	ASSERT_EQ(1, *v.cbegin());
+}
+
+TEST_F(DefaultVector,
+ConstEndIteratorPointsToOnePositionPastLastElement) {
+	v.append(1);
+	v.append(2);
+	int* ptrToPosAfterLastElement = v.data() + v.size();
+	const_iterator cEndIter(ptrToPosAfterLastElement);
+
+	ASSERT_TRUE(cEndIter == v.cend());
 }
 
 PRISM_END_TEST_NAMESPACE

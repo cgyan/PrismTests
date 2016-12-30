@@ -17,7 +17,8 @@ src/Vector/UniqueVector.o: ../src/Vector/UniqueVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
@@ -56,3 +57,5 @@ src/Vector/UniqueVector.o: ../src/Vector/UniqueVector.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:

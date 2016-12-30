@@ -18,6 +18,7 @@ src/Vector/NewVector.o: ../src/Vector/NewVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
@@ -57,5 +58,7 @@ src/Vector/NewVector.o: ../src/Vector/NewVector.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
