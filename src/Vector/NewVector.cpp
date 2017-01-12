@@ -7,7 +7,6 @@
  */
 
 #include "gtest/gtest.h"
-#include <list>
 #include <prism/PVector>
 #include <prism/global>
 
@@ -18,97 +17,151 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 class NewVector : public Test {
 public:
-	PVector v1;
-	PVector v2;
-	PVector v3;
-	PVector v4;
+	PVector<int> defaultVector;
+	PVector<int> fillVector;
+	PVector<int> initializerListVector;
+	PVector<int> rangeVector;
+	PVector<int> copiedVector;
+	PVector<int> copyAssignmentVector;
 
 	NewVector()
-	: v1(),
-	  v2(3, 123),
-	  v3({1,2,3,4,5}),
-	  v4(v3.data(), v3.data()+v3.size())
+	: defaultVector(),
+	  fillVector(3, 123),
+	  initializerListVector({1,2,3,4,5}),
+	  rangeVector(initializerListVector.cbegin(), initializerListVector.cend()),
+	  copiedVector(rangeVector),
+	  copyAssignmentVector()
 	{}
 };
 
 TEST_F(NewVector,
-V1HasSizeZero) {
-	ASSERT_EQ(0, v1.size());
+DefaultVectorHasSizeZero) {
+	ASSERT_EQ(0, defaultVector.size());
 }
 
 TEST_F(NewVector,
-V1HasCapacityZero) {
-	ASSERT_EQ(0, v1.capacity());
+DefaultVectorHasCapacityZero) {
+	ASSERT_EQ(0, defaultVector.capacity());
 }
 
 TEST_F(NewVector,
-V1IsEmpty) {
-	ASSERT_TRUE(v1.empty());
+DefaultVectorIsEmpty) {
+	ASSERT_TRUE(defaultVector.empty());
 }
 
 TEST_F(NewVector,
-V2HasSizeThree) {
-	ASSERT_EQ(3, v2.size());
+FilledVectorHasSizeThree) {
+	ASSERT_EQ(3, fillVector.size());
 }
 
 TEST_F(NewVector,
-V2HasCapacityThree) {
-	ASSERT_EQ(3, v2.capacity());
+FilledVectorHasCapacityThree) {
+	ASSERT_EQ(3, fillVector.capacity());
 }
 
 TEST_F(NewVector,
-V2IsNotEmpty) {
-	ASSERT_FALSE(v2.empty());
+FilledVectorIsNotEmpty) {
+	ASSERT_FALSE(fillVector.empty());
 }
 
 TEST_F(NewVector,
-V2HasEachElementEqualToValue) {
-	ASSERT_EQ(123, v2.at(0));
-	ASSERT_EQ(123, v2.at(1));
-	ASSERT_EQ(123, v2.at(2));
+FilledVectorHasEachElementEqualToValue) {
+	ASSERT_EQ(123, fillVector.at(0));
+	ASSERT_EQ(123, fillVector.at(1));
+	ASSERT_EQ(123, fillVector.at(2));
 }
 
 TEST_F(NewVector,
-V3HasSizeFive) {
-	ASSERT_EQ(5, v3.size());
+InitializerListVectorHasSizeFive) {
+	ASSERT_EQ(5, initializerListVector.size());
 }
 
 TEST_F(NewVector,
-V3HasCapacityFive) {
-	ASSERT_EQ(5, v3.capacity());
+InitializerListVectorHasCapacityFive) {
+	ASSERT_EQ(5, initializerListVector.capacity());
 }
 
 TEST_F(NewVector,
-V3HasElementsAtIndexs) {
-	ASSERT_EQ(1, v3[0]);
-	ASSERT_EQ(2, v3[1]);
-	ASSERT_EQ(3, v3[2]);
-	ASSERT_EQ(4, v3[3]);
-	ASSERT_EQ(5, v3[4]);
+InitializerListVectorHasElementsAtIndexs) {
+	ASSERT_EQ(1, initializerListVector[0]);
+	ASSERT_EQ(2, initializerListVector[1]);
+	ASSERT_EQ(3, initializerListVector[2]);
+	ASSERT_EQ(4, initializerListVector[3]);
+	ASSERT_EQ(5, initializerListVector[4]);
 }
 
 TEST_F(NewVector,
-V3IsNotEmpty) {
-	ASSERT_FALSE(v3.empty());
+InitializerListVectorIsNotEmpty) {
+	ASSERT_FALSE(initializerListVector.empty());
 }
 
 TEST_F(NewVector,
-V4HasSizeFive) {
-	ASSERT_EQ(5, v4.size());
+RangeVectorHasSizeFive) {
+	ASSERT_EQ(5, rangeVector.size());
 }
 
 TEST_F(NewVector,
-V4HasCapacityFive) {
-	ASSERT_EQ(5, v4.capacity());
+RangeVectorHasCapacityFive) {
+	ASSERT_EQ(5, rangeVector.capacity());
 }
 
 TEST_F(NewVector,
-V4HasElementsAtIndexs) {
-	ASSERT_EQ(1, v4[0]);
-	ASSERT_EQ(2, v4[1]);
-	ASSERT_EQ(3, v4[2]);
-	ASSERT_EQ(4, v4[3]);
-	ASSERT_EQ(5, v4[4]);
+RangeVectorHasElementsAtIndexs) {
+	ASSERT_EQ(1, rangeVector[0]);
+	ASSERT_EQ(2, rangeVector[1]);
+	ASSERT_EQ(3, rangeVector[2]);
+	ASSERT_EQ(4, rangeVector[3]);
+	ASSERT_EQ(5, rangeVector[4]);
+}
+
+TEST_F(NewVector,
+CopyConstructedVectorHasSameSizeAsOriginalVector) {
+	int expectedSize = 5;
+	int actualSize = copiedVector.size();
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(NewVector,
+CopyConstructedVectorHasCapacityEqualToSize) {
+	ASSERT_EQ(copiedVector.capacity(), copiedVector.size());
+}
+
+TEST_F(NewVector,
+CopyConstructedVectorHasSameElementsAsOriginalVector) {
+	ASSERT_EQ(rangeVector[0], copiedVector[0]);
+	ASSERT_EQ(rangeVector[1], copiedVector[1]);
+	ASSERT_EQ(rangeVector[2], copiedVector[2]);
+	ASSERT_EQ(rangeVector[3], copiedVector[3]);
+	ASSERT_EQ(rangeVector[4], copiedVector[4]);
+}
+
+TEST_F(NewVector,
+CopyAssignedVectorHasSameSizeAsOriginalVector) {
+	copyAssignmentVector = initializerListVector;
+	int expectedSize = 5;
+	int actualSize = copyAssignmentVector.size();
+
+	ASSERT_EQ(expectedSize, actualSize);
+}
+
+TEST_F(NewVector,
+CopyAssignedVectorHasCapacityEqualToOriginalVector) {
+	copyAssignmentVector = initializerListVector;
+	int expectedCapacity = initializerListVector.capacity();
+	int actualCapacity = copyAssignmentVector.capacity();
+
+	ASSERT_EQ(expectedCapacity, actualCapacity);
+}
+
+TEST_F(NewVector,
+CopyAssignedVectorHasSameElementsAsOriginalVector) {
+	copyAssignmentVector = initializerListVector;
+
+	ASSERT_EQ(copyAssignmentVector[0], initializerListVector[0]);
+	ASSERT_EQ(copyAssignmentVector[1], initializerListVector[1]);
+	ASSERT_EQ(copyAssignmentVector[2], initializerListVector[2]);
+	ASSERT_EQ(copyAssignmentVector[3], initializerListVector[3]);
+	ASSERT_EQ(copyAssignmentVector[4], initializerListVector[4]);
 }
 
 PRISM_END_TEST_NAMESPACE
