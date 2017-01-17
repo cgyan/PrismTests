@@ -16,47 +16,40 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 class VectorNonMember : public Test {
 public:
-	PVector<int> v;
+	PVector<int> original;
+	PVector<int> originalCopy;
+	PVector<int> unequal;
 
 	VectorNonMember()
-	: v({1,2,3,4,5})
+	: original({1,2,3,4,5}),
+	  originalCopy(original),
+	  unequal({6,7,8})
 	{}
 };
 
 TEST_F(VectorNonMember,
-ReturnsTrueWhenTwoEmptyVectorsAreComparedForEquality) {
-	PVector<int> emptyvec1;
-	PVector<int> emptyvec2;
-
-	ASSERT_EQ(emptyvec1, emptyvec2);
+ReturnsTrueWhenTwoEmptyVectorsAreCompared) {
+	ASSERT_EQ(PVector<int>(), PVector<int>());
 }
 
 TEST_F(VectorNonMember,
 ReturnsTrueWhenVectorsAreEqual) {
-	PVector<int> otherVec({1,2,3,4,5});
-
-	ASSERT_TRUE(otherVec == v);
+	ASSERT_TRUE(originalCopy == original);
 }
 
 TEST_F(VectorNonMember,
 ReturnsFalseWhenVectorsAreUnequal) {
-	PVector<int> otherVec({1,2,3});
-
-	ASSERT_FALSE(otherVec == v);
+	ASSERT_FALSE(unequal == original);
 }
 
 TEST_F(VectorNonMember,
 ReturnsTrueWhenVectorsAreUnequal) {
-	PVector<int> otherVec({1,2,3});
-
-	ASSERT_TRUE(otherVec != v);
+	ASSERT_TRUE(unequal != original);
 }
 
 TEST_F(VectorNonMember,
 ReturnsFalseWhenVectorsAreEqual) {
-	PVector<int> otherVec({1,2,3,4,5});
-
-	ASSERT_FALSE(otherVec != v);
+	ASSERT_FALSE(originalCopy != original);
 }
 
 PRISM_END_PRIVATE_NAMESPACE

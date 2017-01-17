@@ -1,9 +1,8 @@
-src/Vector/ElementAccess.o: ../src/Vector/ElementAccess.cpp \
+src/Vector/VectorRemovals.o: ../src/Vector/VectorRemovals.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/algorithm_priv.h \
@@ -19,17 +18,16 @@ src/Vector/ElementAccess.o: ../src/Vector/ElementAccess.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm:
 
@@ -62,3 +60,5 @@ src/Vector/ElementAccess.o: ../src/Vector/ElementAccess.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:

@@ -1,8 +1,9 @@
-src/Vector/UniqueVector.o: ../src/Vector/UniqueVector.cpp \
+src/Vector/VectorIterators.o: ../src/Vector/VectorIterators.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/algorithm_priv.h \
@@ -22,11 +23,13 @@ src/Vector/UniqueVector.o: ../src/Vector/UniqueVector.cpp \
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
+
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm:
 

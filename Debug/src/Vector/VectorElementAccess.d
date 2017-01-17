@@ -1,4 +1,4 @@
-src/Vector/Queries.o: ../src/Vector/Queries.cpp \
+src/Vector/VectorElementAccess.o: ../src/Vector/VectorElementAccess.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \

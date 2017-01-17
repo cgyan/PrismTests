@@ -1,4 +1,4 @@
-src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
+src/Vector/VectorInsertions.o: ../src/Vector/VectorInsertions.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
@@ -18,7 +18,8 @@ src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
@@ -59,3 +60,5 @@ src/Vector/DuplicatesVector.o: ../src/Vector/DuplicatesVector.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:

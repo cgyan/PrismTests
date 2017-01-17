@@ -14,7 +14,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class Iterators : public Test {
+class VectorIterators : public Test {
 public:
 	using iterator 					= prism::SequenceIterator<int, false>;
 	using const_iterator 			= prism::SequenceIterator<int, true>;
@@ -24,13 +24,13 @@ public:
 	PVector<int> v;
 	const PVector<int> cv;
 
-	Iterators()
+	VectorIterators()
 	: v({1,2,3,4,5}),
 	  cv({6,7,8,9,10})
 	{}
 };
 
-TEST_F(Iterators,
+TEST_F(VectorIterators,
 BeginIteratorsPointToFirstElement) {
 	iterator nonConstIter(v.data());
 	const_iterator constIter(cv.cdata());
@@ -40,14 +40,14 @@ BeginIteratorsPointToFirstElement) {
 	ASSERT_TRUE(const_iterator(cv.data()) == cv.begin());
 }
 
-TEST_F(Iterators,
+TEST_F(VectorIterators,
 EndIteratorsPointToPositionAfterLastElement) {
 	ASSERT_TRUE(iterator(v.end()) == v.end());
 	ASSERT_TRUE(const_iterator(v.end()) == v.end());
 	ASSERT_TRUE(const_iterator(cv.end()) == cv.cend());
 }
 
-TEST_F(Iterators,
+TEST_F(VectorIterators,
 EndIteratorsEqualBeginIteratorsWhenEmpty) {
 	PVector<int> emptyVec;
 
@@ -57,14 +57,14 @@ EndIteratorsEqualBeginIteratorsWhenEmpty) {
 	ASSERT_TRUE(emptyVec.crbegin() == emptyVec.crend());
 }
 
-TEST_F(Iterators,
+TEST_F(VectorIterators,
 ReverseBeginIteratorsPointToLastElement) {
 	ASSERT_TRUE(reverse_iterator(v.end()) == v.rbegin());
 	ASSERT_TRUE(const_reverse_iterator(cv.end()) == cv.rbegin());
 	ASSERT_TRUE(const_reverse_iterator(cv.end()) == cv.crbegin());
 }
 
-TEST_F(Iterators,
+TEST_F(VectorIterators,
 ReverseEndIteratorsPointToFirstElement) {
 	ASSERT_TRUE(reverse_iterator(v.begin()) == v.rend());
 	ASSERT_TRUE(const_reverse_iterator(cv.begin()) == cv.rend());

@@ -16,7 +16,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class Conversions : public Test {
+class VectorConversions : public Test {
 public:
 	PVector<int> emptyPrismVector;
 	PVector<int> populatedPrismVector;
@@ -25,7 +25,7 @@ public:
 	std::list<int> emptyStdList;
 	std::list<int> populatedStdList;
 
-	Conversions()
+	VectorConversions()
 	: emptyPrismVector(),
 	  populatedPrismVector({1,2,3,4,5}),
 	  emptyStdVector(),
@@ -35,22 +35,22 @@ public:
 	{}
 };
 
-TEST_F(Conversions,
+TEST_F(VectorConversions,
 ConvertsEmptyVectorToEmptyStdVector) {
 	ASSERT_EQ(emptyStdVector, emptyPrismVector.toStdVector());
 }
 
-TEST_F(Conversions,
+TEST_F(VectorConversions,
 ConvertsElementsToStdVector) {
 	ASSERT_EQ(populatedStdVector, populatedPrismVector.toStdVector());
 }
 
-TEST_F(Conversions,
+TEST_F(VectorConversions,
 ConvertsEmptyVectorToEmptyStdList) {
 	ASSERT_EQ(emptyStdList, emptyPrismVector.toStdList());
 }
 
-TEST_F(Conversions,
+TEST_F(VectorConversions,
 ConvertsElementsToStdList) {
 	ASSERT_EQ(populatedStdList, populatedPrismVector.toStdList());
 }
