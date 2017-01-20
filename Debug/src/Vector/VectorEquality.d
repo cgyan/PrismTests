@@ -1,4 +1,4 @@
-src/Vector/VectorNonMember.o: ../src/Vector/VectorNonMember.cpp \
+src/Vector/VectorEquality.o: ../src/Vector/VectorEquality.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \

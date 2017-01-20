@@ -10,6 +10,7 @@
 #include <prism/global>
 #include <prism/OutOfBoundsException>
 #include <prism/type_traits>
+#include <prism/LogAllocator>
 using namespace ::testing;
 
 /*
@@ -552,12 +553,19 @@ SetsEachElementEqualToValue) {
 	ASSERT_EQ(newValue, v[5]);
 }
 
-class VectorAllocator : public VectorTestBase
-{};
+class VectorAllocator : public VectorTestBase {
+public:
+	PVector<int, LogAllocator<int>> customAllocatorVector;
+};
 
 TEST_F(VectorAllocator,
 ReturnsDefaultAllocator) {
 	ASSERT_EQ(v.allocator(), prism::Allocator<int>());
+}
+
+TEST_F(VectorAllocator,
+ReturnsCustomAllocator) {
+	ASSERT_EQ(customAllocatorVector.allocator(), prism::LogAllocator<int>());
 }
 
 PRISM_END_TEST_NAMESPACE

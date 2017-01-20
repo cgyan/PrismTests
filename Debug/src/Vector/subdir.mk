@@ -7,9 +7,9 @@ CPP_SRCS += \
 ../src/Vector/Vector.cpp \
 ../src/Vector/VectorConversions.cpp \
 ../src/Vector/VectorElementAccess.cpp \
+../src/Vector/VectorEquality.cpp \
 ../src/Vector/VectorInsertions.cpp \
 ../src/Vector/VectorIterators.cpp \
-../src/Vector/VectorNonMember.cpp \
 ../src/Vector/VectorQueries.cpp \
 ../src/Vector/VectorRemovals.cpp 
 
@@ -17,9 +17,9 @@ OBJS += \
 ./src/Vector/Vector.o \
 ./src/Vector/VectorConversions.o \
 ./src/Vector/VectorElementAccess.o \
+./src/Vector/VectorEquality.o \
 ./src/Vector/VectorInsertions.o \
 ./src/Vector/VectorIterators.o \
-./src/Vector/VectorNonMember.o \
 ./src/Vector/VectorQueries.o \
 ./src/Vector/VectorRemovals.o 
 
@@ -27,9 +27,9 @@ CPP_DEPS += \
 ./src/Vector/Vector.d \
 ./src/Vector/VectorConversions.d \
 ./src/Vector/VectorElementAccess.d \
+./src/Vector/VectorEquality.d \
 ./src/Vector/VectorInsertions.d \
 ./src/Vector/VectorIterators.d \
-./src/Vector/VectorNonMember.d \
 ./src/Vector/VectorQueries.d \
 ./src/Vector/VectorRemovals.d 
 
