@@ -8,7 +8,9 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include src/non_tdd_unit_tests/subdir.mk
 -include src/Vector/subdir.mk
+-include src/subdir.mk
 -include external/gtest/subdir.mk
 -include subdir.mk
 -include objects.mk
