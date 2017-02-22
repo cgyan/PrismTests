@@ -1425,12 +1425,6 @@ ThrowsWhenRemovingSingleElementFromEmptyVector) {
 }
 
 TEST_F(VectorInvalidIteratorRemovals,
-ThrowsWhenRemovingRangeFromEmptyVector) {
-	ASSERT_THROW(emptyVec.remove(emptyVec.cbegin(), emptyVec.cend()),
-			prism::OutOfBoundsException);
-}
-
-TEST_F(VectorInvalidIteratorRemovals,
 ThrowsWhenRemovingRangeStartingFromBeforeBegin) {
 	from = --v.cbegin();
 	to = v.cbegin() + 2;

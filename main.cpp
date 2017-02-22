@@ -23,10 +23,11 @@ using namespace prism::test;
 
 int main(int argc, char * argv[]) {
 
-	using Vector = prism::Vector<DynamicNumber>;
-//	using Vector = std::vector<DynamicNumber, MyAllocator<DynamicNumber>>;
+//	using Vector = prism::Vector<DynamicNumber>;
+	using Vector = std::vector<DynamicNumber>;
 
 	Vector v = {1,2,3,4,5,6};
+
 
 	cout << "finished...\n";
 //	return 0;
