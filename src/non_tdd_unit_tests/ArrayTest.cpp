@@ -168,7 +168,7 @@ TEST_F(ArrayTest, back_const) {
 TEST_F(ArrayTest, begin) {
 	Array<int,5>::iterator it = a.begin();
 
-	ASSERT_EQ(&a[0], it.p);
+	ASSERT_EQ(&a[0], &*it);
 	ASSERT_EQ(0, *it);
 }
 
@@ -178,7 +178,7 @@ TEST_F(ArrayTest, begin) {
 TEST_F(ArrayTest, begin_const) {
 	Array<int,5>::const_iterator it = a.begin();
 
-	ASSERT_EQ(&a[0], it.p);
+	ASSERT_EQ(&a[0], &*it);
 	ASSERT_EQ(0, *it);
 }
 
@@ -188,7 +188,7 @@ TEST_F(ArrayTest, begin_const) {
 TEST_F(ArrayTest, cbegin) {
 	Array<int,5>::const_iterator cit = a.constBegin();
 
-	ASSERT_EQ(&a[0], cit.p);
+	ASSERT_EQ(&a[0], &*cit);
 	ASSERT_EQ(0, *cit);
 }
 
@@ -198,7 +198,7 @@ TEST_F(ArrayTest, cbegin) {
 TEST_F(ArrayTest, constBegin) {
 	Array<int,5>::const_iterator cit = a.constBegin();
 
-	ASSERT_EQ(&a[0], cit.p);
+	ASSERT_EQ(&a[0], &*cit);
 	ASSERT_EQ(0, *cit);
 }
 
@@ -221,7 +221,7 @@ TEST_F(ArrayTest, constData) {
 TEST_F(ArrayTest, cend) {
 	Array<int,5>::const_iterator cit = a.constEnd();
 
-	ASSERT_EQ(a.data()+5, cit.p);
+	ASSERT_EQ(a.data()+5, &*cit);
 }
 
 /**
@@ -230,7 +230,7 @@ TEST_F(ArrayTest, cend) {
 TEST_F(ArrayTest, constEnd) {
 	Array<int,5>::const_iterator cit = a.constEnd();
 
-	ASSERT_EQ(a.data()+5, cit.p);
+	ASSERT_EQ(a.data()+5, &*cit);
 }
 
 /**
@@ -267,7 +267,7 @@ TEST_F(ArrayTest, empty) {
 TEST_F(ArrayTest, end) {
 	Array<int,5>::iterator it = a.end();
 
-	ASSERT_EQ(&a[0]+5, it.p);
+	ASSERT_EQ(&a[0]+5, &*it);
 }
 
 /**
@@ -276,7 +276,7 @@ TEST_F(ArrayTest, end) {
 TEST_F(ArrayTest, end_const) {
 	Array<int,5>::const_iterator it = a.end();
 
-	ASSERT_EQ(&a[0]+5, it.p);
+	ASSERT_EQ(&a[0]+5, &*it);
 }
 
 /**

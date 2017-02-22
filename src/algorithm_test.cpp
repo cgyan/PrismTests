@@ -9,7 +9,7 @@
 #include "gtest/gtest.h"
 #include <prism/global>
 #include <prism/algorithm>
-#include <prism/PVector>
+#include <prism/Vector>
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
@@ -21,8 +21,8 @@ class algorithm_test : public Test {
 
 TEST_F(algorithm_test,
 MoveRange) {
-	PVector<int> original = {1,2,3,4,5,6};
-	PVector<int> destination(6);
+	Vector<int> original = {1,2,3,4,5,6};
+	Vector<int> destination(6);
 
 	prism::move(original.cbegin(), original.cend(), destination.begin());
 

@@ -172,6 +172,7 @@ TEST_F(CircleTest, bottom) {
 
 /**
  * Test: centralAngle()
+ * This test fails because of floating point imprecision
  */
 TEST_F(CircleTest, centralAngle) {
 	Circle c;

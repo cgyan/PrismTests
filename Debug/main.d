@@ -1,7 +1,7 @@
 main.o: ../main.cpp \
   /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Vector \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Vector.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h \
@@ -23,16 +23,16 @@ main.o: ../main.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/PVector_priv.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/String \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/String.h \
   ../src/dummy/Number.h ../src/dummy/DynamicNumber.h
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/PVector:
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Vector:
 
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/PVector.h:
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Vector.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/global.h:
 
@@ -76,7 +76,7 @@ main.o: ../main.cpp \
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
 
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/PVector_priv.h:
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/String:
 

@@ -1,5 +1,5 @@
 /*
- * DefaultVector.cpp
+ * Vector.cpp
  *
  *  Created on: 12 Dec 2016
  *      Author: iainhemstock
@@ -10,10 +10,13 @@
 
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prism/PVector>
+#include <prism/Vector>
 #include <prism/OutOfBoundsException>
 #include <prism/type_traits>
 #include <prism/LogAllocator>
+#include <vector>
+#include <list>
+#include <deque>
 using namespace ::testing;
 
 //#include "../src/dummy/Number.h"
@@ -24,8 +27,10 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 //using NumberType = prism::test::Number;
 using NumberType = prism::test::DynamicNumber;
-using Vec = prism::PVector<NumberType, prism::Allocator<NumberType>>;
-using CustomAllocatorVec = prism::PVector<NumberType, prism::LogAllocator<NumberType>>;
+using Vec = prism::Vector<NumberType, prism::Allocator<NumberType>>;
+using CustomAllocatorVec = prism::Vector<NumberType, prism::LogAllocator<NumberType>>;
+
+#define INITLIST {1,2,3,4,5,6}
 
 class VectorTestBase : public Test {
 protected:
@@ -33,7 +38,7 @@ protected:
 	using const_iterator = Vec::const_iterator;
 
 	Vec emptyVec{};
-	Vec v{1, 2, 3, 4, 5, 6};
+	Vec v{INITLIST};
 	const Vec cv{v};
 
 	int expectedSize{0};
@@ -47,7 +52,7 @@ protected:
 	enum { InvalidNegativeSize = -1, InvalidNegativeIndex = -1, InvalidPositiveIndex = 15 };
 };
 
-class VectorCreations : public VectorTestBase {
+class VectorInstantiations : public VectorTestBase {
 public:
 	Vec defaultVector;
 	Vec fillVector;
@@ -56,46 +61,46 @@ public:
 	Vec copiedVector;
 	Vec copyAssignedVector;
 
-	VectorCreations()
+	VectorInstantiations()
 	: defaultVector(),
 	  fillVector(3, NumberType(newValue)),
-	  initializerListVector({1, 2, 3, 4, 5, 6}),
+	  initializerListVector(INITLIST),
 	  rangeVector(initializerListVector.cbegin(), initializerListVector.cend()),
 	  copiedVector(rangeVector)
 	{}
 };
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 DefaultVectorHasSizeZero) {
 	ASSERT_EQ(0, defaultVector.size());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 DefaultVectorHasCapacityZero) {
 	ASSERT_EQ(0, defaultVector.capacity());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 DefaultVectorIsEmpty) {
 	ASSERT_TRUE(defaultVector.empty());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 FilledVectorHasSizeThree) {
 	ASSERT_EQ(3, fillVector.size());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 FilledVectorHasCapacityThree) {
 	ASSERT_EQ(3, fillVector.capacity());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 FilledVectorIsNotEmpty) {
 	ASSERT_FALSE(fillVector.empty());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 FilledVectorHasEachElementEqualToValue) {
 	Vec fillVectorComparison;
 	for (int i=0; i<fillVector.size(); i++)
@@ -103,54 +108,54 @@ FilledVectorHasEachElementEqualToValue) {
 	ASSERT_EQ(fillVectorComparison, fillVector);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 InitializerListVectorHasSizeSix) {
 	ASSERT_EQ(v.size(), initializerListVector.size());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 InitializerListVectorHasCapacitySix) {
 	ASSERT_EQ(v.capacity(), initializerListVector.capacity());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 InitializerListVectorHasElementsAtIndexs) {
 	ASSERT_EQ(v, initializerListVector);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 InitializerListVectorIsNotEmpty) {
 	ASSERT_FALSE(initializerListVector.empty());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 RangeVectorHasSizeSix) {
 	ASSERT_EQ(v.size(), rangeVector.size());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 RangeVectorHasCapacitySix) {
 	ASSERT_EQ(v.capacity(), rangeVector.capacity());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 RangeVectorHasElementsAtIndexs) {
 	ASSERT_EQ(v, rangeVector);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyConstructedVectorHasSameSizeAsOriginalVector) {
 	expectedSize = v.size();
 	actualSize = copiedVector.size();
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyConstructedVectorHasCapacityEqualToSize) {
 	ASSERT_EQ(copiedVector.capacity(), copiedVector.size());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyConstructedVectorHasSameElementsAsOriginalVector) {
 	const_iterator first = rangeVector.cbegin();
 	const_iterator otherFirst = copiedVector.cbegin();
@@ -158,7 +163,7 @@ CopyConstructedVectorHasSameElementsAsOriginalVector) {
 		ASSERT_EQ(*first, *otherFirst);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyAssignedVectorHasSameSizeAsOriginalVector) {
 	copyAssignedVector = initializerListVector;
 	expectedSize = initializerListVector.size();
@@ -167,7 +172,7 @@ CopyAssignedVectorHasSameSizeAsOriginalVector) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyAssignedVectorHasCapacityEqualToOriginalVector) {
 	copyAssignedVector = initializerListVector;
 	expectedCapacity = initializerListVector.capacity();
@@ -176,20 +181,20 @@ CopyAssignedVectorHasCapacityEqualToOriginalVector) {
 	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 CopyAssignedVectorHasSameElementsAsOriginalVector) {
 	copyAssignedVector = initializerListVector;
 	ASSERT_EQ(copyAssignedVector, initializerListVector);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 IgnoresAssigningVectorToItself) {
 	Vec vCopy(v);
 	v = v;
 	ASSERT_EQ(v, vCopy);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveConstructedVectorHasSizeEqualToVectorArgumentSize) {
 	int vectorSize = initializerListVector.size();
 	Vec moveVector(std::move(initializerListVector));
@@ -199,7 +204,7 @@ MoveConstructedVectorHasSizeEqualToVectorArgumentSize) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveConstructedVectorHasCapacityEqualToVectorArgumentSize) {
 	int vectorCapacity = initializerListVector.capacity();
 	Vec moveVector(std::move(initializerListVector));
@@ -209,7 +214,7 @@ MoveConstructedVectorHasCapacityEqualToVectorArgumentSize) {
 	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveConstructedVectorHasSameElementsAsArgumentVector) {
 	Vec copyInitializerListVector(initializerListVector);
 	Vec moveVector(std::move(initializerListVector));
@@ -217,19 +222,24 @@ MoveConstructedVectorHasSameElementsAsArgumentVector) {
 	ASSERT_EQ(moveVector, copyInitializerListVector);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MovedFromVectorIsLeftInValidState) {
-	Vec moveConstructedVector(std::move(initializerListVector));
-	Vec moveAssignedVector;
-	moveAssignedVector = std::move(rangeVector);
+	Vec vCopy1 = v;
+	Vec vCopy2 = v;
 
-	ASSERT_EQ(0, initializerListVector.size());
-	ASSERT_EQ(0, initializerListVector.capacity());
-	ASSERT_EQ(0, rangeVector.size());
-	ASSERT_EQ(0, rangeVector.capacity());
+	Vec moveConstructedVector(std::move(vCopy1));
+	Vec moveAssignedVector;
+	moveAssignedVector = std::move(vCopy2);
+
+	ASSERT_EQ(0, vCopy1.size());
+	ASSERT_EQ(0, vCopy1.capacity());
+	ASSERT_TRUE(vCopy1.empty());
+	ASSERT_EQ(0, vCopy2.size());
+	ASSERT_EQ(0, vCopy2.capacity());
+	ASSERT_TRUE(vCopy2.empty());
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveAssignedVectorHasSizeEqualToOtherVector) {
 	int vectorSize = initializerListVector.size();
 	Vec moveVector;
@@ -240,7 +250,7 @@ MoveAssignedVectorHasSizeEqualToOtherVector) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveAssignedVectorHasCapacityEqualToOtherVector) {
 	int vectorCapacity = initializerListVector.capacity();
 	Vec moveVector;
@@ -251,13 +261,60 @@ MoveAssignedVectorHasCapacityEqualToOtherVector) {
 	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
-TEST_F(VectorCreations,
+TEST_F(VectorInstantiations,
 MoveAssignedVectorHasSameElementsAsOtherVector) {
 	Vec copyInitializerListVector(initializerListVector);
 	Vec moveVector;
 	moveVector = std::move(initializerListVector);
 
 	ASSERT_EQ(moveVector, copyInitializerListVector);
+}
+
+TEST_F(VectorInstantiations,
+InstantiatesFromStdListRange) {
+	std::list<NumberType> sl = INITLIST;
+	Vec vecFromStdList(sl.cbegin(), sl.cend());
+	auto itList = sl.cbegin();
+	auto itVec = vecFromStdList.cbegin();
+
+	ASSERT_EQ(sl.size(), vecFromStdList.size());
+
+	for (; itList != sl.cend(); itList++, itVec++)
+		ASSERT_TRUE(*itList == *itVec);
+}
+
+TEST_F(VectorInstantiations,
+InstantiatesFromStdVectorRange) {
+	std::vector<NumberType> sv = INITLIST;
+	Vec vecFromStdVec(sv.cbegin(), sv.cend());
+	auto itStdVec = sv.cbegin();
+	auto itPrismVec = vecFromStdVec.cbegin();
+
+	ASSERT_EQ(sv.size(), vecFromStdVec.size());
+
+	for (; itStdVec != sv.cend(); itStdVec++, itPrismVec++)
+		ASSERT_TRUE(*itStdVec == *itPrismVec);
+}
+
+TEST_F(VectorInstantiations,
+CreateStdListFromVectorRange) {
+	std::list<NumberType> sl{v.cbegin(), v.cend()};
+	std::list<NumberType> expected = INITLIST;
+	ASSERT_EQ(expected, sl);
+}
+
+TEST_F(VectorInstantiations,
+CreateStdVectorFromVectorRange) {
+	std::vector<NumberType> sv{v.cbegin(), v.cend()};
+	std::vector<NumberType> expected = INITLIST;
+	ASSERT_EQ(expected, sv);
+}
+
+TEST_F(VectorInstantiations,
+CreateStdDequeFromVectorRange) {
+	std::deque<NumberType> sd{v.cbegin(), v.cend()};
+	std::deque<NumberType> expected = INITLIST;
+	ASSERT_EQ(expected, sd);
 }
 
 class VectorInvalidResizing : public VectorTestBase
@@ -434,10 +491,10 @@ PreservesExistingElementsAfterReservingMoreMemory) {
 	ASSERT_EQ(v, vCopy);
 }
 
-class VectorSizeAndCapacity : public VectorTestBase
+class VectorInvariants : public VectorTestBase
 {};
 
-TEST_F(VectorSizeAndCapacity,
+TEST_F(VectorInvariants,
 IsEmptyOnConstruction) {
 	bool expected = true;
 	bool actual = emptyVec.empty();
@@ -445,47 +502,246 @@ IsEmptyOnConstruction) {
 	ASSERT_EQ(expected, actual);
 }
 
-TEST_F(VectorSizeAndCapacity,
+TEST_F(VectorInvariants,
 IsNotEmptyAfterInsertion) {
-	emptyVec.append(500);
+	emptyVec.append(std::move(newValue));
 
 	ASSERT_FALSE(emptyVec.empty());
 }
 
-TEST_F(VectorSizeAndCapacity,
+TEST_F(VectorInvariants,
 EmptyVectorHasSizeZero) {
 	expectedSize = 0;
 	actualSize = emptyVec.size();
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorSizeAndCapacity,
+TEST_F(VectorInvariants,
 EmptyVectorHasCapacityZero) {
 	expectedCapacity = 0;
 	actualCapacity = emptyVec.capacity();
 	ASSERT_EQ(expectedCapacity, actualCapacity);
 }
 
-class VectorReplacer : public VectorTestBase {
+#define REPLACER_INITLIST {10, 11, 12, 13}
+
+class VectorReplacerBase : public VectorTestBase {
 public:
+	int replacementIndex;
+	const_iterator pos;
+	NumberType copyNewValue{newValue};
+	std::list<NumberType> range{REPLACER_INITLIST};
+	Vec frontReplaced{10,11,12,13,5,6};
+	Vec middleReplaced{1,10,11,12,13,6};
+	Vec backReplaced{1,2,10,11,12,13};
+	Vec backAvailableReplaced{1,2,3,4,10,11};
 };
 
-TEST_F(VectorReplacer,
-ReplacesValueAtIndex) {
-	int replacementIndex = 0;
-	v.replace(replacementIndex, newValue);
+class VectorInvalidIndexReplacer : public VectorReplacerBase
+{};
 
-	ASSERT_EQ(newValue, v.at(replacementIndex));
-}
-
-TEST_F(VectorReplacer,
+TEST_F(VectorInvalidIndexReplacer,
 ThrowsWhenReplacingValueAtNegativeIndex) {
 	ASSERT_THROW(v.replace(InvalidNegativeIndex, newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorReplacer,
+TEST_F(VectorInvalidIndexReplacer,
 ThrowsWhenReplacingValueAtInvalidPositiveIndex) {
 	ASSERT_THROW(v.replace(InvalidPositiveIndex, newValue), prism::OutOfBoundsException);
+}
+
+class VectorInvalidIteratorReplacer : public VectorReplacerBase
+{};
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingAtPosBeforeBegin) {
+	ASSERT_THROW(v.replace(--v.cbegin(), newValue), prism::OutOfBoundsException);
+}
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingAtPosAtEndOrAfter) {
+	ASSERT_THROW(v.replace(v.cend(), newValue), prism::OutOfBoundsException);
+	ASSERT_THROW(v.replace(++v.cend(), newValue), prism::OutOfBoundsException);
+}
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingRangeStartingBeforeBegin) {
+	ASSERT_THROW(v.replace(--v.cbegin(), range.cbegin(), range.cend()), prism::OutOfBoundsException);
+}
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingRangeStartingAtEndOrAfter) {
+	ASSERT_THROW(v.replace(v.cend(), range.cbegin(), range.cend()), prism::OutOfBoundsException);
+	ASSERT_THROW(v.replace(++v.cend(), range.cbegin(), range.cend()), prism::OutOfBoundsException);
+}
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingWithInitListAtPosBeforeBegin) {
+	ASSERT_THROW(v.replace(--v.cbegin(), INITLIST), prism::OutOfBoundsException);
+}
+
+TEST_F(VectorInvalidIteratorReplacer,
+ThrowsWhenReplacingWithInitListAtEndOrAfter) {
+	ASSERT_THROW(v.replace(v.cend(), INITLIST), prism::OutOfBoundsException);
+	ASSERT_THROW(v.replace(++v.cend(), INITLIST), prism::OutOfBoundsException);
+}
+
+class VectorIndexSingleElementReplacer : public VectorReplacerBase
+{};
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesFirstValueithLValue) {
+	replacementIndex = 0;
+	v.replace(replacementIndex, newValue);
+	ASSERT_EQ(newValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesFirstValueWithRValue) {
+	replacementIndex = 0;
+	v.replace(replacementIndex, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesMiddleValueithLValue) {
+	replacementIndex = v.size() / 2;
+	v.replace(replacementIndex, newValue);
+	ASSERT_EQ(newValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesMiddleValueWithRValue) {
+	replacementIndex = v.size() / 2;
+	v.replace(replacementIndex, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesLastValueithLValue) {
+	replacementIndex = v.size() - 1;
+	v.replace(replacementIndex, newValue);
+	ASSERT_EQ(newValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIndexSingleElementReplacer,
+ReplacesLastValueWithRValue) {
+	replacementIndex = v.size() - 1;
+	v.replace(replacementIndex, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.at(replacementIndex));
+}
+
+class VectorIteratorSingleElementReplacer : public VectorReplacerBase
+{};
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesFirstValueWithLValue) {
+	pos = v.cbegin();
+	v.replace(pos, newValue);
+	ASSERT_EQ(newValue, v.at(0));
+}
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesFirstValueWithRValue) {
+	pos = v.cbegin();
+	v.replace(pos, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.at(0));
+}
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesMiddleValueWithLValue) {
+	replacementIndex = v.size() / 2;
+	pos = v.cbegin() + replacementIndex;
+	v.replace(pos, newValue);
+	ASSERT_EQ(newValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesMiddleValueWithRValue) {
+	replacementIndex = v.size() / 2;
+	pos = v.cbegin() + replacementIndex;
+	v.replace(pos, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.at(replacementIndex));
+}
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesLastValueWithLValue) {
+	pos = --v.cend();
+	v.replace(pos, newValue);
+	ASSERT_EQ(newValue, v.last());
+}
+
+TEST_F(VectorIteratorSingleElementReplacer,
+ReplacesLastValueWithRValue) {
+	pos = --v.cend();
+	v.replace(pos, std::move(newValue));
+	ASSERT_EQ(copyNewValue, v.last());
+}
+
+class VectorIteratorRangeReplacer : public VectorReplacerBase
+{};
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithRangeAtBegin) {
+	pos = v.cbegin();
+	v.replace(pos, range.cbegin(), range.cend());
+	ASSERT_EQ(frontReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithRangeAtMiddle) {
+	pos = v.cbegin() + 1;
+	v.replace(pos, range.cbegin(), range.cend());
+	ASSERT_EQ(middleReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithRangeAtBack) {
+	pos = v.cbegin() + 2;
+	v.replace(pos, range.cbegin(), range.cend());
+	ASSERT_EQ(backReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesAvailableElementsWithRangeAtBack) {
+	pos = v.cbegin() + 4;
+	v.replace(pos, range.cbegin(), range.cend());
+	ASSERT_EQ(backAvailableReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithInitListAtFront) {
+	v.replace(v.cbegin(), REPLACER_INITLIST);
+	ASSERT_EQ(frontReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithInitListAtMiddle) {
+	v.replace(v.cbegin() + 1, REPLACER_INITLIST);
+	ASSERT_EQ(middleReplaced, v);
+}
+
+TEST_F(VectorIteratorRangeReplacer,
+ReplacesWithInitListAtBack) {
+	v.replace(v.cbegin() + 2, REPLACER_INITLIST);
+	ASSERT_EQ(backReplaced, v);
+}
+
+class VectorIteratorWholeRangeReplacer : public VectorReplacerBase {
+
+};
+
+TEST_F(VectorIteratorWholeRangeReplacer,
+ReplacesRangeWithNewRange) {
+	Vec sourceRange(REPLACER_INITLIST);
+	v.replace(sourceRange.cbegin(), sourceRange.cend());
+	ASSERT_EQ(Vec(sourceRange), v);
+}
+
+TEST_F(VectorIteratorWholeRangeReplacer,
+ReplacesRangeWithInitList) {
+	v.replace(REPLACER_INITLIST);
+	ASSERT_EQ(Vec(REPLACER_INITLIST), v);
 }
 
 class VectorSwaps : public VectorTestBase
@@ -640,75 +896,73 @@ public:
 	const int numElementsToInsert{3};
 };
 
-class VectorInvalidInsertion : public VectorInserterBase {
-public:
-	std::initializer_list<NumberType> initlist;
-	Vec source;
+class VectorInvalidIndexInsertion : public VectorInserterBase
+{};
 
-	void
-	SetUp() {
-		initlist = {1,2,3,4,5,6};
-		source = initlist;
-	}
-};
-
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIndexInsertion,
 ThrowsWhenInsertingSingleLValueAtInvalidNegativeIndex) {
 	ASSERT_THROW(v.insert(InvalidNegativeIndex, newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIndexInsertion,
 ThrowsWhenInsertingSingleLValueAtInvalidPositiveIndex) {
 	ASSERT_THROW(v.insert(InvalidPositiveIndex, newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIndexInsertion,
 ThrowsWhenInsertingMultipleCopiesOfLValueAtNegativeIndex) {
-	ASSERT_THROW(v.insert(InvalidNegativeIndex, numElementsToInsert, 500), prism::OutOfBoundsException);
+	ASSERT_THROW(v.insert(InvalidNegativeIndex, numElementsToInsert, std::move(newValue)),
+			prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIndexInsertion,
 ThrowsWhenInsertingMultipleCopiesOfLValueAtInvalidPositiveIndex) {
-	ASSERT_THROW(v.insert(InvalidPositiveIndex, numElementsToInsert, 500), prism::OutOfBoundsException);
+	ASSERT_THROW(v.insert(InvalidPositiveIndex, numElementsToInsert, std::move(newValue)),
+			prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+class VectorInvalidIteratorInsertion : public VectorInserterBase {
+public:
+	Vec source{INITLIST};
+};
+
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingSingleLValueAtInvalidPosBeforeBegin) {
 	ASSERT_THROW(v.insert(--v.cbegin(), newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingSingleLValueAtInvalidPosAfterEnd) {
 	ASSERT_THROW(v.insert(++v.end(), newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingMultipleLValueCopiesAtInvalidPosBeforeBegin) {
 	ASSERT_THROW(v.insert(--v.cbegin(), numElementsToInsert, newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingMultipleLValueCopiesAtInvalidPosAfterEnd) {
 	ASSERT_THROW(v.insert(++v.cend(), numElementsToInsert, newValue), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingInitListAtInvalidPosBeforeBegin) {
-	ASSERT_THROW(v.insert(--v.cbegin(), initlist), prism::OutOfBoundsException);
+	ASSERT_THROW(v.insert(--v.cbegin(), INITLIST), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingInitListAtInvalidPosAfterEnd) {
-	ASSERT_THROW(v.insert(++v.cend(), initlist), prism::OutOfBoundsException);
+	ASSERT_THROW(v.insert(++v.cend(), INITLIST), prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingRangeAtInvalidPosBeforeBegin) {
 	ASSERT_THROW(v.insert(--v.cbegin(), source.cbegin(), source.cend()),
 			prism::OutOfBoundsException);
 }
 
-TEST_F(VectorInvalidInsertion,
+TEST_F(VectorInvalidIteratorInsertion,
 ThrowsWhenInsertingRangeAtInvalidPosAfterEnd) {
 	ASSERT_THROW(v.insert(++v.cend(), source.cbegin(), source.cend()),
 			prism::OutOfBoundsException);
@@ -741,15 +995,13 @@ PreservesElementsBeforeInsertionPoint) {
 TEST_F(VectorGeneralInsertion,
 IncreasesSizeByNumElementsInserted) {
 	int preInsertSize = v.size();
-
 	v.insert(insertionIndex, numElementsToInsert, newValue);
-
 	int expectedSize = preInsertSize + numElementsToInsert;
 	int actualSize = v.size();
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-class OneCopyInserter : public VectorInserterBase {
+class VectorSingleElementInserterBase : public VectorInserterBase {
 public:
 	void SetUp() {
 		frontInserted = {newValue, 1, 2, 3, 4, 5, 6 };
@@ -758,153 +1010,161 @@ public:
 	}
 };
 
-TEST_F(OneCopyInserter,
+class VectorIndexSingleElementInserter : public VectorSingleElementInserterBase
+{};
+
+TEST_F(VectorIndexSingleElementInserter,
 InsertsRValueAtFrontIndex) {
-	v.insert(FirstIndex, 500);
+	v.insert(FirstIndex, std::move(newValue));
 	ASSERT_EQ(v, frontInserted);
 }
 
-TEST_F(OneCopyInserter,
-InsertsRValueAtFrontIterator) {
-	v.insert(v.cbegin(), 500);
-	ASSERT_EQ(v, frontInserted);
-}
-
-TEST_F(OneCopyInserter,
+TEST_F(VectorIndexSingleElementInserter,
 InsertsLValueAtFrontIndex) {
 	v.insert(FirstIndex, newValue);
 	ASSERT_EQ(v, frontInserted);
 }
 
-TEST_F(OneCopyInserter,
-InsertsLValueAtFrontIterator) {
-	v.insert(v.cbegin(), newValue);
-	ASSERT_EQ(v, frontInserted);
-}
-
-TEST_F(OneCopyInserter,
+TEST_F(VectorIndexSingleElementInserter,
 InsertsRValueAtMiddleIndex) {
-	v.insert(MiddleIndex, 500);
+	v.insert(MiddleIndex, std::move(newValue));
 	ASSERT_EQ(v, middleInserted);
 }
 
-TEST_F(OneCopyInserter,
-InsertsRValueAtMiddleIterator) {
-	v.insert(v.cbegin() + MiddleIndex, 500);
-	ASSERT_EQ(v, middleInserted);
-}
-
-TEST_F(OneCopyInserter,
+TEST_F(VectorIndexSingleElementInserter,
 InsertsLValueAtMiddleIndex) {
 	v.insert(MiddleIndex, newValue);
 	ASSERT_EQ(v, middleInserted);
 }
 
-TEST_F(OneCopyInserter,
-InsertsLValueAtMiddleIterator) {
-	v.insert(v.cbegin() + MiddleIndex, newValue);
-	ASSERT_EQ(v, middleInserted);
-}
-
-TEST_F(OneCopyInserter,
+TEST_F(VectorIndexSingleElementInserter,
 InsertsRValueAtBackIndex) {
-	v.insert(LastIndex, 500);
+	v.insert(LastIndex, std::move(newValue));
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
-InsertsRValueAtBackIterator) {
-	v.insert(v.cend(), 500);
-	ASSERT_EQ(v, backInserted);
-}
-
-TEST_F(OneCopyInserter,
+TEST_F(VectorIndexSingleElementInserter,
 InsertsLValueAtBackIndex) {
 	v.insert(LastIndex, newValue);
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+class VectorIteratorSingleElementInserter : public VectorSingleElementInserterBase
+{};
+
+TEST_F(VectorIteratorSingleElementInserter,
+InsertsRValueAtFrontIterator) {
+	v.insert(v.cbegin(), std::move(newValue));
+	ASSERT_EQ(v, frontInserted);
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+InsertsLValueAtFrontIterator) {
+	v.insert(v.cbegin(), newValue);
+	ASSERT_EQ(v, frontInserted);
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+InsertsRValueAtMiddleIterator) {
+	v.insert(v.cbegin() + MiddleIndex, std::move(newValue));
+	ASSERT_EQ(v, middleInserted);
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+InsertsLValueAtMiddleIterator) {
+	v.insert(v.cbegin() + MiddleIndex, newValue);
+	ASSERT_EQ(v, middleInserted);
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+InsertsRValueAtBackIterator) {
+	v.insert(v.cend(), std::move(newValue));
+	ASSERT_EQ(v, backInserted);
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
 InsertsLValueAtBackIterator) {
 	v.insert(v.cend(), newValue);
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorIteratorSingleElementInserter,
+ReturnsIteratorToFrontInsertedSingleLValue) {
+	iterator it = v.insert(v.cbegin(), newValue);
+	ASSERT_TRUE(it == v.begin());
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+ReturnsIteratorToFrontInsertedSingleRValue) {
+	iterator it = v.insert(v.cbegin(), std::move(newValue));
+	ASSERT_TRUE(it == v.begin());
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+ReturnsIteratorToBackInsertedSingleLValue) {
+	iterator it = v.insert(v.cend(), newValue);
+	ASSERT_TRUE(it == --v.end());
+}
+
+TEST_F(VectorIteratorSingleElementInserter,
+ReturnsIteratorToBackInsertedSingleRValue) {
+	iterator it = v.insert(v.cend(), std::move(newValue));
+	ASSERT_TRUE(it == --v.end());
+}
+
+class VectorAppendAndPrependInserter : public VectorSingleElementInserterBase
+{};
+
+TEST_F(VectorAppendAndPrependInserter,
 AppendsRValue) {
-	v.append(500);
+	v.append(std::move(newValue));
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 AppendsLValue) {
 	v.reserve(10);
 	v.append(newValue);
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 AppendsLValueByStream) {
 	v << newValue;
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 ReturnsReferenceToVectorWhenAppendingByStream) {
 	using Type = decltype(v << newValue);
-
 	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 AppendsLValueByAdditionAssignment) {
 	v += newValue;
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 ReturnsReferenceToVectorWhenAppendingLValueByAdditionAssignment) {
 	using Type = decltype(v += newValue);
 	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 PrependsRValue) {
-	v.prepend(500);
+	v.prepend(std::move(newValue));
 	ASSERT_EQ(v, frontInserted);
 }
 
-TEST_F(OneCopyInserter,
+TEST_F(VectorAppendAndPrependInserter,
 PrependLValue) {
 	v.prepend(newValue);
 	ASSERT_EQ(v, frontInserted);
 }
 
-TEST_F(OneCopyInserter,
-ReturnsIteratorToFrontInsertedSingleLValue) {
-	iterator it = v.insert(v.cbegin(), newValue);
-	ASSERT_TRUE(it == v.begin());
-}
-
-TEST_F(OneCopyInserter,
-ReturnsIteratorToFrontInsertedSingleRValue) {
-	iterator it = v.insert(v.cbegin(), 500);
-	ASSERT_TRUE(it == v.begin());
-}
-
-TEST_F(OneCopyInserter,
-ReturnsIteratorToBackInsertedSingleLValue) {
-	iterator it = v.insert(v.cend(), newValue);
-	ASSERT_TRUE(it == --v.end());
-}
-
-TEST_F(OneCopyInserter,
-ReturnsIteratorToBackInsertedSingleRValue) {
-	iterator it = v.insert(v.cend(), 500);
-	ASSERT_TRUE(it == --v.end());
-}
-
-class MultipleCopyInserter : public VectorInserterBase {
+class VectorMultipleElementInserterBase : public VectorInserterBase {
 public:
 	void SetUp() {
 		frontInserted = { newValue, newValue, newValue, 1, 2, 3, 4, 5, 6 };
@@ -913,56 +1173,63 @@ public:
 	}
 };
 
-TEST_F(MultipleCopyInserter,
-InsertsMultipleLValueAtFrontIndex) {
-	v.insert(FirstIndex, numElementsToInsert, newValue);
-	ASSERT_EQ(v, frontInserted);
-}
+class VectorIteratorMultipleElementInserter : public VectorMultipleElementInserterBase
+{};
 
-TEST_F(MultipleCopyInserter,
+TEST_F(VectorIteratorMultipleElementInserter,
 InsertsMultipleLValueAtFrontIterator) {
 	v.insert(v.cbegin(), numElementsToInsert, newValue);
 	ASSERT_EQ(v, frontInserted);
 }
 
-TEST_F(MultipleCopyInserter,
-InsertsMultipleLValueAtMiddleIndex) {
-	v.insert(MiddleIndex, numElementsToInsert, newValue);
-	ASSERT_EQ(v, middleInserted);
-}
-
-TEST_F(MultipleCopyInserter,
+TEST_F(VectorIteratorMultipleElementInserter,
 InsertsMultipleLValueAtMiddleIterator) {
 	v.insert(v.cbegin() + MiddleIndex, numElementsToInsert, newValue);
 	ASSERT_EQ(v, middleInserted);
 }
 
-TEST_F(MultipleCopyInserter,
-InsertsMultipleLValueAtBackIndex) {
-	v.insert(LastIndex, numElementsToInsert, newValue);
-	ASSERT_EQ(v, backInserted);
-}
-
-TEST_F(MultipleCopyInserter,
+TEST_F(VectorIteratorMultipleElementInserter,
 InsertsMultipleLValueAtBackIterator) {
 	v.insert(v.cend(), numElementsToInsert, newValue);
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(MultipleCopyInserter,
+TEST_F(VectorIteratorMultipleElementInserter,
 ReturnsIteratorToFirstOfFrontInsertedMultipleCopiesOfLValue) {
 	iterator it = v.insert(v.cbegin(), numElementsToInsert, newValue);
 	ASSERT_TRUE(it == v.begin());
 }
 
-TEST_F(MultipleCopyInserter,
+TEST_F(VectorIteratorMultipleElementInserter,
 ReturnsIteratorToFirstOfBackInsertedMultipleCopiesOfLValue) {
 	iterator it = v.insert(v.cend(), numElementsToInsert, newValue);
 	ASSERT_TRUE(it == v.end() - numElementsToInsert);
 }
 
-class RangeInserter : public VectorInserterBase {
+class VectorIndexMultipleElementInserter : public VectorMultipleElementInserterBase
+{};
+
+TEST_F(VectorIndexMultipleElementInserter,
+InsertsMultipleLValueAtFrontIndex) {
+	v.insert(FirstIndex, numElementsToInsert, newValue);
+	ASSERT_EQ(v, frontInserted);
+}
+
+TEST_F(VectorIndexMultipleElementInserter,
+InsertsMultipleLValueAtMiddleIndex) {
+	v.insert(MiddleIndex, numElementsToInsert, newValue);
+	ASSERT_EQ(v, middleInserted);
+}
+
+TEST_F(VectorIndexMultipleElementInserter,
+InsertsMultipleLValueAtBackIndex) {
+	v.insert(LastIndex, numElementsToInsert, newValue);
+	ASSERT_EQ(v, backInserted);
+}
+
+class VectorIteratorRangeInserter : public VectorInserterBase {
 public:
+	using InitList = std::initializer_list<NumberType>;
 	Vec sourceRange;
 
 	void SetUp() {
@@ -973,50 +1240,50 @@ public:
 	}
 };
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsRangeAtFrontIterator) {
 	v.insert(v.cbegin(), sourceRange.cbegin(), sourceRange.cend());
-	ASSERT_EQ(v, frontInserted);
+	ASSERT_EQ(frontInserted, v);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsRangeAtMiddleIterator) {
 	v.insert(v.cbegin() + 3, sourceRange.cbegin(), sourceRange.cend());
-	ASSERT_EQ(v, middleInserted);
+	ASSERT_EQ(middleInserted, v);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsRangeAtBackIterator) {
 	v.insert(v.cend(), sourceRange.cbegin(), sourceRange.cend());
-	ASSERT_EQ(v, backInserted);
+	ASSERT_EQ(backInserted, v);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsRangeFromStdVector) {
 	std::vector<NumberType> stdvec({10,20,30});
 	v.insert(v.cbegin(), stdvec.cbegin(), stdvec.cend());
-	ASSERT_EQ(v, frontInserted);
+	ASSERT_EQ(frontInserted, v);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 AppendsRangeFromOtherVectorToThisVector) {
 	v << sourceRange;
-	ASSERT_EQ(v, backInserted);
+	ASSERT_EQ(backInserted, v);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsVectorReferenceWhenAppendingRangeFromOtherVectorToThisVector) {
 	using Type = decltype(v << sourceRange);
 	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ConcatenateTwoVectorRangesToFormNewVector) {
 	Vec concatenated = v + sourceRange;
 	ASSERT_EQ(concatenated, backInserted);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 OriginalSourceVectorsArePreservedWhenUsedInConcatenation) {
 	Vec copyOriginal(v);
 	Vec copySource(sourceRange);
@@ -1026,78 +1293,72 @@ OriginalSourceVectorsArePreservedWhenUsedInConcatenation) {
 	ASSERT_EQ(sourceRange, copySource);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ConcatenateOtherVectorRangeToThisVector) {
 	v += sourceRange;
 	ASSERT_EQ(v, backInserted);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsVectorReferenceWhenConcatenatingOtherVectorRangeToThisVector) {
 	using Type = decltype(v += sourceRange);
 	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsIteratorToFirstElementOfFrontInsertedRange) {
 	iterator it = v.insert(v.cbegin(), sourceRange.cbegin(), sourceRange.cend());
 	ASSERT_TRUE(it == v.begin());
 }
 
-TEST_F(RangeInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsIteratorToFirstElementOfBackInsertedRange) {
 	iterator it = v.insert(v.cend(), sourceRange.cbegin(), sourceRange.cend());
 	ASSERT_TRUE(it == v.end() - sourceRange.size());
 }
 
-class InitListInserter : public VectorInserterBase {
-public:
-	using InitList = std::initializer_list<NumberType>;
-//	InitList sourceRange;
-
-	void SetUp() {
-		// Initialising the source range here causes the tests to fail for some reason
-		// the underlying init list array seems to get destroyed early
-//		sourceRange = { 10, 20, 30 };
-		frontInserted = { 10, 20, 30, 1, 2, 3, 4, 5, 6 };
-		middleInserted = { 1, 2, 3, 10, 20, 30, 4, 5, 6 };
-		backInserted = { 1, 2, 3, 4, 5, 6, 10, 20, 30 };
-	}
-};
-
-TEST_F(InitListInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsListAtFrontIterator) {
 	InitList sourceRange = { 10, 20, 30 };
 	v.insert(v.cbegin(), sourceRange);
 	ASSERT_EQ(frontInserted, v);
 }
 
-TEST_F(InitListInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsListAtMiddleIterator) {
 	InitList sourceRange = { 10, 20, 30 };
 	v.insert(v.cbegin() + 3, sourceRange);
 	ASSERT_EQ(middleInserted, v);
 }
 
-TEST_F(InitListInserter,
+TEST_F(VectorIteratorRangeInserter,
 InsertsListAtBackIterator) {
 	InitList sourceRange = { 10, 20, 30 };
 	v.insert(v.cend(), sourceRange);
 	ASSERT_EQ(backInserted, v);
 }
 
-TEST_F(InitListInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsIteratorToFirstElementOfFrontInsertedInitList) {
 	InitList sourceRange = { 10, 20, 30 };
 	iterator it = v.insert(v.cbegin(), sourceRange);
 	ASSERT_TRUE(it == v.begin());
 }
 
-TEST_F(InitListInserter,
+TEST_F(VectorIteratorRangeInserter,
 ReturnsIteratorToFirstElementOfBackInsertedInitList) {
 	InitList sourceRange = { 10, 20, 30 };
 	iterator it = v.insert(v.cend(), sourceRange);
 	ASSERT_TRUE(it == v.end() - sourceRange.size());
+}
+
+TEST_F(VectorIteratorRangeInserter,
+InsertsRangeFromStdList) {
+	std::list<NumberType> sl = {10, 11, 12};
+	Vec expected = v;
+	expected += Vec(sl.cbegin(), sl.cend());
+	v.insert(v.cend(), sl.cbegin(), sl.cend());
+	ASSERT_EQ(expected, v);
 }
 
 class VectorRemoverBase : public VectorTestBase {
@@ -1140,19 +1401,12 @@ ThrowsWhenRemovingFirstElementWhenEmpty) {
 }
 
 TEST_F(VectorInvalidIndexRemovals,
-ThrowsWhenRemovingLastElementWhenEmpty) {
-	ASSERT_THROW(emptyVec.removeLast(), prism::OutOfBoundsException);
-}
-
-TEST_F(VectorInvalidIndexRemovals,
 ThrowsWhenRemovingMultipleCopiesOnEmptyVector) {
 	ASSERT_THROW(emptyVec.remove(0, 5), prism::OutOfBoundsException);
 }
 
-class VectorInvalidIteratorRemovals : public VectorRemoverBase {
-public:
-
-};
+class VectorInvalidIteratorRemovals : public VectorRemoverBase
+{};
 
 TEST_F(VectorInvalidIteratorRemovals,
 ThrowsWhenRemovingAtPosBeforeBegin) {
@@ -1190,17 +1444,17 @@ ThrowsWhenRemovingRangeFinishingAfterEnd) {
 	ASSERT_THROW(v.remove(from, to), prism::OutOfBoundsException);
 }
 
-class VectorSingleCopyRemoverBase : public VectorRemoverBase {
+class VectorSingleElementRemoverBase : public VectorRemoverBase {
 public:
 	Vec frontRemovedVector{2, 3, 4, 5, 6};
 	Vec middleRemovedVector{1, 2, 3, 5, 6};
 	Vec backRemovedVector{1, 2, 3, 4, 5};
 };
 
-class VectorSingleCopyAtIndexRemover : public VectorSingleCopyRemoverBase
+class VectorIndexSingleElementRemover : public VectorSingleElementRemoverBase
 {};
 
-TEST_F(VectorSingleCopyAtIndexRemover,
+TEST_F(VectorIndexSingleElementRemover,
 DecreasesSizeByOne) {
 	indexToRemove = 0;
 	expectedSize = v.size() - 1;
@@ -1210,29 +1464,29 @@ DecreasesSizeByOne) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorSingleCopyAtIndexRemover,
+TEST_F(VectorIndexSingleElementRemover,
 RemovesElementAtFirstIndex) {
 	indexToRemove = 0;
 	v.remove(indexToRemove);
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIndexRemover,
+TEST_F(VectorIndexSingleElementRemover,
 RemovesElementAtMiddleIndex) {
 	v.remove(v.size()/2);
 	ASSERT_EQ(middleRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIndexRemover,
+TEST_F(VectorIndexSingleElementRemover,
 RemovesElementAtLastIndex) {
 	v.remove(v.size() - 1);
 	ASSERT_EQ(backRemovedVector, v);
 }
 
-class VectorSingleCopyAtIteratorRemover : public VectorSingleCopyRemoverBase
+class VectorIteratorSingleElementRemover : public VectorSingleElementRemoverBase
 {};
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 DecreasesSizeByOne) {
 	expectedSize = v.size() - 1;
 	v.remove(v.cbegin());
@@ -1241,50 +1495,50 @@ DecreasesSizeByOne) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 PreservesOtherElements) {
 	v.remove(v.cbegin());
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 RemovesElementPointedToByFrontIterator) {
 	v.remove(v.cbegin());
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 RemovesElementPointedToByMiddleIterator) {
 	v.remove(v.cbegin() + v.size()/2);
 	ASSERT_EQ(middleRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 RemovesElementPointedToByBackIterator) {
 	v.remove(v.cend() - 1);
 	ASSERT_EQ(backRemovedVector, v);
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 ReturnsIteratorToBeginWhenRemovingFirstElement) {
 	iterator it = v.remove(v.cbegin());
 	ASSERT_TRUE(it == v.begin());
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 ReturnsIteratorToNewMiddleElementWhenRemovingMiddleElement) {
 	int offset = v.size() / 2;
 	iterator it = v.remove(v.cbegin() + offset);
 	ASSERT_TRUE(it == (v.begin() + offset));
 }
 
-TEST_F(VectorSingleCopyAtIteratorRemover,
+TEST_F(VectorIteratorSingleElementRemover,
 ReturnsIteratorToEndWhenRemovingLastElement) {
 	iterator it = v.remove(--v.cend());
 	ASSERT_TRUE(it == v.end());
 }
 
-class VectorRemoveFirstRemover : public VectorSingleCopyRemoverBase
+class VectorRemoveFirstRemover : public VectorSingleElementRemoverBase
 {};
 
 TEST_F(VectorRemoveFirstRemover,
@@ -1302,7 +1556,7 @@ PreservesOtherElementsWhenRemovingFirstElement) {
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-class VectorRemoveLastRemover : public VectorSingleCopyRemoverBase
+class VectorRemoveLastRemover : public VectorSingleElementRemoverBase
 {};
 
 TEST_F(VectorRemoveLastRemover,
@@ -1327,12 +1581,12 @@ public:
 	Vec backRemovedVector{1,2};
 };
 
-class VectorMultipleElementsFromIndexRemover : public VectorRangeRemoverBase {
+class VectorIndexMultipleElementsRemover : public VectorRangeRemoverBase {
 public:
 	int indexToRemoveFrom;
 };
 
-TEST_F(VectorMultipleElementsFromIndexRemover,
+TEST_F(VectorIndexMultipleElementsRemover,
 DecreasesSize) {
 	indexToRemoveFrom = 1;
 	expectedSize = v.size() - numElementsToRemove;
@@ -1342,32 +1596,32 @@ DecreasesSize) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorMultipleElementsFromIndexRemover,
+TEST_F(VectorIndexMultipleElementsRemover,
 RemovesFirstFewElements) {
 	indexToRemoveFrom = 0;
 	v.remove(indexToRemoveFrom, numElementsToRemove);
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-TEST_F(VectorMultipleElementsFromIndexRemover,
+TEST_F(VectorIndexMultipleElementsRemover,
 RemovesMiddleFewElements) {
 	indexToRemoveFrom = 1;
 	v.remove(indexToRemoveFrom, numElementsToRemove);
 	ASSERT_EQ(middleRemovedVector, v);
 }
 
-TEST_F(VectorMultipleElementsFromIndexRemover,
+TEST_F(VectorIndexMultipleElementsRemover,
 RemovesLastFewElements) {
 	indexToRemoveFrom = 2;
 	v.remove(indexToRemoveFrom, numElementsToRemove);
 	ASSERT_EQ(backRemovedVector, v);
 }
 
-class VectorRangeRemover : public VectorRangeRemoverBase {
+class VectorIteratorRangeRemover : public VectorRangeRemoverBase {
 public:
 };
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 DecreasesSizeByRangeLength) {
 	expectedSize = v.size() - numElementsToRemove;
 	v.remove(v.cbegin(), v.cbegin() + numElementsToRemove);
@@ -1376,7 +1630,7 @@ DecreasesSizeByRangeLength) {
 	ASSERT_EQ(expectedSize, actualSize);
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 RemovesFrontRange) {
 	from = v.cbegin();
 	to = from + numElementsToRemove;
@@ -1384,7 +1638,7 @@ RemovesFrontRange) {
 	ASSERT_EQ(frontRemovedVector, v);
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 RemovesMiddleRange) {
 	from = v.cbegin() + 1;
 	to = from + numElementsToRemove;
@@ -1392,7 +1646,7 @@ RemovesMiddleRange) {
 	ASSERT_EQ(middleRemovedVector, v);
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 RemovesBackRange) {
 	from = v.cend() - numElementsToRemove;
 	to = v.cend();
@@ -1400,7 +1654,7 @@ RemovesBackRange) {
 	ASSERT_EQ(backRemovedVector, v);
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 ReturnsIteratorToBeginAfterRemovedFrontRange) {
 	from = v.cbegin();
 	to = from + numElementsToRemove;
@@ -1408,7 +1662,7 @@ ReturnsIteratorToBeginAfterRemovedFrontRange) {
 	ASSERT_TRUE(it == v.begin());
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 ReturnsIteratorToMiddleAfterRemovedMiddleRange) {
 	from = v.cbegin() + 1;
 	to = from + numElementsToRemove;
@@ -1416,7 +1670,7 @@ ReturnsIteratorToMiddleAfterRemovedMiddleRange) {
 	ASSERT_TRUE(it == v.begin() + 1);
 }
 
-TEST_F(VectorRangeRemover,
+TEST_F(VectorIteratorRangeRemover,
 ReturnsIteratorToEndAfterRemovedBackRange) {
 	from = v.cend() - numElementsToRemove;
 	to = v.cend();
@@ -1859,14 +2113,12 @@ ReturnsFalseWhenDoesNotEndWithValue) {
 TEST_F(VectorQueries,
 ReturnsFalseWhenEmptyVectorDoesNotEndWithValue) {
 	Vec vec;
-	NumberType value = 500;
-	ASSERT_FALSE(vec.endsWith(value));
+	ASSERT_FALSE(vec.endsWith(nonExistentValue));
 }
 
 TEST_F(VectorQueries,
 ReturnsTrueWhenStartsWithValue) {
-	NumberType value = 1;
-
+	NumberType value = *v.cbegin();
 	ASSERT_TRUE(queriesVector.startsWith(value));
 }
 
@@ -1878,14 +2130,12 @@ ReturnsFalseWhenDoesNotStartWithValue) {
 TEST_F(VectorQueries,
 ReturnsFalseWhenEmptyVectorDoesNotStartWithValue) {
 	Vec vec;
-
-	ASSERT_FALSE(vec.startsWith(500));
+	ASSERT_FALSE(vec.startsWith(nonExistentValue));
 }
 
 TEST_F(VectorQueries,
 ReturnsIndexNotFoundForFirstIndexOfNonExistentValue) {
 	NumberType valueToFind = nonExistentValue;
-
 	ASSERT_EQ(Vec::IndexNotFound, queriesVector.indexOf(valueToFind));
 }
 
@@ -1894,7 +2144,6 @@ ReturnsFirstIndexMatchingValue) {
 	NumberType valueToFind = 3;
 	expectedIndex = 2;
 	actualIndex = queriesVector.indexOf(valueToFind);
-
 	ASSERT_EQ(expectedIndex, actualIndex);
 }
 
@@ -1904,14 +2153,12 @@ ReturnsFirstIndexMatchingValueSearchingFromIndex) {
 	int indexToSearchFrom = 3;
 	expectedIndex = 5;
 	actualIndex = queriesVector.indexOf(valueToFind, indexToSearchFrom);
-
 	ASSERT_EQ(expectedIndex, actualIndex);
 }
 
 TEST_F(VectorQueries,
 ReturnsIndexNotFoundForLastIndexOfNonExistentValue) {
 	NumberType valueToFind = nonExistentValue;
-
 	ASSERT_EQ(Vec::IndexNotFound, queriesVector.lastIndexOf(valueToFind));
 }
 
@@ -1920,7 +2167,6 @@ ReturnsLastIndexMatchingValue) {
 	NumberType valueToFind = 3;
 	expectedIndex = 5;
 	actualIndex = queriesVector.lastIndexOf(valueToFind);
-
 	ASSERT_EQ(expectedIndex, actualIndex);
 }
 
@@ -1930,47 +2176,7 @@ ReturnsLastIndexMatchingValueSearchingFromIndex) {
 	int indexToSearchFrom = 4;
 	expectedIndex = 2;
 	actualIndex = queriesVector.lastIndexOf(valueToFind, indexToSearchFrom);
-
 	ASSERT_EQ(expectedIndex, actualIndex);
-}
-
-class VectorConversions : public Test {
-public:
-	Vec emptyPrismVector;
-	Vec populatedPrismVector;
-	std::vector<NumberType> emptyStdVector;
-	std::vector<NumberType> populatedStdVector;
-	std::list<NumberType> emptyStdList;
-	std::list<NumberType> populatedStdList;
-
-	VectorConversions()
-	: emptyPrismVector(),
-	  populatedPrismVector({1,2,3,4,5}),
-	  emptyStdVector(),
-	  populatedStdVector({1,2,3,4,5}),
-	  emptyStdList(),
-	  populatedStdList({1,2,3,4,5})
-	{}
-};
-
-TEST_F(VectorConversions,
-ConvertsEmptyVectorToEmptyStdVector) {
-	ASSERT_EQ(emptyStdVector, emptyPrismVector.toStdVector());
-}
-
-TEST_F(VectorConversions,
-ConvertsElementsToStdVector) {
-	ASSERT_EQ(populatedStdVector, populatedPrismVector.toStdVector());
-}
-
-TEST_F(VectorConversions,
-ConvertsEmptyVectorToEmptyStdList) {
-	ASSERT_EQ(emptyStdList, emptyPrismVector.toStdList());
-}
-
-TEST_F(VectorConversions,
-ConvertsElementsToStdList) {
-	ASSERT_EQ(populatedStdList, populatedPrismVector.toStdList());
 }
 
 class VectorRelationalComparisonsBase : public Test {

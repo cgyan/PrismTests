@@ -177,8 +177,9 @@ TEST_F(TimeTest, set) {
 
 /**
  * Test: start()
+ * Disabled because it is a poor test and takes too long to run
  */
-TEST_F(TimeTest, start) {
+TEST_F(TimeTest, DISABLED_start) {
 	Time time;
 	time.start();
 	for (int i=0; i<1000000000; i++);

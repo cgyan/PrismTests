@@ -89,7 +89,7 @@ public:
 		return *this;
 	}
 
-	DynamicNumber(DynamicNumber&& rhs)
+	DynamicNumber(DynamicNumber&& rhs) noexcept
 	: p(rhs.p)
 	{
 	#ifdef PRISM_SHOULD_OUTPUT_CONSTRUCTOR_NAME
@@ -99,7 +99,7 @@ public:
 	}
 
 	DynamicNumber&
-	operator=(DynamicNumber&& rhs) {
+	operator=(DynamicNumber&& rhs) noexcept {
 	#ifdef PRISM_SHOULD_OUTPUT_CONSTRUCTOR_NAME
 		cout << "DynamicNumber::operator(DynamicNumber&& rhs) \n";
 	#endif

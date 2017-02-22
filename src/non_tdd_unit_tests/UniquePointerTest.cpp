@@ -64,7 +64,7 @@ TEST_F(UniquePointerTest, move_ctor) {
  */
 TEST_F(UniquePointerTest, move_assignment) {
 	prism::UniquePointer<int> up;
-	int * p_up = up.data();
+//	int * p_up = up.data();
 	int * p_iup = iup.data();
 	up = prism::move(iup);
 
