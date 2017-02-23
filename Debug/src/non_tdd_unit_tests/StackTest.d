@@ -12,6 +12,8 @@ src/non_tdd_unit_tests/StackTest.o: \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/type_traits_wrappers.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Vector.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/algorithm \
@@ -22,8 +24,6 @@ src/non_tdd_unit_tests/StackTest.o: \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/BadSizeException.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Exception \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/List.h \
@@ -58,6 +58,10 @@ src/non_tdd_unit_tests/StackTest.o: \
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h:
 
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
+
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Vector.h:
@@ -77,10 +81,6 @@ src/non_tdd_unit_tests/StackTest.o: \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Exception:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
 

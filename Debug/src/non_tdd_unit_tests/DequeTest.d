@@ -16,6 +16,7 @@ src/non_tdd_unit_tests/DequeTest.o: \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/type_traits_wrappers.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/List_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Deque_priv.h \
@@ -53,6 +54,8 @@ src/non_tdd_unit_tests/DequeTest.o: \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
 

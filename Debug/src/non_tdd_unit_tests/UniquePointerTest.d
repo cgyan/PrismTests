@@ -13,6 +13,8 @@ src/non_tdd_unit_tests/UniquePointerTest.o: \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/iterator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
@@ -40,5 +42,9 @@ src/non_tdd_unit_tests/UniquePointerTest.o: \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:

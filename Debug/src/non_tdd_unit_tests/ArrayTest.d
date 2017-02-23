@@ -13,6 +13,8 @@ src/non_tdd_unit_tests/ArrayTest.o: \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/algorithm.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/algorithm_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/iterator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Exception.h
@@ -42,6 +44,10 @@ src/non_tdd_unit_tests/ArrayTest.o: \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/algorithm_priv.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/iterator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
 

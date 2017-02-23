@@ -12,6 +12,8 @@ main.o: ../main.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/type_traits_wrappers.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/pair.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
+  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/OutOfBoundsException \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/OutOfBoundsException.h \
@@ -20,8 +22,6 @@ main.o: ../main.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/BadSizeException.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Exception \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator \
-  /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/String \
@@ -54,6 +54,10 @@ main.o: ../main.cpp \
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/iterator_priv.h:
 
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
+
+/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
+
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/type_traits:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/OutOfBoundsException:
@@ -69,10 +73,6 @@ main.o: ../main.cpp \
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/global:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Exception:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Allocator:
-
-/Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/Allocator.h:
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator:
 

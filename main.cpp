@@ -23,8 +23,8 @@ using namespace prism::test;
 
 int main(int argc, char * argv[]) {
 
-//	using Vector = prism::Vector<DynamicNumber>;
-	using Vector = std::vector<DynamicNumber>;
+	using Vector = prism::Vector<DynamicNumber>;
+//	using Vector = std::vector<DynamicNumber>;
 
 	Vector v = {1,2,3,4,5,6};
 
