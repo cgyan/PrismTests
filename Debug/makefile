@@ -9,7 +9,6 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include src/non_tdd_unit_tests/subdir.mk
--include src/Vector/subdir.mk
 -include src/subdir.mk
 -include external/gtest/subdir.mk
 -include subdir.mk
@@ -44,7 +43,7 @@ endif
 all: PrismTests
 
 dependents:
-	-cd /Users/iainhemstock/GitHub/Prism/code/Prism/Debug && $(MAKE) all
+	-cd /Users/iainhemstock/GitHub/Prism/code/Prism/Debug && $(MAKE) clean all
 
 # Tool invocations
 PrismTests: $(OBJS) $(USER_OBJS) /Users/iainhemstock/GitHub/Prism/code/Prism/Debug/Prism.so

@@ -6,6 +6,13 @@
  *      Author: iainhemstock
  */
 
+#include "gtest/gtest.h"
+#include <prism/Plist>
 
+using namespace ::testing;
+
+class ListTestBase : public Test {
+
+};
 
 

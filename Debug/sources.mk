@@ -26,6 +26,5 @@ SUBDIRS := \
 external/gtest \
 . \
 src \
-src/Vector \
 src/non_tdd_unit_tests \
 
