@@ -13,6 +13,7 @@
 #include <iostream>
 #include <prism/Allocator>
 #include <prism/algorithm>
+#include <prism/type_traits>
 #include <vector>
 #include <memory>
 
@@ -23,7 +24,7 @@ using namespace prism::test;
 
 int main(int argc, char * argv[]) {
 
-	using Vector = prism::Vector<DynamicNumber>;
+	using Vector = prism::Vector<int>;
 //	using Vector = std::vector<DynamicNumber>;
 
 	Vector v = {1,2,3,4,5,6};

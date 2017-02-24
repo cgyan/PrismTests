@@ -25,7 +25,7 @@ C_DEPS :=
 SUBDIRS := \
 external/gtest \
 . \
-src/Vector \
 src \
+src/Vector \
 src/non_tdd_unit_tests \
 
