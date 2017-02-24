@@ -45,6 +45,7 @@
 								<option id="gnu.cpp.compiler.macosx.exe.debug.option.debugging.level.2057215115" name="Debug Level" superClass="gnu.cpp.compiler.macosx.exe.debug.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1205513892" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Prism}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="/Users/iainhemstock/hpc-gcc"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Prism/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="/Users/iainhemstock/GitHub/PrismTests/external"/>

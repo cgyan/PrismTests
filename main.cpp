@@ -6,29 +6,15 @@
  */
 
 #include "gtest/gtest.h"
-#include <prism/Vector>
-#include <prism/String>
-#include "src/dummy/Number.h"
-#include "src/dummy/DynamicNumber.h"
-#include <iostream>
-#include <prism/Allocator>
-#include <prism/algorithm>
-#include <prism/type_traits>
-#include <vector>
-#include <memory>
 
 using namespace std;
 using namespace ::testing;
-using namespace prism;
-using namespace prism::test;
 
 int main(int argc, char * argv[]) {
 
-	using Vector = prism::Vector<int>;
-//	using Vector = std::vector<DynamicNumber>;
+	using const_reference = const int&;
 
-	Vector v = {1,2,3,4,5,6};
-
+	std::cout << std::is_const<const_reference>::value << endl;
 
 	cout << "finished...\n";
 //	return 0;

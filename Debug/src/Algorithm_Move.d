@@ -24,7 +24,7 @@ src/Algorithm_Move.o: ../src/Algorithm_Move.cpp \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Exception \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/Iterator \
   /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h \
-  ../src/dummy/DynamicNumber.h
+  ../src/../inc/prism/h/DynamicNumber.h
 
 /Users/iainhemstock/GitHub/PrismTests/external/gtest/gtest.h:
 
@@ -76,4 +76,4 @@ src/Algorithm_Move.o: ../src/Algorithm_Move.cpp \
 
 /Users/iainhemstock/GitHub/Prism/code/Prism/inc/prism/h/priv/Vector_priv.h:
 
-../src/dummy/DynamicNumber.h:
+../src/../inc/prism/h/DynamicNumber.h:

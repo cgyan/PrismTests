@@ -10,7 +10,8 @@
 #include <prism/global>
 #include <prism/algorithm>
 #include <prism/Vector>
-#include "dummy/DynamicNumber.h"
+
+#include "../inc/prism/h/DynamicNumber.h"
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE

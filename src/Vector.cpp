@@ -19,8 +19,8 @@
 #include <deque>
 using namespace ::testing;
 
-//#include "../src/dummy/Number.h"
-#include "../src/dummy/DynamicNumber.h"
+//#include <prism/Number>
+#include "../inc/prism/DynamicNumber"
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE

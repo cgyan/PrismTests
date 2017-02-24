@@ -43,7 +43,7 @@ endif
 all: PrismTests
 
 dependents:
-	-cd /Users/iainhemstock/GitHub/Prism/code/Prism/Debug && $(MAKE) clean all
+	-cd /Users/iainhemstock/GitHub/Prism/code/Prism/Debug && $(MAKE) all
 
 # Tool invocations
 PrismTests: $(OBJS) $(USER_OBJS) /Users/iainhemstock/GitHub/Prism/code/Prism/Debug/Prism.so
