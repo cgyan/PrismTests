@@ -61,7 +61,7 @@ HasValueType) {
 
 TEST_F(ListPublicTypes,
 HasLValueReferenceToValueType) {
-	bool isNonConst = !std::is_const<reference>::value;
+	bool isNonConst = !std::is_const<std::remove_reference<reference>::type>::value;
 	bool isLValueReference = std::is_lvalue_reference<reference>::value;
 	ASSERT_TRUE(isNonConst && isLValueReference);
 }
