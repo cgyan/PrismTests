@@ -45,6 +45,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 class DynamicNumber {
 public:
 	int * p;
+	enum { DUMMY_CONSTANT_VALUE = 123 };
 public:
 	~DynamicNumber() {
 	#ifdef PRISM_SHOULD_OUTPUT_CONSTRUCTOR_NAME
@@ -54,7 +55,7 @@ public:
 	}
 
 	DynamicNumber()
-	: p(new int(-1))
+	: p(new int(0))
 	{
 	#ifdef PRISM_SHOULD_OUTPUT_CONSTRUCTOR_NAME
 		cout << "DynamicNumber() \n";
@@ -95,7 +96,7 @@ public:
 	#ifdef PRISM_SHOULD_OUTPUT_CONSTRUCTOR_NAME
 		cout << "DynamicNumber(DynamicNumber&& rhs) \n";
 	#endif
-		rhs.p = nullptr;
+		rhs.p = new int(0);
 	}
 
 	DynamicNumber&
@@ -106,20 +107,25 @@ public:
 		if (this != &rhs) {
 			delete p;
 			p = rhs.p;
-			rhs.p = nullptr;
+			rhs.p = new int(0);
 		}
 		return *this;
 	}
 
 	friend std::ostream&
 	operator<<(std::ostream& out, const DynamicNumber & n) {
-		out << *n.p;
+		if (n.p != nullptr) out << *n.p;
+		else out << 0;
 		return out;
 	}
 
 	const bool
 	operator==(const DynamicNumber& rhs) const {
-		return *p == *rhs.p;
+		if (p == nullptr && rhs.p == nullptr)
+			return true;
+		if (p != nullptr && rhs.p != nullptr)
+			return *p == *rhs.p;
+		return false;
 	}
 
 	const bool
