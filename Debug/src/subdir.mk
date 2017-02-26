@@ -5,20 +5,20 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/Algorithm_Move.cpp \
+../src/Iterator.cpp \
 ../src/List.cpp \
-../src/MoveIterator.cpp \
 ../src/Vector.cpp 
 
 OBJS += \
 ./src/Algorithm_Move.o \
+./src/Iterator.o \
 ./src/List.o \
-./src/MoveIterator.o \
 ./src/Vector.o 
 
 CPP_DEPS += \
 ./src/Algorithm_Move.d \
+./src/Iterator.d \
 ./src/List.d \
-./src/MoveIterator.d \
 ./src/Vector.d 
 
 
