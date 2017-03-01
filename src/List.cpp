@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prism/Plist>
+#include <prism/scratchpad>
 #include <prism/Allocator>
 #include <prism/LogAllocator>
 #include <prism/DynamicNumber>
@@ -23,30 +23,78 @@ using List = prism::PList<NumberType, prism::Allocator<NumberType>>;
 
 class ListTestBase : public Test {
 public:
-	using allocator_type = List::allocator_type;
-	using value_type = List::value_type;
-	using reference = List::reference;
-	using const_reference = List::const_reference;
-	using pointer = List::pointer;
-	using const_pointer = List::const_pointer;
-	using difference_type = List::difference_type;
-	using size_type = List::size_type;
+	using allocator_type 			= List::allocator_type;
+	using value_type 				= List::value_type;
+	using reference 				= List::reference;
+	using const_reference 			= List::const_reference;
+	using pointer 					= List::pointer;
+	using const_pointer 			= List::const_pointer;
+	using difference_type 			= List::difference_type;
+	using size_type 				= List::size_type;
+	using iterator 					= List::iterator;
+	using const_iterator 			= List::const_iterator;
+	using reverse_iterator 			= List::reverse_iterator;
+	using const_reverse_iterator 	= List::const_reverse_iterator;
 public:
-	List list;
+	List emptyList;
 };
 
-class ListInvariants : public ListTestBase {
+class ListIterator : public ListTestBase {
 
 };
 
-TEST_F(ListInvariants,
-IsEmptyWhenConstructed) {
-	ASSERT_TRUE(list.empty());
+TEST_F(ListIterator,
+HasValueType) {
+	bool isSame = std::is_same<NumberType, iterator::value_type>::value;
+	ASSERT_TRUE(isSame);
 }
 
-TEST_F(ListInvariants,
-HasSizeZeroWhenConstructed) {
-	ASSERT_EQ(0, list.size());
+TEST_F(ListIterator,
+HasLValueReferenceToValueType) {
+	bool isLValueRef = std::is_lvalue_reference<iterator::reference>::value;
+	ASSERT_TRUE(isLValueRef);
+}
+
+TEST_F(ListIterator,
+ValueTypeThatReferenceRefersToIsNonConst) {
+	bool isNonConst = !std::is_const<std::remove_reference<iterator::reference>::type>::value;
+	ASSERT_TRUE(isNonConst);
+}
+
+TEST_F(ListIterator,
+ValueTypeThatReferenceRefersToIsConst) {
+	bool isConst = std::is_const<std::remove_reference<const_iterator::reference>::type>::value;
+	ASSERT_TRUE(isConst);
+}
+
+TEST_F(ListIterator,
+HasPointerToValueType) {
+	bool isPointer = std::is_pointer<iterator::pointer>::value;
+	ASSERT_TRUE(isPointer);
+}
+
+TEST_F(ListIterator,
+ValueTypeThatPointerPointsToIsNonConst) {
+	bool isNonConst = !std::is_const<std::remove_pointer<iterator::pointer>::type>::value;
+	ASSERT_TRUE(isNonConst);
+}
+
+TEST_F(ListIterator,
+ValueTypeThatPointerPointsToIsConst) {
+	bool isConst = std::is_const<std::remove_pointer<const_iterator::pointer>::type>::value;
+	ASSERT_TRUE(isConst);
+}
+
+TEST_F(ListIterator,
+HasDifferenceType) {
+	bool isSame = std::is_same<std::ptrdiff_t, iterator::difference_type>::value;
+	ASSERT_TRUE(isSame);
+}
+
+TEST_F(ListIterator,
+HasIteratorCategory) {
+	bool isSame = std::is_same<std::bidirectional_iterator_tag, iterator::iterator_category>::value;
+	ASSERT_TRUE(isSame);
 }
 
 class ListPublicTypes : public ListTestBase {
@@ -61,30 +109,50 @@ HasValueType) {
 
 TEST_F(ListPublicTypes,
 HasLValueReferenceToValueType) {
-	bool isNonConst = !std::is_const<std::remove_reference<reference>::type>::value;
 	bool isLValueReference = std::is_lvalue_reference<reference>::value;
-	ASSERT_TRUE(isNonConst && isLValueReference);
+	ASSERT_TRUE(isLValueReference);
+}
+
+TEST_F(ListPublicTypes,
+LValueReferenceToValueTypeIsNonConst) {
+	bool isNonConst = !std::is_const<std::remove_reference<reference>::type>::value;
+	ASSERT_TRUE(isNonConst);
+}
+
+TEST_F(ListPublicTypes,
+LValueReferenceToConstValueTypeIsConst) {
+	bool isConst = std::is_const<std::remove_reference<const_reference>::type>::value;
+	ASSERT_TRUE(isConst);
 }
 
 TEST_F(ListPublicTypes,
 HasLValueReferenceToConstValueType) {
-	bool isConst = std::is_const<std::remove_reference<const_reference>::type>::value;
 	bool isLValueReference = std::is_lvalue_reference<const_reference>::value;
-	ASSERT_TRUE(isConst && isLValueReference);
+	ASSERT_TRUE(isLValueReference);
 }
 
 TEST_F(ListPublicTypes,
 HasPointerToValueType) {
-	bool isNonConst = !std::is_const<std::remove_pointer<pointer>::type>::value;
 	bool isPointer = std::is_pointer<pointer>::value;
-	ASSERT_TRUE(isNonConst && isPointer);
+	ASSERT_TRUE(isPointer);
+}
+
+TEST_F(ListPublicTypes,
+ValueTypeThatPointerPointsToIsNonConst) {
+	bool isNonConst = !std::is_const<std::remove_pointer<pointer>::type>::value;
+	ASSERT_TRUE(isNonConst);
 }
 
 TEST_F(ListPublicTypes,
 HasPointerToConstValueType) {
-	bool isConst = std::is_const<std::remove_pointer<const_pointer>::type>::value;
 	bool isPointer = std::is_pointer<const_pointer>::value;
-	ASSERT_TRUE(isConst && isPointer);
+	ASSERT_TRUE(isPointer);
+}
+
+TEST_F(ListPublicTypes,
+ValueTypeThatPointerPointsToIsConst) {
+	bool isConst = std::is_const<std::remove_pointer<const_pointer>::type>::value;
+	ASSERT_TRUE(isConst);
 }
 
 TEST_F(ListPublicTypes,
@@ -93,7 +161,8 @@ HasDifferenceType) {
 	ASSERT_TRUE(isSame);
 }
 
-TEST_F(ListPublicTypes, HasSizeType) {
+TEST_F(ListPublicTypes,
+HasSizeType) {
 	bool isSame = std::is_same<std::size_t, size_type>::value;
 	ASSERT_TRUE(isSame);
 }
@@ -113,7 +182,66 @@ HasCustomAllocatorType) {
 	ASSERT_TRUE(isSame);
 }
 
+TEST_F(ListPublicTypes,
+HasNonConstIteratorType) {
+	bool isSame = std::is_same<prism::PListIterator<NumberType, false>, iterator>::value;
+	ASSERT_TRUE(isSame);
+}
 
+TEST_F(ListPublicTypes,
+HasConstIteratorType) {
+	bool isSame = std::is_same<prism::PListIterator<NumberType, true>, const_iterator>::value;
+	ASSERT_TRUE(isSame);
+}
+
+TEST_F(ListPublicTypes,
+HasReverseIteratorType) {
+	bool isSame = std::is_same<prism::ReverseIterator<iterator>, reverse_iterator>::value;
+	ASSERT_TRUE(isSame);
+}
+
+TEST_F(ListPublicTypes,
+HasConstReverseIteratorType) {
+	bool isSame = std::is_same<prism::ReverseIterator<const_iterator>, const_reverse_iterator>::value;
+	ASSERT_TRUE(isSame);
+}
+
+class ListInvariants : public ListTestBase {
+
+};
+
+TEST_F(ListInvariants,
+IsEmptyWhenConstructed) {
+	ASSERT_TRUE(emptyList.empty());
+}
+
+TEST_F(ListInvariants,
+IsNotEmptyAfterElementsAdded) {
+	emptyList.resize(1);
+	ASSERT_FALSE(emptyList.empty());
+}
+
+TEST_F(ListInvariants,
+HasSizeZeroWhenConstructed) {
+	ASSERT_EQ(0, emptyList.size());
+}
+
+class ListResizer : public ListTestBase {
+
+};
+
+TEST_F(ListResizer,
+UpdatesEmptyListSizeToNewSize) {
+	const int newSize{5};
+	emptyList.resize(newSize);
+	ASSERT_EQ(newSize, emptyList.size());
+}
+
+TEST_F(ListResizer,
+AddsDefaultConstructedValueToEmptyList) {
+	emptyList.resize(1);
+	ASSERT_EQ(NumberType{}, emptyList.front());
+}
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE

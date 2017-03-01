@@ -185,6 +185,7 @@ TEST_F(CircleTest, DISABLED_centralAngle) {
 	// radians
 	c.setAngleMode(Circle::RADIANS);
 	ASSERT_EQ(Circle::PI/2, c.centralAngle(x,y));
+//	ASSERT_NEAR(Circle::PI/2, c.centralAngle(x,y), 1);
 }
 
 /**

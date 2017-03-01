@@ -15,9 +15,10 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-using NumberType	= prism::test::DynamicNumber;
-using SequenceIter 	= prism::SequenceIterator<NumberType, false>;
-using MoveIter 		= prism::MoveIterator<SequenceIter>;
+using NumberType			= prism::test::DynamicNumber;
+using SequenceIter 			= prism::SequenceIterator<NumberType, false>;
+using ConstSequenceIter 	= prism::SequenceIterator<NumberType, true>;
+using MoveIter 				= prism::MoveIterator<SequenceIter>;
 
 class IteratorTestBase : public Test {
 public:
@@ -41,8 +42,9 @@ class MoveIteratorPublicTypes : public MoveIteratorTestBase {
 
 TEST_F(MoveIteratorPublicTypes,
 HasIteratorType) {
-	bool isSame = std::is_same<SequenceIter, typename MoveIter::iterator_type>::value;
-	ASSERT_TRUE(isSame);
+//	bool isSame = std::is_same<SequenceIter, typename MoveIter::iterator_type>::value;
+//	ASSERT_TRUE(isSame);
+	StaticAssertTypeEq<SequenceIter, typename MoveIter::iterator_type>();
 }
 
 TEST_F(MoveIteratorPublicTypes,
@@ -330,8 +332,26 @@ ReturnsMoveIterator) {
 TEST_F(MoveIteratorMake,
 MoveIteratorPointsToElement) {
 	auto mi = prism::make_move_iterator<SequenceIter>(std::begin(sequence));
-	NumberType expected = *std::begin(sequence);
-	NumberType actual = *mi;
+	expected = *std::begin(sequence);
+	actual = *mi;
+	ASSERT_EQ(expected, actual);
+}
+
+TEST_F(MoveIteratorMake,
+MakeMoveIteratorFromPointer) {
+	NumberType* p = sequence;
+	auto mi = prism::make_move_iterator(p);
+	expected = *sequence;
+	actual = *mi;
+	ASSERT_EQ(expected, actual);
+}
+
+TEST_F(MoveIteratorMake,
+MakeMoveIteratorFromSequenceIterator) {
+	SequenceIter it(sequence);
+	auto mi = prism::make_move_iterator(it);
+	expected = *sequence;
+	actual = *mi;
 	ASSERT_EQ(expected, actual);
 }
 
@@ -341,6 +361,7 @@ public:
 	SequenceIter siBegin{sequence};
 	SequenceIter siEnd{std::end(sequence)};
 	SequenceIter siEmpty{};
+	ConstSequenceIter csi{sequence};
 };
 
 class SequenceIteratorPublicTypes : public SequenceIteratorTestBase {
@@ -361,10 +382,26 @@ HasReferenceToValueType) {
 }
 
 TEST_F(SequenceIteratorPublicTypes,
+HasReferenceToConstValueType) {
+	bool isRefToConstValueType = std::is_lvalue_reference<ConstSequenceIter::reference>::value &&
+			std::is_same<const DynamicNumber, std::remove_reference<ConstSequenceIter::reference>::type>::value &&
+			std::is_const<std::remove_reference<ConstSequenceIter::reference>::type>::value;
+	ASSERT_TRUE(isRefToConstValueType);
+}
+
+TEST_F(SequenceIteratorPublicTypes,
 HasPointerToValueType) {
 	bool isPointerToValueType = std::is_pointer<SequenceIter::pointer>::value &&
 			std::is_same<DynamicNumber, std::remove_pointer<SequenceIter::pointer>::type>::value;
 	ASSERT_TRUE(isPointerToValueType);
+}
+
+TEST_F(SequenceIteratorPublicTypes,
+HasPointerToConstValueType) {
+	bool isPointerToConstValueType = std::is_pointer<ConstSequenceIter::pointer>::value &&
+			std::is_same<const DynamicNumber, std::remove_pointer<ConstSequenceIter::pointer>::type>::value &&
+			std::is_const<std::remove_pointer<ConstSequenceIter::pointer>::type>::value;
+	ASSERT_TRUE(isPointerToConstValueType);
 }
 
 TEST_F(SequenceIteratorPublicTypes,
