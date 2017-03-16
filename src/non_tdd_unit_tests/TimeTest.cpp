@@ -8,6 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <prism/Time>
+#include <prism/Time_WithETMStub>
 #include <prism/String>
 #include <iostream>
 using namespace std;
@@ -15,9 +16,34 @@ using namespace std;
 namespace prism {
 namespace test {
 
+Time make_time_stub() {
+	Time_WithElapsedTimeMonitorStub time;
+	return time;
+}
+
 class TimeTest : public ::testing::Test {
 
 };
+
+TEST_F(TimeTest, start_stub_version) {
+	Time time = make_time_stub();
+	time.start();
+	const int msElapsed = time.elapsed();
+	ASSERT_EQ(ElapsedTimeMonitorStub::ElapsedTimeInMs, msElapsed);
+}
+
+/**
+ * Test: start()
+ * Disabled because it is a poor test and takes too long to run
+ */
+TEST_F(TimeTest, DISABLED_start) {
+	Time time;
+	time.start();
+	for (int i=0; i<1000000000; i++);
+	int ms = time.elapsed();
+
+	ASSERT_GT(ms, time.msecsTo(time));
+}
 
 /**
  * Test: constants
@@ -56,11 +82,11 @@ TEST_F(TimeTest, ctor_hour_min_sec_msec)
 {
 	Time time(14,23,56,862);
 
-	ASSERT_EQ("14:23:56:862", time.toString());
-	ASSERT_EQ(14, time.hour());
-	ASSERT_EQ(23, time.min());
-	ASSERT_EQ(56, time.sec());
-	ASSERT_EQ(862, time.msec());
+	EXPECT_EQ("14:23:56:862", time.toString());
+	EXPECT_EQ(14, time.hour());
+	EXPECT_EQ(23, time.min());
+	EXPECT_EQ(56, time.sec());
+	EXPECT_EQ(862, time.msec());
 }
 
 /**
@@ -173,19 +199,6 @@ TEST_F(TimeTest, set) {
 	ASSERT_EQ(2, time.min());
 	ASSERT_EQ(3, time.sec());
 	ASSERT_EQ(123, time.msec());
-}
-
-/**
- * Test: start()
- * Disabled because it is a poor test and takes too long to run
- */
-TEST_F(TimeTest, DISABLED_start) {
-	Time time;
-	time.start();
-	for (int i=0; i<1000000000; i++);
-	int ms = time.elapsed();
-
-	ASSERT_GT(ms, time.msecsTo(time));
 }
 
 /**

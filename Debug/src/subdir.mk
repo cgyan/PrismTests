@@ -7,18 +7,21 @@ CPP_SRCS += \
 ../src/Algorithm_Move.cpp \
 ../src/Iterator.cpp \
 ../src/List.cpp \
+../src/Time.cpp \
 ../src/Vector.cpp 
 
 OBJS += \
 ./src/Algorithm_Move.o \
 ./src/Iterator.o \
 ./src/List.o \
+./src/Time.o \
 ./src/Vector.o 
 
 CPP_DEPS += \
 ./src/Algorithm_Move.d \
 ./src/Iterator.d \
 ./src/List.d \
+./src/Time.d \
 ./src/Vector.d 
 
 
