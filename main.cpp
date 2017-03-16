@@ -10,7 +10,6 @@
 #include <prism/Iterator>
 #include <prism/DynamicNumber>
 #include <list>
-#include <prism/Time>
 
 using namespace std;
 using namespace ::testing;
@@ -21,7 +20,7 @@ using namespace prism::test;
 
 int main(int argc, char * argv[]) {
 
-//	Time t;
+
 
 	cout << "finished...\n";
 //	return 0;
