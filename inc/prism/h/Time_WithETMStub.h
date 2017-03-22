@@ -36,10 +36,8 @@ struct ElapsedTimeMonitorStub : public IElapsedTimeMonitor {
 class Time_WithElapsedTimeMonitorStub : public prism::Time {
 public:
 	Time_WithElapsedTimeMonitorStub()
-	: Time()
-	{
-		setEtm(std::make_shared<ElapsedTimeMonitorStub>());
-	}
+	: Time(TimeData{0, 0, 0, 0}, std::make_shared<ElapsedTimeMonitorStub>())
+	{}
 };
 
 PRISM_END_TEST_NAMESPACE
