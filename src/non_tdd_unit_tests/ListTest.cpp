@@ -6,7 +6,7 @@
 // */
 //
 #include "gtest/gtest.h"
-#include <prism/h/List.h>
+#include <prism/core/List.h>
 
 namespace prism {
 namespace test {

@@ -31,7 +31,7 @@
 #ifndef PRISM_DYNAMIC_NUMBER_H_
 #define PRISM_DYNAMIC_NUMBER_H_
 
-#include <prism/h/global.h>
+#include <prism/global>
 #include <iostream>
 #include <sstream>
 using std::cout;
@@ -150,15 +150,3 @@ PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
 
 #endif /* PRISM_DYNAMIC_NUMBER_H_ */
-
-
-
-
-
-
-
-
-
-
-
-

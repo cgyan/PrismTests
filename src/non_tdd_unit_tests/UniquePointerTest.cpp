@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <prism/UniquePointer>
-#include <prism/h/type_traits.h>
+#include <prism/type_traits>
 #include <string>
 
 namespace prism {
@@ -186,19 +186,3 @@ TEST_F(UniquePointerTest, nonmember_swap) {
 
 } // end namespace test
 } // end namespace prism
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

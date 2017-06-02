@@ -8,7 +8,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <prism/h/type_traits.h>
+#include <prism/type_traits>
 
 namespace prism {
 namespace test {
@@ -215,8 +215,8 @@ TEST_F(type_traitsTest, conditional_type_nonmember_pointers) {
 TEST_F(type_traitsTest, conditional_type_unions) {
 	union U1 {};
 	union U2 {};
-	typename prism::ConditionalType_t<true,U1,U2> UType1;
-	typename prism::ConditionalType_t<false,U1,U2> UType2;
+	typename prism::ConditionalType<true,U1,U2>::type UType1;
+	typename prism::ConditionalType<false,U1,U2>::type UType2;
 
 	EXPECT_TRUE(typeid(UType1) == typeid(U1));
 	EXPECT_TRUE(typeid(UType2) == typeid(U2));
@@ -1077,26 +1077,3 @@ TEST_F(type_traitsTest, RemoveVolatile) {
 
 } // end namespace test
 } // end namespace prism
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

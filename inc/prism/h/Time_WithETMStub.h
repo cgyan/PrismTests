@@ -11,7 +11,7 @@
 
 #include <prism/global>
 #include <prism/Time>
-#include <prism/h/IElapsedTimeMonitor.h>
+#include <prism/core/IElapsedTimeMonitor.h>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
