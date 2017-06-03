@@ -24,8 +24,10 @@ DEFINES				:= # -D
 
 # =============================================================================================
 
+
 $(shell mkdir -p $(BUILDDIR))
 $(shell mkdir -p $(BINDIR))
+
 
 default : $(TARGET)
 
@@ -53,6 +55,9 @@ $(BUILDDIR)/%.o : $(SRCDIR)/%.cpp
 
 clean :
 	rm -rf build bin/*
+
+cleaner : clean
+	rm -rf bin
 
 dump :
 	@echo CC: 			$(CC)
