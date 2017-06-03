@@ -7,48 +7,48 @@ PROJDIR				:= $(shell pwd)
 SRCDIR 				:= src
 BUILDDIR			:= build
 BINDIR				:= bin
-TARGET				:= $(BINDIR)/prismtests
+TARGETEXT			:= 
+TARGET				:= $(BINDIR)/runner
 SRCEXT 				:= cpp
-RECURSIVEWILDCARD 	= $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEWILDCARD,$d/,$2))
-ALLSRCS				:= $(call RECURSIVEWILDCARD,$(SRCDIR)/,*.$(SRCEXT))
+RECURSIVEDIRSEARCH 	= $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEDIRSEARCH,$d/,$2))
+ALLSRCS				:= $(call RECURSIVEDIRSEARCH,$(SRCDIR)/,*.$(SRCEXT))
 EXCLDSRCS			:=
 FILTSRCS			:= $(filter-out $(EXCLDSRCS),$(ALLSRCS))
 OBJS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(FILTSRCS:.$(SRCEXT)=.o))
-LIBDIR				:= -L c:\libs
+LIBDIR				:= -Lc:/libs
 LIBS				:= -lprism
 CPPFLAGS			:= -Wall
 CFLAGS				:=
 CXXFLAGS			:= -std=c++11
-INC					:= -I inc -I c:\inc
+INC					:= -I inc -I c:/inc
 DEFINES				:= # -D
 
 # =============================================================================================
 
-
 $(shell mkdir -p $(BUILDDIR))
 $(shell mkdir -p $(BINDIR))
 
-
 default : $(TARGET)
 
+#build an executable
 $(TARGET) : $(OBJS)
 	@echo Building target: $@
 	$(CC) $(OBJS) -o $(TARGET) $(LIBDIR) $(LIBS)
 	@echo Finished building target: $@
 	@echo ''
 
-dll : $(OBJS)
-	@echo Building DLL: $(TARGET).dll
-	$(CC) -shared -o $(TARGET).dll $(OBJS) $(LIBDIR) $(LIBS) $(DEFINES)
-	@echo Finished building DLL: $(TARGET).dll
+# build a shared library
+shared : $(OBJS)
+	@echo Building $(TARGETEXT): $(TARGET).$(TARGETEXT)
+	$(CC) -shared -o $(TARGET).$(TARGETEXT) $(OBJS) $(LIBDIR) $(LIBS) $(DEFINES)
+	@echo Finished building $(TARGETEXT): $(TARGET).$(TARGETEXT)
 	@echo ''
 
 $(BUILDDIR)/%.o : $(SRCDIR)/%.cpp
 	@echo Building file: $< into target: $@
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(CXXFLAGS) $(INC) $(DEFINES) -MD -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(CXXFLAGS) $(INC) $(DEFINES) -MMD -c $< -o $@
 	@cp $(BUILDDIR)/$*.d $(BUILDDIR)/$*.P
-	@sed -e 's/#.*//' -e 's/^[^:]*: *//' -e 's/ *\\$$//' -e '/^$$/ d' -e 's/$$/ :/' < $(BUILDDIR)/$*.d >> $(BUILDDIR)/$*.P;
 	@rm -f $(BUILDDIR)/$*.d
 	@echo Finished building file: $<
 	@echo ''
@@ -58,6 +58,7 @@ clean :
 
 cleaner : clean
 	rm -rf bin
+
 
 dump :
 	@echo CC: 			$(CC)
@@ -76,5 +77,9 @@ dump :
 	@echo CPPFLAGS:		$(CPPFLAGS)
 	@echo CXXFLAGS: 	$(CXXFLAGS)
 	@echo INC: 			$(INC)
+	@echo ALLP:			$(ALLPFILES)
 
--include $(BUILDDIR)/*.P
+# scans each subdirectory from $(BUILDDIR) downwards looking for all *.P files
+# then includes them in the makefile
+ALLPFILES := $(call RECURSIVEDIRSEARCH,$(BUILDDIR)/,*.P)
+-include $(ALLPFILES)
