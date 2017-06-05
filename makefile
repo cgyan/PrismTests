@@ -12,11 +12,11 @@ TARGET				:= $(BINDIR)/runner
 SRCEXT 				:= cpp
 RECURSIVEDIRSEARCH 	= $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEDIRSEARCH,$d/,$2))
 ALLSRCS				:= $(call RECURSIVEDIRSEARCH,$(SRCDIR)/,*.$(SRCEXT))
-EXCLDSRCS			:=
+EXCLDSRCS			:= src/3rdparty/gtest-all.cpp
 FILTSRCS			:= $(filter-out $(EXCLDSRCS),$(ALLSRCS))
 OBJS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(FILTSRCS:.$(SRCEXT)=.o))
 LIBDIR				:= -Lc:/libs
-LIBS				:= -lprism
+LIBS				:= -lprism -lgtest
 CPPFLAGS			:= -Wall
 CFLAGS				:=
 CXXFLAGS			:= -std=c++11
@@ -57,28 +57,7 @@ clean :
 cleaner : clean
 	rm -rf bin
 
-
-dump :
-	@echo CC: 			$(CC)
-	@echo PROJDIR:		$(PROJDIR)
-	@echo SRCDIR: 		$(SRCDIR)
-	@echo BUILDDIR: 	$(BUILDDIR)
-	@echo BINDIR:	 	$(BINDIR)
-	@echo TARGET: 		$(TARGET)
-	@echo SRCEXT: 		$(SRCEXT)
-	@echo ALLSRCS: 		$(ALLSRCS)
-	@echo EXCLDSRCS:	$(EXCLDSRCS)
-	@echo FILTSRCS:		$(FILTSRCS)
-	@echo OBJS: 		$(OBJS)
-	@echo LIBDIR:		$(LIBDIR)
-	@echo LIBS:			$(LIBS)
-	@echo CPPFLAGS:		$(CPPFLAGS)
-	@echo CXXFLAGS: 	$(CXXFLAGS)
-	@echo INCDIR: 		$(INCDIR)
-	@echo ALLP:			$(ALLPFILES)
-
 # scans each subdirectory from $(BUILDDIR) downwards looking for all generated
 # dependency files then includes those files in the makefile
-DEPENDEXT := d
-GENERATEDDEPENDENCIES := $(call RECURSIVEDIRSEARCH,$(BUILDDIR)/,*.$(DEPENDEXT))
+GENERATEDDEPENDENCIES := $(call RECURSIVEDIRSEARCH,$(BUILDDIR)/,*.d)
 -include $(GENERATEDDEPENDENCIES)
