@@ -7,7 +7,6 @@
 
 #include "gtest/gtest.h"
 using namespace ::testing;
-#include <prism/Object>
 
 int main(int argc, char * argv[]) {
 	// to run certain test cases use string with this format: "*Class1*:*Class2*:*ClassN*"

@@ -7,7 +7,7 @@ PROJDIR				:= $(shell pwd)
 SRCDIR 				:= src
 BUILDDIR			:= build
 BINDIR				:= bin
-TARGETEXT			:= 
+TARGETEXT			:=
 TARGET				:= $(BINDIR)/runner
 SRCEXT 				:= cpp
 RECURSIVEDIRSEARCH 	= $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEDIRSEARCH,$d/,$2))
@@ -20,17 +20,17 @@ LIBS				:= -lprism
 CPPFLAGS			:= -Wall
 CFLAGS				:=
 CXXFLAGS			:= -std=c++11
-INC					:= -I inc -I c:/inc
+INCDIR				:= -I inc -I c:/inc
 DEFINES				:= # -D
+
+default : $(TARGET)
 
 # =============================================================================================
 
 $(shell mkdir -p $(BUILDDIR))
 $(shell mkdir -p $(BINDIR))
 
-default : $(TARGET)
-
-#build an executable
+# build an executable
 $(TARGET) : $(OBJS)
 	@echo Building target: $@
 	$(CC) $(OBJS) -o $(TARGET) $(LIBDIR) $(LIBS)
@@ -39,17 +39,15 @@ $(TARGET) : $(OBJS)
 
 # build a shared library
 shared : $(OBJS)
-	@echo Building $(TARGETEXT): $(TARGET).$(TARGETEXT)
+	@echo Building library: $(TARGET).$(TARGETEXT)
 	$(CC) -shared -o $(TARGET).$(TARGETEXT) $(OBJS) $(LIBDIR) $(LIBS) $(DEFINES)
-	@echo Finished building $(TARGETEXT): $(TARGET).$(TARGETEXT)
+	@echo Finished building library: $(TARGET).$(TARGETEXT)
 	@echo ''
 
 $(BUILDDIR)/%.o : $(SRCDIR)/%.cpp
-	@echo Building file: $< into target: $@
+	@echo Building file: $<
 	@mkdir -p $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) $(CXXFLAGS) $(INC) $(DEFINES) -MMD -c $< -o $@
-	@cp $(BUILDDIR)/$*.d $(BUILDDIR)/$*.P
-	@rm -f $(BUILDDIR)/$*.d
+	$(CC) $(CPPFLAGS) $(CFLAGS) $(CXXFLAGS) $(INCDIR) $(DEFINES) -MMD -c $< -o $@
 	@echo Finished building file: $<
 	@echo ''
 
@@ -76,10 +74,11 @@ dump :
 	@echo LIBS:			$(LIBS)
 	@echo CPPFLAGS:		$(CPPFLAGS)
 	@echo CXXFLAGS: 	$(CXXFLAGS)
-	@echo INC: 			$(INC)
+	@echo INCDIR: 		$(INCDIR)
 	@echo ALLP:			$(ALLPFILES)
 
-# scans each subdirectory from $(BUILDDIR) downwards looking for all *.P files
-# then includes them in the makefile
-ALLPFILES := $(call RECURSIVEDIRSEARCH,$(BUILDDIR)/,*.P)
--include $(ALLPFILES)
+# scans each subdirectory from $(BUILDDIR) downwards looking for all generated
+# dependency files then includes those files in the makefile
+DEPENDEXT := d
+GENERATEDDEPENDENCIES := $(call RECURSIVEDIRSEARCH,$(BUILDDIR)/,*.$(DEPENDEXT))
+-include $(GENERATEDDEPENDENCIES)
