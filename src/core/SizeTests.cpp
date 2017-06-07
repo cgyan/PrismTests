@@ -143,22 +143,21 @@ TEST_F(SizeTests, CanSubtractOtherSizeFromThisSize) {
     ASSERT_EQ(Size(4,4), original);
 }
 
-TEST_F(SizeTests, CanMultiplyThisSizeByOtherSize) {
+TEST_F(SizeTests, CanMultiplyThisSizeByFactor) {
     Size original(5,6);
-    original *= Size(2,3);
-    ASSERT_EQ(Size(10,18), original);
+    original *= 2;
+    ASSERT_EQ(Size(10,12), original);
 }
 
-TEST_F(SizeTests, CanDivideThisSizeByOtherSize) {
+TEST_F(SizeTests, CanDivideThisSizeByFactor) {
     Size original(5,6);
-    original /= Size(2,3);
-    ASSERT_EQ(Size(2,2), original);
+    original /= 2;
+    ASSERT_EQ(Size(2,3), original);
 }
 
 TEST_F(SizeTests, ThrowsWhenDividingByZero) {
     Size original(5,6);
-    ASSERT_THROW(original /= Size(0,3), DivideByZeroException);
-    ASSERT_THROW(original /= Size(3,0), DivideByZeroException);
+    ASSERT_THROW(original /= 0, DivideByZeroException);
 }
 
 TEST_F(SizeTests, CanAddTwoSizesTogetherReturningNewSize) {
