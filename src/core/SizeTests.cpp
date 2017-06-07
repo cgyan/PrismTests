@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include <prism/global>
 #include <prism/PSize>
+#include <prism/DivideByZeroException>
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
@@ -120,6 +121,81 @@ TEST_F(SizeTests, CanReturnNewSizeScaledByOtherSize) {
     PSize scaled = original.scaled(scaler);
     ASSERT_EQ(PSize(10,18), scaled);
     ASSERT_EQ(PSize(5,6), original);
+}
+
+TEST_F(SizeTests, CanCompareTwoSizesForEquality) {
+    ASSERT_TRUE(Size(5,10) == Size(5,10));
+    ASSERT_FALSE(Size(1,2) == Size(2,1));
+}
+
+TEST_F(SizeTests, CanCompareTwoSizesForInequality) {
+    ASSERT_FALSE(Size(5,10) != Size(5,10));
+    ASSERT_TRUE(Size(1,2) != Size(2,1));
+}
+
+TEST_F(SizeTests, CanAppendOtherSizeToThisSize) {
+    Size original(1,2);
+    original += Size(5,6);
+    ASSERT_EQ(Size(6,8), original);
+}
+
+TEST_F(SizeTests, CanSubtractOtherSizeFromThisSize) {
+    Size original(5,6);
+    original -= Size(1,2);
+    ASSERT_EQ(Size(4,4), original);
+}
+
+TEST_F(SizeTests, CanMultiplyThisSizeByOtherSize) {
+    Size original(5,6);
+    original *= Size(2,3);
+    ASSERT_EQ(Size(10,18), original);
+}
+
+TEST_F(SizeTests, CanDivideThisSizeByOtherSize) {
+    Size original(5,6);
+    original /= Size(2,3);
+    ASSERT_EQ(Size(2,2), original);
+}
+
+TEST_F(SizeTests, ThrowsWhenDividingByZero) {
+    Size original(5,6);
+    ASSERT_THROW(original /= Size(0,3), DivideByZeroException);
+    ASSERT_THROW(original /= Size(3,0), DivideByZeroException);
+}
+
+TEST_F(SizeTests, CanAddTwoSizesTogetherReturningNewSize) {
+    Size lhs(5,6);
+    Size rhs(1,2);
+    Size result = lhs + rhs;
+    ASSERT_EQ(Size(6,8), result);
+    ASSERT_EQ(Size(5,6), lhs);
+    ASSERT_EQ(Size(1,2), rhs);
+}
+
+TEST_F(SizeTests, CanSubtractTwoSizesReturningNewSize) {
+    Size lhs(5,6);
+    Size rhs(1,2);
+    Size result = lhs - rhs;
+    ASSERT_EQ(Size(4,4), result);
+    ASSERT_EQ(Size(5,6), lhs);
+    ASSERT_EQ(Size(1,2), rhs);
+}
+
+TEST_F(SizeTests, CanMultiplySizeByFactorReturningNewSize) {
+    Size original(5,6);
+    ASSERT_EQ(Size(50,60), original * 10);
+    ASSERT_EQ(Size(50,60), 10 * original);
+    ASSERT_EQ(Size(5,6), original);
+}
+
+TEST_F(SizeTests, CanDivideSizeByFactorReturningNewSize) {
+    Size original(5,6);
+    ASSERT_EQ(Size(2,3), original / 2);
+    ASSERT_EQ(Size(5,6), original);
+}
+
+TEST_F(SizeTests, ThrowsWhenDividingSizeByOtherZeroFactor) {
+    ASSERT_THROW(Size(5,6) / 0, DivideByZeroException);
 }
 
 PRISM_END_TEST_NAMESPACE

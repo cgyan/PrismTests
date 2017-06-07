@@ -21,7 +21,7 @@ CPPFLAGS			:= -Wall
 CFLAGS				:=
 CXXFLAGS			:= -std=c++11
 INCDIR				:= -I inc -I c:/inc
-DEFINES				:= # -D
+DEFINES				:= #-D
 
 default : $(TARGET)
 
