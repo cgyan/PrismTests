@@ -1,13 +1,11 @@
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prism/PSize>
+#include <prism/Size>
 #include <prism/DivideByZeroException>
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
-
-using Size = PSize;
 
 class SizeTests : public Test {
 
@@ -94,33 +92,33 @@ TEST_F(SizeTests, IsValidIfBothWidthAndHeightNotNegative) {
 TEST_F(SizeTests, CanScaleThisSizeByFactors) {
     int widthFactor = 2;
     int heightFactor = 3;
-    PSize original(5,6);
+    Size original(5,6);
     original.scale(widthFactor, heightFactor);
-    ASSERT_EQ(PSize(10,18), original);
+    ASSERT_EQ(Size(10,18), original);
 }
 
 TEST_F(SizeTests, CanReturnNewSizeScaledByFactors) {
     int widthFactor = 2;
     int heightFactor = 3;
-    PSize original(5,6);
-    PSize scaled = original.scaled(widthFactor, heightFactor);
-    ASSERT_EQ(PSize(10,18), scaled);
-    ASSERT_EQ(PSize(5,6), original);
+    Size original(5,6);
+    Size scaled = original.scaled(widthFactor, heightFactor);
+    ASSERT_EQ(Size(10,18), scaled);
+    ASSERT_EQ(Size(5,6), original);
 }
 
 TEST_F(SizeTests, CanScaleThisSizeByOtherSize) {
-    PSize scaler(2,3);
-    PSize original(10,11);
+    Size scaler(2,3);
+    Size original(10,11);
     original.scale(scaler);
-    ASSERT_EQ(PSize(20,33), original);
+    ASSERT_EQ(Size(20,33), original);
 }
 
 TEST_F(SizeTests, CanReturnNewSizeScaledByOtherSize) {
-    PSize scaler(2,3);
-    PSize original(5,6);
-    PSize scaled = original.scaled(scaler);
-    ASSERT_EQ(PSize(10,18), scaled);
-    ASSERT_EQ(PSize(5,6), original);
+    Size scaler(2,3);
+    Size original(5,6);
+    Size scaled = original.scaled(scaler);
+    ASSERT_EQ(Size(10,18), scaled);
+    ASSERT_EQ(Size(5,6), original);
 }
 
 TEST_F(SizeTests, CanCompareTwoSizesForEquality) {
