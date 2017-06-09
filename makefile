@@ -12,7 +12,7 @@ TARGET				:= $(BINDIR)/runner
 SRCEXT 				:= cpp
 RECURSIVEDIRSEARCH 	= $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEDIRSEARCH,$d/,$2))
 ALLSRCS				:= $(call RECURSIVEDIRSEARCH,$(SRCDIR)/,*.$(SRCEXT))
-EXCLDSRCS			:= src/3rdparty/gtest-all.cpp
+EXCLDSRCS			:=
 FILTSRCS			:= $(filter-out $(EXCLDSRCS),$(ALLSRCS))
 OBJS				:= $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(FILTSRCS:.$(SRCEXT)=.o))
 LIBDIR				:= -Lc:/libs
