@@ -149,12 +149,21 @@ TEST_F(PointTests, ThrowsWhenDividingPointByZero) {
     ASSERT_THROW(p /= 0, prism::DivideByZeroException);
 }
 
-TEST_F(PointTests, CanMakeCopyOfPoint) {
-    Point p(2,3);
-    Point copy1(p);
-    Point copy2 = p;
-    ASSERT_EQ(p, copy1);
-    ASSERT_EQ(p, copy2);
+TEST_F(PointTests, CanModifyCopyOfPointWithoutAlteringOriginalPoint) {
+    Point original(2,3);
+
+    Point copy1(original);
+    copy1.set(10,11);
+
+    ASSERT_EQ(Point(2,3), original);
+    ASSERT_EQ(Point(10,11), copy1);
+
+    Point copy2;
+    copy2 = original;
+    copy2.set(20,21);
+
+    ASSERT_EQ(Point(2,3), original);
+    ASSERT_EQ(Point(20,21), copy2);
 }
 
 PRISM_END_TEST_NAMESPACE
