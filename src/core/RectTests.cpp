@@ -185,6 +185,62 @@ TEST(RectTests, CanSetBottomLeftPoint) {
     ASSERT_EQ(expectedHeight, r.height());
 }
 
+TEST(RectTests, CanSetTopEdgeToPosition) {
+    Rect r(0,0,100,100);
+    r.setTop(50);
+
+    ASSERT_EQ(Point(0,50), r.topLeft());
+    ASSERT_EQ(50, r.top());
+    ASSERT_EQ(Point(100, 50), r.topRight());
+    ASSERT_EQ(100, r.right());
+    ASSERT_EQ(Point(100,100), r.bottomRight());
+    ASSERT_EQ(100, r.bottom());
+    ASSERT_EQ(Point(0,100), r.bottomLeft());
+    ASSERT_EQ(0, r.left());
+}
+
+TEST(RectTests, CanSetRightEdgeToPosition) {
+    Rect r(0,0,100,100);
+    r.setRight(50);
+
+    ASSERT_EQ(Point(0,0), r.topLeft());
+    ASSERT_EQ(0, r.top());
+    ASSERT_EQ(Point(50, 0), r.topRight());
+    ASSERT_EQ(50, r.right());
+    ASSERT_EQ(Point(50,100), r.bottomRight());
+    ASSERT_EQ(100, r.bottom());
+    ASSERT_EQ(Point(0,100), r.bottomLeft());
+    ASSERT_EQ(0, r.left());
+}
+
+TEST(RectTests, CanSetBottomEdgeToPosition) {
+    Rect r(0,0,100,100);
+    r.setBottom(50);
+
+    ASSERT_EQ(Point(0,0), r.topLeft());
+    ASSERT_EQ(0, r.top());
+    ASSERT_EQ(Point(100, 0), r.topRight());
+    ASSERT_EQ(100, r.right());
+    ASSERT_EQ(Point(100,50), r.bottomRight());
+    ASSERT_EQ(50, r.bottom());
+    ASSERT_EQ(Point(0,50), r.bottomLeft());
+    ASSERT_EQ(0, r.left());
+}
+
+TEST(RectTests, CanSetLeftEdgeToPosition) {
+    Rect r(0,0,100,100);
+    r.setLeft(50);
+
+    ASSERT_EQ(Point(50,0), r.topLeft());
+    ASSERT_EQ(0, r.top());
+    ASSERT_EQ(Point(100, 0), r.topRight());
+    ASSERT_EQ(100, r.right());
+    ASSERT_EQ(Point(100,100), r.bottomRight());
+    ASSERT_EQ(100, r.bottom());
+    ASSERT_EQ(Point(50,100), r.bottomLeft());
+    ASSERT_EQ(50, r.left());
+}
+
 TEST(RectTests, CanMoveRectSoThatTopEdgeIsAtPosition) {
     const int newTopEdge = 10;
     Rect r(Point(0,0), Size(50,50));
@@ -313,6 +369,47 @@ TEST(RectTests, CanMoveRectSoThatBottomLeftPointIsAtPosition) {
     ASSERT_EQ(10, r.left());
 }
 
+TEST(RectTests, CanMoveCentrePointToPosition) {
+    Point topLeft(0,0);
+    Size size(20,20);
+    Rect r;
+    r.set(topLeft, size);
+
+    Point pos(20,20);
+    r.moveCentre(pos);
+
+    ASSERT_EQ(Point(20,20), r.centre());
+    ASSERT_EQ(Point(10,10), r.topLeft());
+    ASSERT_EQ(10, r.top());
+    ASSERT_EQ(Point(30,10), r.topRight());
+    ASSERT_EQ(30, r.right());
+    ASSERT_EQ(Point(30,30), r.bottomRight());
+    ASSERT_EQ(30, r.bottom());
+    ASSERT_EQ(Point(10,30), r.bottomLeft());
+    ASSERT_EQ(10, r.left());
+}
+
+TEST(RectTests, CanMoveCentrePointToCoordinate) {
+    Point topLeft(0,0);
+    Size size(20,20);
+    Rect r;
+    r.set(topLeft, size);
+
+    const int x = 20;
+    const int y = 20;
+    r.moveCentre(x,y);
+
+    ASSERT_EQ(Point(20,20), r.centre());
+    ASSERT_EQ(Point(10,10), r.topLeft());
+    ASSERT_EQ(10, r.top());
+    ASSERT_EQ(Point(30,10), r.topRight());
+    ASSERT_EQ(30, r.right());
+    ASSERT_EQ(Point(30,30), r.bottomRight());
+    ASSERT_EQ(30, r.bottom());
+    ASSERT_EQ(Point(10,30), r.bottomLeft());
+    ASSERT_EQ(10, r.left());
+}
+
 TEST(RectTests, CanGetCentrePointOfDefaultPositionedRect) {
     Point defaultPosition = Point(0,0);
     Rect r(defaultPosition, Size(10,10));
@@ -419,7 +516,7 @@ TEST(RectTests, ReturnsTrueIfPointIsContainedWithinOrOnBorderOfRect) {
     ASSERT_FALSE(r.contains(Point(51,51)));
 }
 
-TEST(RectTests, ReturnsTrueIfPointIsContainedPreciselyWithinRect) {
+TEST(RectTests, ReturnsTrueIfPointIsPreciselyContainedWithinRect) {
     Rect r(Point(0,0), Point(50,50));
 
     ASSERT_FALSE(r.contains(Point(0,0), true));
@@ -445,6 +542,218 @@ TEST(RectTests, ReturnsTrueIfCoordinateIsContainedWithinOrOnBorderOfRect) {
     ASSERT_FALSE(r.contains(-1,-1));
     ASSERT_FALSE(r.contains(50,-51));
     ASSERT_FALSE(r.contains(51,51));
+}
+
+TEST(RectTests, ReturnsTrueIfCoordinateIsPreciselyContainedWithinRect) {
+    Rect r(0,0,50,50);
+
+    ASSERT_FALSE(r.contains(0,0,true));
+    ASSERT_FALSE(r.contains(0,1,true));
+    ASSERT_FALSE(r.contains(1,0,true));
+    ASSERT_FALSE(r.contains(49,50,true));
+    ASSERT_FALSE(r.contains(50,49,true));
+    ASSERT_FALSE(r.contains(50,50,true));
+
+    ASSERT_TRUE(r.contains(1,1,true));
+    ASSERT_TRUE(r.contains(25,25,true));
+    ASSERT_TRUE(r.contains(49,49,true));
+}
+
+TEST(RectTests, ReturnsTrueIfOtherRectIsContainedWithinOrOnBorderOfRect) {
+    Rect r(0,0,50,50);
+
+    ASSERT_TRUE(r.contains(Rect(0,0,25,25)));
+    ASSERT_TRUE(r.contains(Rect(25,25,25,25)));
+    ASSERT_TRUE(r.contains(Rect(0,0,50,50)));
+
+    ASSERT_FALSE(r.contains(Rect(-1,0,25,25)));
+    ASSERT_FALSE(r.contains(Rect(0,-1,25,25)));
+    ASSERT_FALSE(r.contains(Rect(1,1,50,50)));
+}
+
+TEST(RectTests, ReturnsTrueIfOtherRectIsPreciselyContainedWithinRect) {
+    Rect r(0,0,50,50);
+
+    ASSERT_TRUE(r.contains(Rect(1,1,48,48), true));
+
+    ASSERT_FALSE(r.contains(Rect(0,0,25,25), true));
+    ASSERT_FALSE(r.contains(Rect(25,25,25,25), true));
+    ASSERT_FALSE(r.contains(Rect(0,0,50,50), true));
+}
+
+TEST(RectTests, CanTransposeWidthAndHeight) {
+    Rect r;
+    r.setWidth(5);
+    r.setHeight(10);
+
+    Rect transposed = r.transposed();
+
+    ASSERT_EQ(Rect(0,0,5,10), r);
+    ASSERT_EQ(10, transposed.width());
+    ASSERT_EQ(5, transposed.height());
+}
+
+TEST(RectTests, CanFlipOppositeEdgesIfWidthOrHeightAreNegative) {
+    Rect r;
+    r.setSize(-10, -15);
+
+    Rect normalised = r.normalised();
+
+    ASSERT_EQ(Rect(0,0,10,15), normalised);
+    ASSERT_EQ(Rect(0,0,-10,-15), r);
+}
+
+TEST(RectTests, CanRelativelyTranslatePositionByPointAmountOnBothAxis) {
+    Rect r;
+    r.set(0,0,20,20);
+
+    Point offset(10,10);
+    r.translate(offset);
+
+    ASSERT_EQ(Point(20,20), r.centre());
+    ASSERT_EQ(Point(10,10), r.topLeft());
+    ASSERT_EQ(10, r.top());
+    ASSERT_EQ(Point(30,10), r.topRight());
+    ASSERT_EQ(30, r.right());
+    ASSERT_EQ(Point(30,30), r.bottomRight());
+    ASSERT_EQ(30, r.bottom());
+    ASSERT_EQ(Point(10,30), r.bottomLeft());
+    ASSERT_EQ(10, r.left());
+}
+
+TEST(RectTests, CanRelativelyTranslatePositionByAmountOnBothAxis) {
+    Rect r;
+    r.set(0,0,20,20);
+
+    const int dx = 10;
+    const int dy = 10;
+    r.translate(dx,dy);
+
+    ASSERT_EQ(Point(20,20), r.centre());
+    ASSERT_EQ(Point(10,10), r.topLeft());
+    ASSERT_EQ(10, r.top());
+    ASSERT_EQ(Point(30,10), r.topRight());
+    ASSERT_EQ(30, r.right());
+    ASSERT_EQ(Point(30,30), r.bottomRight());
+    ASSERT_EQ(30, r.bottom());
+    ASSERT_EQ(Point(10,30), r.bottomLeft());
+    ASSERT_EQ(10, r.left());
+}
+
+TEST(RectTests, ReturnsNewRectRelativelyTranslatedByOffset) {
+    Rect r;
+    r.setSize(20,20);
+
+    const int dx = 10;
+    const int dy = 10;
+    Rect translated = r.translated(dx,dy);
+
+    ASSERT_EQ(Rect(0,0,20,20), r);
+
+    ASSERT_EQ(Point(20,20), translated.centre());
+    ASSERT_EQ(Point(10,10), translated.topLeft());
+    ASSERT_EQ(10, translated.top());
+    ASSERT_EQ(Point(30,10), translated.topRight());
+    ASSERT_EQ(30, translated.right());
+    ASSERT_EQ(Point(30,30), translated.bottomRight());
+    ASSERT_EQ(30, translated.bottom());
+    ASSERT_EQ(Point(10,30), translated.bottomLeft());
+    ASSERT_EQ(10, translated.left());
+}
+
+TEST(RectTests, ReturnsNewRectRelativelyTranslatedByPointOffset) {
+    Rect r;
+    r.setSize(20,20);
+
+    Point offset(10,10);
+    Rect translated = r.translated(offset);
+
+    ASSERT_EQ(Rect(0,0,20,20), r);
+
+    ASSERT_EQ(Point(20,20), translated.centre());
+    ASSERT_EQ(Point(10,10), translated.topLeft());
+    ASSERT_EQ(10, translated.top());
+    ASSERT_EQ(Point(30,10), translated.topRight());
+    ASSERT_EQ(30, translated.right());
+    ASSERT_EQ(Point(30,30), translated.bottomRight());
+    ASSERT_EQ(30, translated.bottom());
+    ASSERT_EQ(Point(10,30), translated.bottomLeft());
+    ASSERT_EQ(10, translated.left());
+}
+
+TEST(RectTests, ReturnsBoundingRectThatContainsTwoRects) {
+    Rect r1;
+    r1.setX(0);
+    r1.setY(0);
+    r1.setSize(20,20);
+
+    Rect r2;
+    r2.setX(10);
+    r2.setY(10);
+    r2.setSize(20,20);
+
+    Rect united = Rect::united(r1,r2);
+
+    ASSERT_EQ(Point(15,15), united.centre());
+    ASSERT_EQ(Point(0,0), united.topLeft());
+    ASSERT_EQ(0, united.top());
+    ASSERT_EQ(Point(30,0), united.topRight());
+    ASSERT_EQ(30, united.right());
+    ASSERT_EQ(Point(30,30), united.bottomRight());
+    ASSERT_EQ(30, united.bottom());
+    ASSERT_EQ(Point(0,30), united.bottomLeft());
+    ASSERT_EQ(0, united.left());
+}
+
+TEST(RectTests, ReturnsTrueIfTwoRectsAreIntersected) {
+    Rect r;
+    r.setTopLeft(Point(0,0));
+    r.setSize(20,20);
+
+    ASSERT_TRUE(r.intersects(Rect(10,10,20,20)));
+    ASSERT_TRUE(r.intersects(Rect(5,5,5,5)));
+    ASSERT_TRUE(r.intersects(Rect(-10,-10,100,100)));
+
+    ASSERT_FALSE(r.intersects(Rect(20,0,20,20)));
+    ASSERT_FALSE(r.intersects(Rect(0,20,20,20)));
+    ASSERT_FALSE(r.intersects(Rect(-20,0,20,20)));
+    ASSERT_FALSE(r.intersects(Rect(0,-20,20,20)));
+}
+
+TEST(RectTests, ReturnsNewRectOfOverlappingPortionOfTwoRects) {
+    Rect r1;
+    r1.setTopLeft(Point(0,0));
+    r1.setSize(20,20);
+
+    Rect r2;
+    r2.setTopLeft(Point(10,10));
+    r2.setSize(20,20);
+
+    Rect intersected = Rect::intersected(r1,r2);
+
+    ASSERT_EQ(Point(15,15), intersected.centre());
+    ASSERT_EQ(Point(10,10), intersected.topLeft());
+    ASSERT_EQ(10, intersected.top());
+    ASSERT_EQ(Point(20,10), intersected.topRight());
+    ASSERT_EQ(20, intersected.right());
+    ASSERT_EQ(Point(20,20), intersected.bottomRight());
+    ASSERT_EQ(20, intersected.bottom());
+    ASSERT_EQ(Point(10,20), intersected.bottomLeft());
+    ASSERT_EQ(10, intersected.left());
+}
+
+TEST(RectTests, ReturnsFirstRectIfThereIsNoOverlapBetweenTwoRects) {
+    Rect r1;
+    r1.setTopLeft(Point(0,0));
+    r1.setSize(20,20);
+
+    Rect r2;
+    r2.setTopLeft(Point(100,100));
+    r2.setSize(20,20);
+
+    Rect intersected = Rect::intersected(r1,r2);
+    ASSERT_EQ(r1, intersected);
+
 }
 
 PRISM_END_TEST_NAMESPACE
