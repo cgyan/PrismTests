@@ -58,9 +58,19 @@ TEST(RectTests, DefaultTopEdgeIsZero) {
     ASSERT_EQ(0, r.top());
 }
 
+TEST(RectTests, DefaultTopRightPointIsZeroZero) {
+    Rect r;
+    ASSERT_EQ(Point(0,0), r.topRight());
+}
+
 TEST(RectTests, DefaultRightEdgeIsZero) {
     Rect r;
     ASSERT_EQ(0, r.right());
+}
+
+TEST(RectTests, DefaultBottomRigtPointIsZeroZero) {
+    Rect r;
+    ASSERT_EQ(Point(0,0), r.bottomRight());
 }
 
 TEST(RectTests, DefaultBottomEdgeIsZero) {
@@ -68,24 +78,14 @@ TEST(RectTests, DefaultBottomEdgeIsZero) {
     ASSERT_EQ(0, r.bottom());
 }
 
-TEST(RectTests, DefaultLeftEdgeIsZero) {
-    Rect r;
-    ASSERT_EQ(0, r.left());
-}
-
-TEST(RectTests, DefaultTopRightPointIsZeroZero) {
-    Rect r;
-    ASSERT_EQ(Point(0,0), r.topRight());
-}
-
 TEST(RectTests, DefaultBottomLeftPointIsZeroZero) {
     Rect r;
     ASSERT_EQ(Point(0,0), r.bottomLeft());
 }
 
-TEST(RectTests, DefaultBottomRigtPointIsZeroZero) {
+TEST(RectTests, DefaultLeftEdgeIsZero) {
     Rect r;
-    ASSERT_EQ(Point(0,0), r.bottomRight());
+    ASSERT_EQ(0, r.left());
 }
 
 TEST(RectTests, DefaultXPosIsZero) {
@@ -113,138 +113,140 @@ TEST(RectTests, DefaultSizeHasWidthAndHeightOfZero) {
     ASSERT_EQ(Size(0,0), r.size());
 }
 
-TEST(RectTests, CanSetTopLeftPoint) {
-    Point p(5,5);
-    Rect r(Point(1,1), Size(10,10));
-
-    r.setTopLeft(p);
-
-    int expectedX = p.x();
-    int expectedY = p.y();
-    int expectedWidth = 6;
-    int expectedHeight = 6;
-
-    ASSERT_EQ(p, r.topLeft());
-    ASSERT_EQ(expectedX, r.left());
-    ASSERT_EQ(expectedY, r.top());
-    ASSERT_EQ(expectedWidth, r.width());
-    ASSERT_EQ(expectedHeight, r.height());
-}
-
-TEST(RectTests, CanSetTopRightPoint) {
-    Point p(5,5);
-    Rect r(Point(1,1), Size(10,10));
-
-    r.setTopRight(p);
-
-    int expectedX = p.x();
-    int expectedY = p.y();
-    int expectedWidth = 4;
-    int expectedHeight = 6;
-
-    ASSERT_EQ(p, r.topRight());
-    ASSERT_EQ(expectedX, r.right());
-    ASSERT_EQ(expectedY, r.top());
-    ASSERT_EQ(expectedWidth, r.width());
-    ASSERT_EQ(expectedHeight, r.height());
-}
-
-TEST(RectTests, CanSetBottomRightPoint) {
-    Point p(5,5);
-    Rect r(Point(1,1), Size(10,10));
-
-    r.setBottomRight(p);
-
-    int expectedX = p.x();
-    int expectedY = p.y();
-    int expectedWidth = 4;
-    int expectedHeight = 4;
-
-    ASSERT_EQ(p, r.bottomRight());
-    ASSERT_EQ(expectedX, r.right());
-    ASSERT_EQ(expectedY, r.bottom());
-    ASSERT_EQ(expectedWidth, r.width());
-    ASSERT_EQ(expectedHeight, r.height());
-}
-
-TEST(RectTests, CanSetBottomLeftPoint) {
-    Point p(5,5);
-    Rect r(Point(1,1), Size(10,10));
-
-    r.setBottomLeft(p);
-
-    int expectedX = p.x();
-    int expectedY = p.y();
-    int expectedWidth = 6;
-    int expectedHeight = 4;
-
-    ASSERT_EQ(p, r.bottomLeft());
-    ASSERT_EQ(expectedX, r.left());
-    ASSERT_EQ(expectedY, r.bottom());
-    ASSERT_EQ(expectedWidth, r.width());
-    ASSERT_EQ(expectedHeight, r.height());
-}
-
-TEST(RectTests, CanSetTopEdgeToPosition) {
-    Rect r(0,0,100,100);
-    r.setTop(50);
-
-    ASSERT_EQ(Point(0,50), r.topLeft());
-    ASSERT_EQ(50, r.top());
-    ASSERT_EQ(Point(100, 50), r.topRight());
-    ASSERT_EQ(100, r.right());
-    ASSERT_EQ(Point(100,100), r.bottomRight());
-    ASSERT_EQ(100, r.bottom());
-    ASSERT_EQ(Point(0,100), r.bottomLeft());
-    ASSERT_EQ(0, r.left());
-}
-
-TEST(RectTests, CanSetRightEdgeToPosition) {
-    Rect r(0,0,100,100);
-    r.setRight(50);
-
-    ASSERT_EQ(Point(0,0), r.topLeft());
-    ASSERT_EQ(0, r.top());
-    ASSERT_EQ(Point(50, 0), r.topRight());
-    ASSERT_EQ(50, r.right());
-    ASSERT_EQ(Point(50,100), r.bottomRight());
-    ASSERT_EQ(100, r.bottom());
-    ASSERT_EQ(Point(0,100), r.bottomLeft());
-    ASSERT_EQ(0, r.left());
-}
-
-TEST(RectTests, CanSetBottomEdgeToPosition) {
-    Rect r(0,0,100,100);
-    r.setBottom(50);
-
-    ASSERT_EQ(Point(0,0), r.topLeft());
-    ASSERT_EQ(0, r.top());
-    ASSERT_EQ(Point(100, 0), r.topRight());
-    ASSERT_EQ(100, r.right());
-    ASSERT_EQ(Point(100,50), r.bottomRight());
-    ASSERT_EQ(50, r.bottom());
-    ASSERT_EQ(Point(0,50), r.bottomLeft());
-    ASSERT_EQ(0, r.left());
-}
-
-TEST(RectTests, CanSetLeftEdgeToPosition) {
-    Rect r(0,0,100,100);
-    r.setLeft(50);
-
-    ASSERT_EQ(Point(50,0), r.topLeft());
-    ASSERT_EQ(0, r.top());
-    ASSERT_EQ(Point(100, 0), r.topRight());
-    ASSERT_EQ(100, r.right());
-    ASSERT_EQ(Point(100,100), r.bottomRight());
-    ASSERT_EQ(100, r.bottom());
-    ASSERT_EQ(Point(50,100), r.bottomLeft());
-    ASSERT_EQ(50, r.left());
-}
+// TEST(RectTests, CanSetTopLeftPoint) {
+//     Point p(5,5);
+//     Rect r(Point(1,1), Size(10,10));
+//
+//     r.setTopLeft(p);
+//
+//     int expectedX = p.x();
+//     int expectedY = p.y();
+//     int expectedWidth = 6;
+//     int expectedHeight = 6;
+//
+//     ASSERT_EQ(p, r.topLeft());
+//     ASSERT_EQ(expectedX, r.left());
+//     ASSERT_EQ(expectedY, r.top());
+//     ASSERT_EQ(expectedWidth, r.width());
+//     ASSERT_EQ(expectedHeight, r.height());
+// }
+//
+// TEST(RectTests, CanSetTopRightPoint) {
+//     Point p(5,5);
+//     Rect r(Point(1,1), Size(10,10));
+//
+//     r.setTopRight(p);
+//
+//     int expectedX = p.x();
+//     int expectedY = p.y();
+//     int expectedWidth = 4;
+//     int expectedHeight = 6;
+//
+//     ASSERT_EQ(p, r.topRight());
+//     ASSERT_EQ(expectedX, r.right());
+//     ASSERT_EQ(expectedY, r.top());
+//     ASSERT_EQ(expectedWidth, r.width());
+//     ASSERT_EQ(expectedHeight, r.height());
+// }
+//
+// TEST(RectTests, CanSetBottomRightPoint) {
+//     Point p(5,5);
+//     Rect r(Point(1,1), Size(10,10));
+//
+//     r.setBottomRight(p);
+//
+//     int expectedX = p.x();
+//     int expectedY = p.y();
+//     int expectedWidth = 4;
+//     int expectedHeight = 4;
+//
+//     ASSERT_EQ(p, r.bottomRight());
+//     ASSERT_EQ(expectedX, r.right());
+//     ASSERT_EQ(expectedY, r.bottom());
+//     ASSERT_EQ(expectedWidth, r.width());
+//     ASSERT_EQ(expectedHeight, r.height());
+// }
+//
+// TEST(RectTests, CanSetBottomLeftPoint) {
+//     Point p(5,5);
+//     Rect r(Point(1,1), Size(10,10));
+//
+//     r.setBottomLeft(p);
+//
+//     int expectedX = p.x();
+//     int expectedY = p.y();
+//     int expectedWidth = 6;
+//     int expectedHeight = 4;
+//
+//     ASSERT_EQ(p, r.bottomLeft());
+//     ASSERT_EQ(expectedX, r.left());
+//     ASSERT_EQ(expectedY, r.bottom());
+//     ASSERT_EQ(expectedWidth, r.width());
+//     ASSERT_EQ(expectedHeight, r.height());
+// }
+//
+// TEST(RectTests, CanSetTopEdgeToPosition) {
+//     Rect r(0,0,100,100);
+//     r.setTop(50);
+//
+//     ASSERT_EQ(Point(0,50), r.topLeft());
+//     ASSERT_EQ(50, r.top());
+//     ASSERT_EQ(Point(100, 50), r.topRight());
+//     ASSERT_EQ(100, r.right());
+//     ASSERT_EQ(Point(100,100), r.bottomRight());
+//     ASSERT_EQ(100, r.bottom());
+//     ASSERT_EQ(Point(0,100), r.bottomLeft());
+//     ASSERT_EQ(0, r.left());
+// }
+//
+// TEST(RectTests, CanSetRightEdgeToPosition) {
+//     Rect r(0,0,100,100);
+//     r.setRight(50);
+//
+//     ASSERT_EQ(Point(0,0), r.topLeft());
+//     ASSERT_EQ(0, r.top());
+//     ASSERT_EQ(Point(50, 0), r.topRight());
+//     ASSERT_EQ(50, r.right());
+//     ASSERT_EQ(Point(50,100), r.bottomRight());
+//     ASSERT_EQ(100, r.bottom());
+//     ASSERT_EQ(Point(0,100), r.bottomLeft());
+//     ASSERT_EQ(0, r.left());
+// }
+//
+// TEST(RectTests, CanSetBottomEdgeToPosition) {
+//     Rect r(0,0,100,100);
+//     r.setBottom(50);
+//
+//     ASSERT_EQ(Point(0,0), r.topLeft());
+//     ASSERT_EQ(0, r.top());
+//     ASSERT_EQ(Point(100, 0), r.topRight());
+//     ASSERT_EQ(100, r.right());
+//     ASSERT_EQ(Point(100,50), r.bottomRight());
+//     ASSERT_EQ(50, r.bottom());
+//     ASSERT_EQ(Point(0,50), r.bottomLeft());
+//     ASSERT_EQ(0, r.left());
+// }
+//
+// TEST(RectTests, CanSetLeftEdgeToPosition) {
+//     Rect r(0,0,100,100);
+//     r.setLeft(50);
+//
+//     ASSERT_EQ(Point(50,0), r.topLeft());
+//     ASSERT_EQ(0, r.top());
+//     ASSERT_EQ(Point(100, 0), r.topRight());
+//     ASSERT_EQ(100, r.right());
+//     ASSERT_EQ(Point(100,100), r.bottomRight());
+//     ASSERT_EQ(100, r.bottom());
+//     ASSERT_EQ(Point(50,100), r.bottomLeft());
+//     ASSERT_EQ(50, r.left());
+// }
 
 TEST(RectTests, CanMoveRectSoThatTopEdgeIsAtPosition) {
-    const int newTopEdge = 10;
-    Rect r(Point(0,0), Size(50,50));
+    Rect r;
+    r.setTopLeft(Point(0,0));
+    r.setSize(50,50);
 
+    const int newTopEdge = 10;
     r.moveTop(newTopEdge);
 
     ASSERT_EQ(Point(0,10), r.topLeft());
@@ -258,9 +260,10 @@ TEST(RectTests, CanMoveRectSoThatTopEdgeIsAtPosition) {
 }
 
 TEST(RectTests, CanMoveRectSoThatRightEdgeIsAtPosition) {
-    const int newRightEdge = 10;
-    Rect r(Point(0,0), Size(50,50));
+    Rect r;
+    r.setBottomRight(Point(50,50));
 
+    const int newRightEdge = 10;
     r.moveRight(newRightEdge);
 
     ASSERT_EQ(Point(-40, 0), r.topLeft());
@@ -532,7 +535,9 @@ TEST(RectTests, ReturnsTrueIfPointIsPreciselyContainedWithinRect) {
 }
 
 TEST(RectTests, ReturnsTrueIfCoordinateIsContainedWithinOrOnBorderOfRect) {
-    Rect r(Point(0,0), Point(50,50));
+    Rect r;
+    r.setBottomLeft(Point(0,50));
+    r.setWidth(50);
 
     ASSERT_TRUE(r.contains(0,0));
     ASSERT_TRUE(r.contains(25,25));
@@ -722,12 +727,13 @@ TEST(RectTests, ReturnsTrueIfTwoRectsAreIntersected) {
 
 TEST(RectTests, ReturnsNewRectOfOverlappingPortionOfTwoRects) {
     Rect r1;
-    r1.setTopLeft(Point(0,0));
-    r1.setSize(20,20);
+    r1.setTopRight(Point(20,0));
+    r1.setHeight(20);
 
     Rect r2;
     r2.setTopLeft(Point(10,10));
-    r2.setSize(20,20);
+    r2.setTopRight(Point(30,10));
+    r2.setHeight(20);
 
     Rect intersected = Rect::intersected(r1,r2);
 
@@ -744,16 +750,19 @@ TEST(RectTests, ReturnsNewRectOfOverlappingPortionOfTwoRects) {
 
 TEST(RectTests, ReturnsFirstRectIfThereIsNoOverlapBetweenTwoRects) {
     Rect r1;
-    r1.setTopLeft(Point(0,0));
-    r1.setSize(20,20);
+    r1.setLeft(0);
+    r1.setTop(0);
+    r1.setRight(20);
+    r1.setBottom(20);
 
     Rect r2;
-    r2.setTopLeft(Point(100,100));
-    r2.setSize(20,20);
+    r2.setLeft(100);
+    r2.setTop(100);
+    r2.setRight(120);
+    r2.setBottom(120);
 
     Rect intersected = Rect::intersected(r1,r2);
     ASSERT_EQ(r1, intersected);
-
 }
 
 PRISM_END_TEST_NAMESPACE
