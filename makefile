@@ -27,12 +27,10 @@ default : $(TARGET)
 
 # =============================================================================================
 
-$(shell mkdir -p $(BUILDDIR))
-$(shell mkdir -p $(BINDIR))
-
 # build an executable
 $(TARGET) : $(OBJS)
 	@echo Building target: $@
+	@mkdir -p $(BINDIR)
 	$(CC) $(OBJS) -o $(TARGET) $(LIBDIR) $(LIBS)
 	@echo Finished building target: $@
 	@echo ''
@@ -40,12 +38,15 @@ $(TARGET) : $(OBJS)
 # build a shared library
 shared : $(OBJS)
 	@echo Building library: $(TARGET).$(TARGETEXT)
+	@mkdir -p $(BINDIR)
 	$(CC) -shared -o $(TARGET).$(TARGETEXT) $(OBJS) $(LIBDIR) $(LIBS) $(DEFINES)
 	@echo Finished building library: $(TARGET).$(TARGETEXT)
 	@echo ''
 
-$(BUILDDIR)/%.o : $(SRCDIR)/%.cpp
+# build an *.o file from a source file
+$(BUILDDIR)/%.o : $(SRCDIR)/%.$(SRCEXT)
 	@echo Building file: $<
+	@mkdir -p $(BUILDDIR)
 	@mkdir -p $(dir $@)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(CXXFLAGS) $(INCDIR) $(DEFINES) -MMD -c $< -o $@
 	@echo Finished building file: $<
