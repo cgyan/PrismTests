@@ -3,7 +3,6 @@
 # makefile should be in the project root directory
 # =============================================================================================
 
-
 CC 					:= g++
 PROJDIR				:= $(shell pwd)
 SRCDIR 				:= src
@@ -26,7 +25,8 @@ default : $(TARGET)
 
 RECURSIVEDIRSEARCH = $(wildcard $1$2) $(foreach d,$(wildcard $1*),$(call RECURSIVEDIRSEARCH,$d/,$2))
 
-SRCS	:= # SRCS is filled in by src subfolder's module.mk files
+SRCS	= # SRCS is filled in by src subfolder's module.mk files
+
 OBJS 	= $(patsubst $(SRCDIR)/%.$(SRCEXT),$(BUILDDIR)/%.o,$(SRCS))
 
 SUBMK 	:= $(call RECURSIVEDIRSEARCH,$(SRCDIR)/,*.mk)

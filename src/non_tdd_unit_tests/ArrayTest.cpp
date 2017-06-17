@@ -36,7 +36,7 @@ protected:
  * Test: ctor()
  */
 TEST_F(ArrayTest, ctor) {
-	ASSERT_EQ(5, a.size());
+	ASSERT_EQ((size_t)5, a.size());
 }
 
 /**
@@ -45,7 +45,7 @@ TEST_F(ArrayTest, ctor) {
 TEST_F(ArrayTest, ctor_fill) {
 	Array<int,5> array(123);
 
-	ASSERT_EQ(5, array.size());
+	ASSERT_EQ((size_t)5, array.size());
 	ASSERT_EQ(123, array[0]);
 	ASSERT_EQ(123, array[1]);
 	ASSERT_EQ(123, array[2]);
@@ -59,7 +59,7 @@ TEST_F(ArrayTest, ctor_fill) {
 TEST_F(ArrayTest, ctor_init_list) {
 	Array<int,3> ilArray({1,2,3});
 
-	ASSERT_EQ(3, ilArray.size());
+	ASSERT_EQ((size_t)3, ilArray.size());
 	ASSERT_EQ(1, ilArray[0]);
 	ASSERT_EQ(2, ilArray[1]);
 	ASSERT_EQ(3, ilArray[2]);
@@ -71,14 +71,14 @@ TEST_F(ArrayTest, ctor_init_list) {
 TEST_F(ArrayTest, copy_ctor) {
 	Array<int,5> copy(a);
 
-	ASSERT_EQ(5, a.size());
+	ASSERT_EQ((size_t)5, a.size());
 	ASSERT_EQ(0, a[0]);
 	ASSERT_EQ(1, a[1]);
 	ASSERT_EQ(2, a[2]);
 	ASSERT_EQ(3, a[3]);
 	ASSERT_EQ(4, a[4]);
 
-	ASSERT_EQ(5, copy.size());
+	ASSERT_EQ((size_t)5, copy.size());
 	ASSERT_EQ(0, copy[0]);
 	ASSERT_EQ(1, copy[1]);
 	ASSERT_EQ(2, copy[2]);
@@ -348,7 +348,7 @@ TEST_F(ArrayTest, last_const) {
  * Test: size()
  */
 TEST_F(ArrayTest, size) {
-	ASSERT_EQ(5, a.size());
+	ASSERT_EQ((size_t)5, a.size());
 }
 
 /**
@@ -431,15 +431,3 @@ TEST_F(ArrayTest, operatorInequality) {
 
 } // end namespace test
 } // end namespace rpism
-
-
-
-
-
-
-
-
-
-
-
-

@@ -328,7 +328,7 @@ ThrowsWhenResizingToNegativeSize) {
 
 class VectorResizing : public VectorTestBase {
 public:
-	int newSize;
+	size_t newSize;
 };
 
 TEST_F(VectorResizing,
