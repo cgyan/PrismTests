@@ -2,40 +2,37 @@
 #include <prism/global>
 #include <prism/Object>
 #include <list>
-using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class ObjectTests : public Test {
-public:
+TEST(ObjectTests, DefaultObjectHasNullParent) {
     Object o;
-    Object oo;
-};
-
-TEST_F(ObjectTests, DefaultObjectHasNullParent) {
     ASSERT_EQ(nullptr, o.parent());
 }
 
-TEST_F(ObjectTests, CanMakeObjectParentOfOtherObject) {
+TEST(ObjectTests, CanMakeObjectChildOfOtherObject) {
+    Object o;
     Object parent;
     o.setParent(&parent);
     ASSERT_EQ(&parent, o.parent());
 }
 
-TEST_F(ObjectTests, CanSetParentWhenObjectIsCreated) {
+TEST(ObjectTests, CanSetParentWhenObjectIsCreated) {
     Object parent;
     Object child(&parent);
     ASSERT_EQ(&parent, child.parent());
 }
 
-TEST_F(ObjectTests, DefaultObjectHasZeroChildren) {
+TEST(ObjectTests, DefaultObjectHasZeroChildren) {
+    Object o;
     Object::ObjectList expected;
     Object::ObjectList actual = o.children();
     ASSERT_EQ(expected.size(), actual.size());
 }
 
-TEST_F(ObjectTests, ObjectHasOneChildAfterBecomingParent) {
+TEST(ObjectTests, ObjectHasOneChildAfterBecomingParent) {
+    Object o;
     Object child;
     child.setParent(&o);
     Object::ObjectList expected(1);
@@ -43,7 +40,7 @@ TEST_F(ObjectTests, ObjectHasOneChildAfterBecomingParent) {
     ASSERT_EQ(expected.size(), actual.size());
 }
 
-TEST_F(ObjectTests, ObjectCanHaveMultipleChildren) {
+TEST(ObjectTests, ObjectCanHaveMultipleChildren) {
     using const_iterator = Object::ObjectList::const_iterator;
 
     Object parent;
