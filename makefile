@@ -13,7 +13,7 @@ TARGET				:= $(BINDIR)/runner
 SRCEXT 				:= cpp
 LIBDIR				:= -Lc:/libs
 LIBS				:= -lprism -lgtest
-CPPFLAGS			:= -Wall
+CPPFLAGS			:= -Wall -g
 CFLAGS				:=
 CXXFLAGS			:= -std=c++11
 INCDIR				:= -I inc -I c:/inc

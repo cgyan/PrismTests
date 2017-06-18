@@ -10,14 +10,12 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(WidgetTests, DefaultWidgetSizeIs600400) {
     Widget w;
-    Size s(600,400);
-    ASSERT_EQ(s, w.size());
+    ASSERT_EQ(Size(600,400), w.size());
 }
 
 TEST(WidgetTests, DefaultWidgetPositionIsZeroZero) {
     Widget w;
-    Point p(0,0);
-    ASSERT_EQ(p, w.position());
+    ASSERT_EQ(Point(0,0), w.pos());
 }
 
 TEST(WidgetTests, DefaultWidgetHasDefaultWindowTitle) {
@@ -26,18 +24,31 @@ TEST(WidgetTests, DefaultWidgetHasDefaultWindowTitle) {
     ASSERT_EQ(wintitle, w.title());
 }
 
+TEST(WidgetTests, CanRenameWindowTitle) {
+    std::string newtitle = "New Window Title";
+    Widget w;
+    w.setTitle(newtitle);
+    ASSERT_EQ(newtitle, w.title());
+}
+
 TEST(WidgetTests, CanResizeWidthAndHeightSimultaneously) {
     Widget w;
-    w.resize(1024,768);
-    Size expected(1024,768);
+    Size expected;
+
+    expected.set(600,400);
+    w.resize(expected);
+    ASSERT_EQ(expected, w.size());
+
+    expected.set(1024,768);
+    w.resize(expected.width(), expected.height());
     ASSERT_EQ(expected, w.size());
 }
 
-TEST(WidgetTests, CanMoveWidgetToNewLocation) {
+TEST(WidgetTests, CanMoveWidgetTopLeftToNewLocation) {
     Point newPos(50,60);
     Widget w;
-    w.setPosition(newPos);
-    ASSERT_EQ(newPos, w.position());
+    w.setPos(newPos);
+    ASSERT_EQ(newPos, w.pos());
 }
 
 PRISM_END_TEST_NAMESPACE
