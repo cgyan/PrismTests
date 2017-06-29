@@ -1,1 +1,1 @@
-SRCS += src/gui/WidgetTests.cpp
+SRCS += #src/gui/WidgetTests.cpp
