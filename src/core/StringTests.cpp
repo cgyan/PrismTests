@@ -36,13 +36,29 @@ public:
     }
 
     char *
-    allocate(const int capacity) {
+    allocate(const int capacity) const {
         return new char[capacity];
     }
 
     const bool
-    indexOutOfBounds(const int index) {
+    indexOutOfBounds(const int index) const {
         return index < 0 || index >= end-start;
+    }
+
+    void
+    append(const char c) {
+        *end = c;
+        ++end;
+    }
+
+    const int
+    numChars() const {
+        return end - start;
+    }
+
+    const int
+    numAvailableChars() const {
+        return finish - start;
     }
 };
 //==============================================================================
@@ -62,8 +78,7 @@ public:
     String(const char c)
     :   impl{new StringImpl(1)}
     {
-        impl->start[0] = c;
-        impl->end = impl->start + 1;
+        impl->append(c);
     }
 
     String(const char * str)
@@ -81,7 +96,7 @@ public:
 
     const int
     length() const {
-        return impl->end - impl->start;
+        return impl->numChars();
     }
 
     const bool
@@ -91,7 +106,7 @@ public:
 
     const int
     capacity() const {
-        return impl->finish - impl->start;
+        return impl->numAvailableChars();
     }
 
     void
@@ -112,7 +127,7 @@ public:
     at(const int index) {
         if (impl->indexOutOfBounds(index))
             throw prism::OutOfBoundsException(index);
-        return impl->start[index];
+        return operator[](index);
     }
 
     const char&
