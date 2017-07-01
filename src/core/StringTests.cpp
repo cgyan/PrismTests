@@ -3,8 +3,12 @@ using namespace ::testing;
 #include <prism/global>
 #include <prism/OutOfBoundsException>
 #include <prism/algorithm>
+#include <prism/Iterator>
 #include <string>
 #include <memory>
+#include <cassert>
+#include <iostream>
+using namespace std;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
@@ -13,13 +17,19 @@ PRISM_BEGIN_TEST_NAMESPACE
 //==============================================================================
 class StringImpl {
 public:
-    char * start{nullptr};
-    char * end{nullptr};
-    char * finish{nullptr};
-
+    using iterator = prism::SequenceIterator<char,false>;
+public:
     StringImpl(const int capacity = 0) {
         start = this->allocate(capacity);
         end = start;
+        finish = start + capacity;
+    }
+
+    template <typename Iter>
+    StringImpl(const int capacity, Iter itBegin, Iter itEnd) {
+        start = this->allocate(capacity);
+        prism::copy(itBegin, itEnd, start);
+        end = start + (itEnd-itBegin);
         finish = start + capacity;
     }
 
@@ -32,7 +42,13 @@ public:
     swap(StringImpl* other) {
         char * temp = this->start;
     	this->start = other->start;
-    	this->start = temp;
+    	other->start = temp;
+        temp = this->end;
+    	this->end = other->end;
+    	other->end = temp;
+        temp = this->finish;
+    	this->finish = other->finish;
+    	other->finish = temp;
     }
 
     char *
@@ -57,14 +73,30 @@ public:
     }
 
     const int
-    numAvailableChars() const {
+    availableBytes() const {
         return finish - start;
     }
+
+    iterator
+    beginIter() const {
+        return start;
+    }
+
+    iterator
+    endIter() const {
+        return this->end;
+    }
+private:
+    char * start{nullptr};
+    char * end{nullptr};
+    char * finish{nullptr};
 };
 //==============================================================================
 // String
 //==============================================================================
 class String {
+public:
+    using iterator = StringImpl::iterator;
 private:
     // class StringImpl;
     std::shared_ptr<StringImpl> impl;
@@ -82,17 +114,14 @@ public:
     }
 
     String(const char * str)
-    :   impl{new StringImpl}
+    :   impl{new StringImpl(0)}
     {
         *this = String(std::string(str));
     }
 
     String(const std::string& str)
-    :   impl{new StringImpl(str.length())}
-    {
-        prism::copy(str.cbegin(), str.cend(), impl->start);
-        impl->end = impl->start + str.length();
-    }
+    :   impl{new StringImpl(str.length(), str.cbegin(), str.cend())}
+    {}
 
     const int
     length() const {
@@ -106,7 +135,7 @@ public:
 
     const int
     capacity() const {
-        return impl->numAvailableChars();
+        return impl->availableBytes();
     }
 
     void
@@ -114,13 +143,8 @@ public:
         if (newCapacity <= this->capacity())
             return;
 
-        const int currentLength = this->length();
-        StringImpl newImpl(newCapacity);
-        prism::copy(impl->start, impl->end, newImpl.start);
+        StringImpl newImpl(newCapacity, this->begin(), this->end());
         impl->swap(&newImpl);
-
-        impl->end = impl->start + currentLength;
-        impl->finish = impl->start + newCapacity;
     }
 
     const char &
@@ -132,7 +156,17 @@ public:
 
     const char&
     operator[](const int index) const {
-        return *(impl->start + index);
+        return *(begin() + index);
+    }
+
+    iterator
+    begin() const {
+        return impl->beginIter();
+    }
+
+    iterator
+    end() const {
+        return impl->endIter();
     }
 };
 
@@ -143,6 +177,13 @@ operator==(const String& lhs, const String& rhs) {
         if (lhs[i] != rhs[i]) return false;
     }
     return true;
+}
+
+std::ostream&
+operator<<(std::ostream& out, const String& s) {
+    for (int i=0; i<s.length(); ++i)
+        out << s[i];
+    return out;
 }
 //==============================================================================
 // Tests
@@ -202,19 +243,15 @@ TEST(StringTests, ThrowsWhenAccessingInvalidCharIndex) {
 TEST(StringTests, CanReserveMemoryInDefaultStringForTwentyChars) {
     String s;
     const int newCapacity = 20;
-
     s.reserve(newCapacity);
-
     ASSERT_EQ(newCapacity, s.capacity());
 }
 
 TEST(StringTests, CanIncreaseReservedMemoryOnExistingString) {
     String s("prism");
     const int newCapacity = 20;
-
     s.reserve(newCapacity);
-
-    ASSERT_TRUE(String("prism") == s);
+    ASSERT_EQ(String("prism"), s);
     ASSERT_EQ(newCapacity, s.capacity());
 }
 
