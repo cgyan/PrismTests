@@ -68,12 +68,12 @@ public:
     }
 
     const int
-    numChars() const {
+    consumedBytes() const {
         return end - start;
     }
 
     const int
-    availableBytes() const {
+    totalBytes() const {
         return finish - start;
     }
 
@@ -97,9 +97,6 @@ private:
 class String {
 public:
     using iterator = StringImpl::iterator;
-private:
-    // class StringImpl;
-    std::shared_ptr<StringImpl> impl;
 public:
     ~String() = default;
 
@@ -125,7 +122,7 @@ public:
 
     const int
     length() const {
-        return impl->numChars();
+        return impl->consumedBytes();
     }
 
     const bool
@@ -135,7 +132,7 @@ public:
 
     const int
     capacity() const {
-        return impl->availableBytes();
+        return impl->totalBytes();
     }
 
     void
@@ -168,6 +165,24 @@ public:
     end() const {
         return impl->endIter();
     }
+
+    const bool
+    contains(const char c) const {
+        iterator it = prism::find(begin(), end(), c);
+        if (it == end()) return false;
+        return true;
+    }
+
+    const bool
+    contains(const String& substring) const {
+        iterator it = prism::search(this->begin(), this->end(),
+            substring.begin(), substring.end());
+        if (it == end()) return false;
+        return true;
+    }
+private:
+    // class StringImpl;
+    std::shared_ptr<StringImpl> impl;
 };
 
 const bool
@@ -260,6 +275,23 @@ TEST(StringTests, RequestToDecreaseReservedMemoryToLessThanCurrentLengthIsIgnore
     const int capacityBeforeReserve = s.capacity();
     s.reserve(1);
     ASSERT_EQ(capacityBeforeReserve, s.capacity());
+}
+
+TEST(StringTests, ReturnsTrueIfContainsGivenChar) {
+    String s = "abc";
+    ASSERT_TRUE(s.contains('a'));
+    ASSERT_TRUE(s.contains('b'));
+    ASSERT_TRUE(s.contains('c'));
+    ASSERT_FALSE(s.contains('q'));
+}
+
+TEST(StringTests, ReturnsTrueIfContainsSubstring) {
+    String s = "prism";
+    ASSERT_TRUE(s.contains("pri"));
+    ASSERT_TRUE(s.contains("ris"));
+    ASSERT_TRUE(s.contains("ism"));
+    ASSERT_FALSE(s.contains("PRI"));
+    ASSERT_FALSE(s.contains("abc"));
 }
 
 PRISM_END_TEST_NAMESPACE
