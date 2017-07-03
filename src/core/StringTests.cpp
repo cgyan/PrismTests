@@ -94,6 +94,9 @@ private:
 //==============================================================================
 // String
 //==============================================================================
+class String;
+const bool operator==(const String& lhs, const String& rhs);
+
 class String {
 public:
     using iterator = StringImpl::iterator;
@@ -118,6 +121,10 @@ public:
 
     String(const std::string& str)
     :   impl{new StringImpl(str.length(), str.cbegin(), str.cend())}
+    {}
+
+    String(iterator first, iterator last)
+    :   impl{new StringImpl(last - first, first, last)}
     {}
 
     const int
@@ -156,6 +163,11 @@ public:
         return *(begin() + index);
     }
 
+    char&
+    operator[](const int index) {
+        return *(begin() + index);
+    }
+
     iterator
     begin() const {
         return impl->beginIter();
@@ -179,6 +191,88 @@ public:
             substring.begin(), substring.end());
         if (it == end()) return false;
         return true;
+    }
+
+    const int
+    count(const char c) const {
+        return prism::count(this->begin(), this->end(), c);
+    }
+
+    const int
+    count(const String& substring) const {
+        int ret = 0;
+    	iterator bit = begin();
+    	iterator eit = end();
+
+    	while (bit != eit) {
+    		iterator result = prism::search(bit, eit, substring.begin(), substring.end());
+    		if (result != eit) {
+    			++ret;
+    			bit = result + 1;
+    		}
+    		else ++bit;
+    	}
+    	return ret;
+    }
+
+    const bool
+    startsWith(const char c) const {
+        return operator[](0) == c;
+    }
+
+    const bool
+    startsWith(const String& substring) const {
+        return prism::equal(substring.begin(), substring.end(), this->begin());
+    }
+
+    const bool
+    endsWith(const char c) const {
+        return *(--end()) == c;
+    }
+
+    const bool
+    endsWith(const String& substring) const {
+        return prism::equal(substring.begin(), substring.end(), this->end() - substring.length());
+    }
+
+    const int
+    indexOf(const char c, const int from = 0) const {
+        iterator it = prism::find(this->begin() + from, this->end(), c);
+        if (it == end()) return -1;
+        return it - begin();
+    }
+
+    const int
+    lastIndexOf(const char c, const int from = -1) const {
+        iterator bit = begin();
+        iterator eit = end();
+        if (from != -1) eit = begin() + from;
+        iterator it = prism::find_last(bit, eit, c);
+        if (it == eit) return -1;
+        return it - begin();
+    }
+
+    void
+    clear() {
+        StringImpl newImpl;
+        impl->swap(&newImpl);
+    }
+
+    void
+    fill(const char c) {
+        prism::fill(this->begin(), this->end(), c);
+    }
+
+    void
+    squeeze() {
+        StringImpl newImpl(this->length(), begin(), end());
+        impl->swap(&newImpl);
+    }
+
+    String
+    sub(const int startIndex) const {
+        String s(begin() + startIndex, end());
+        return s;
     }
 private:
     // class StringImpl;
@@ -292,6 +386,106 @@ TEST(StringTests, ReturnsTrueIfContainsSubstring) {
     ASSERT_TRUE(s.contains("ism"));
     ASSERT_FALSE(s.contains("PRI"));
     ASSERT_FALSE(s.contains("abc"));
+}
+
+TEST(StringTests, CountsTheOccurrencesOfChar) {
+    String s = "tests";
+    ASSERT_EQ(1, s.count('e'));
+    ASSERT_EQ(2, s.count('s'));
+    ASSERT_EQ(0, s.count('q'));
+}
+
+TEST(StringTests, CountsTheOccurrencesOfSubstring) {
+    String s = "I see sea shells by the sea shore";
+    ASSERT_EQ(1, s.count("shells"));
+    ASSERT_EQ(2, s.count("sea"));
+    ASSERT_EQ(0, s.count("prism"));
+}
+
+TEST(StringTests, ReturnsTrueIfStartsWithChar) {
+    String s = "prism";
+    ASSERT_TRUE(s.startsWith('p'));
+    ASSERT_FALSE(s.startsWith('r'));
+}
+
+TEST(StringTests, ReturnsTrueIfStartsWithSubstring) {
+    String s = "prism";
+    ASSERT_TRUE(s.startsWith("pri"));
+    ASSERT_FALSE(s.startsWith("ism"));
+}
+
+TEST(StringTests, ReturnsTrueIfEndsWithChar) {
+    String s = "prism";
+    ASSERT_TRUE(s.endsWith('m'));
+    ASSERT_FALSE(s.endsWith('p'));
+}
+
+TEST(StringTests, ReturnsTrueIfEndsWithSubstring) {
+    String s = "prism";
+    ASSERT_TRUE(s.endsWith("ism"));
+    ASSERT_FALSE(s.endsWith("pri"));
+}
+
+TEST(StringTests, ReturnsFirstIndexOfGivenChar) {
+    String s = "tests";
+    ASSERT_EQ(0, s.indexOf('t'));
+    ASSERT_EQ(1, s.indexOf('e'));
+}
+
+TEST(StringTests, ReturnsFirstIndexOfGivenCharStartingFromGivenIndex) {
+    String s = "tests";
+    const int startIndex = 1;
+    ASSERT_EQ(3, s.indexOf('t', startIndex));
+}
+
+TEST(StringTests, ReturnsNotFoundIfFirstIndexOfCharNotFound) {
+    String s = "tests";
+    const int NotFound = -1;
+    ASSERT_EQ(NotFound, s.indexOf('q'));
+}
+
+TEST(StringTests, ReturnsLastIndexOfGivenChar) {
+    String s = "tests";
+    ASSERT_EQ(4, s.lastIndexOf('s'));
+    ASSERT_EQ(3, s.lastIndexOf('t'));
+}
+
+TEST(StringTests, ReturnsLastIndexOfGivenCharStartingFromGivenIndex) {
+    String s = "tests";
+    const int startIndex = 3;
+    ASSERT_EQ(2, s.lastIndexOf('s', startIndex));
+}
+
+TEST(StringTests, ReturnsNotFoundIfLastIndexOfCharNotFound) {
+    String s = "tests";
+    const int NotFound = -1;
+    ASSERT_EQ(NotFound, s.lastIndexOf('q'));
+}
+
+TEST(StringTests, CanResetStringBackToDefault) {
+    String s = "prism";
+    s.clear();
+    ASSERT_EQ(String(""), s);
+    ASSERT_EQ(0, s.length());
+}
+
+TEST(StringTests, CanFillStringWithGivenChar) {
+    String s = "prism";
+    s.fill('q');
+    ASSERT_EQ(String("qqqqq"), s);
+}
+
+TEST(StringTests, CanRemoveUnusedBytes) {
+    String s = "prism";
+    s.reserve(20);
+    s.squeeze();
+    ASSERT_EQ(s.length(), s.capacity());
+}
+
+TEST(StringTests, ReturnsSubstringStartingFromGivenIndex) {
+    String s = "this is a string";
+    ASSERT_EQ(String("a string"), s.sub(8));
+    ASSERT_EQ(String("string"), s.sub(10));
 }
 
 PRISM_END_TEST_NAMESPACE
