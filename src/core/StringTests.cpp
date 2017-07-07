@@ -6,6 +6,7 @@ using namespace ::testing;
 #include <prism/Iterator>
 #include <string>
 #include <memory>
+#include <cctype>
 #include <cassert>
 #include <iostream>
 using namespace std;
@@ -15,9 +16,11 @@ PRISM_BEGIN_TEST_NAMESPACE
 //==============================================================================
 // StringImpl
 //==============================================================================
+class String;
 class StringImpl {
 public:
     using iterator = prism::SequenceIterator<char,false>;
+    using const_iterator = prism::SequenceIterator<char,true>;
 public:
     StringImpl(const int capacity = 0) {
         start = this->allocate(capacity);
@@ -25,8 +28,7 @@ public:
         finish = start + capacity;
     }
 
-    template <typename Iter>
-    StringImpl(const int capacity, Iter itBegin, Iter itEnd) {
+    StringImpl(const int capacity, const_iterator itBegin, const_iterator itEnd) {
         start = this->allocate(capacity);
         prism::copy(itBegin, itEnd, start);
         end = start + (itEnd-itBegin);
@@ -62,13 +64,30 @@ public:
     }
 
     void
-    append(const char c) {
+    insertAtEnd(const char c) {
         *end = c;
         ++end;
     }
 
+    void
+    insertAtEnd(const_iterator first, const_iterator last) {
+        const int numCharsToInsert = last - first;
+        ensureSufficientStorage(numCharsToInsert);
+        prism::copy(first, last, end);
+        end += numCharsToInsert;
+    }
+
+    void
+    insert(const int index, const char c) {
+        const int numCharsToInsert = 1;
+        ensureSufficientStorage(numCharsToInsert);
+        prism::copy_backward(start + index, end, end + 1);
+        start[index] = c;
+        end += numCharsToInsert;
+    }
+
     const int
-    consumedBytes() const {
+    usedBytes() const {
         return end - start;
     }
 
@@ -84,12 +103,27 @@ public:
 
     iterator
     endIter() const {
-        return this->end;
+        return end;
+    }
+private:
+    const bool
+    storageExceeded(const int numCharsToInsert) const {
+        return this->usedBytes() + numCharsToInsert > this->totalBytes();
+    }
+
+    void
+    ensureSufficientStorage(const int numCharsToInsert) {
+        if (storageExceeded(numCharsToInsert)) {
+            const int newCapacity = (numCharsToInsert + totalBytes()) * exponent;
+            StringImpl newImpl(newCapacity, start, end);
+            this->swap(&newImpl);
+        }
     }
 private:
     char * start{nullptr};
     char * end{nullptr};
     char * finish{nullptr};
+    const int exponent{2};
 };
 //==============================================================================
 // String
@@ -100,6 +134,7 @@ const bool operator==(const String& lhs, const String& rhs);
 class String {
 public:
     using iterator = StringImpl::iterator;
+    using const_iterator = StringImpl::const_iterator;
 public:
     ~String() = default;
 
@@ -110,7 +145,7 @@ public:
     String(const char c)
     :   impl{new StringImpl(1)}
     {
-        impl->append(c);
+        impl->insertAtEnd(c);
     }
 
     String(const char * str)
@@ -120,16 +155,25 @@ public:
     }
 
     String(const std::string& str)
-    :   impl{new StringImpl(str.length(), str.cbegin(), str.cend())}
+    :   impl{new StringImpl(
+                    str.length(),
+                    str.data(),
+                    str.data() + str.length()
+            )}
     {}
 
-    String(iterator first, iterator last)
+    String(const_iterator first, const_iterator last)
     :   impl{new StringImpl(last - first, first, last)}
     {}
 
     const int
     length() const {
-        return impl->consumedBytes();
+        return impl->usedBytes();
+    }
+
+    const int
+    size() const {
+        return length();
     }
 
     const bool
@@ -158,36 +202,46 @@ public:
         return operator[](index);
     }
 
-    const char&
-    operator[](const int index) const {
-        return *(begin() + index);
-    }
-
     char&
     operator[](const int index) {
         return *(begin() + index);
     }
 
+    const char&
+    operator[](const int index) const {
+        return *(begin() + index);
+    }
+
     iterator
+    begin() {
+        return impl->beginIter();
+    }
+
+    const_iterator
     begin() const {
         return impl->beginIter();
     }
 
     iterator
+    end() {
+        return impl->endIter();
+    }
+
+    const_iterator
     end() const {
         return impl->endIter();
     }
 
     const bool
     contains(const char c) const {
-        iterator it = prism::find(begin(), end(), c);
+        const_iterator it = prism::find(begin(), end(), c);
         if (it == end()) return false;
         return true;
     }
 
     const bool
     contains(const String& substring) const {
-        iterator it = prism::search(this->begin(), this->end(),
+        const_iterator it = prism::search(this->begin(), this->end(),
             substring.begin(), substring.end());
         if (it == end()) return false;
         return true;
@@ -201,11 +255,11 @@ public:
     const int
     count(const String& substring) const {
         int ret = 0;
-    	iterator bit = begin();
-    	iterator eit = end();
+    	const_iterator bit = begin();
+    	const_iterator eit = end();
 
     	while (bit != eit) {
-    		iterator result = prism::search(bit, eit, substring.begin(), substring.end());
+    		const_iterator result = prism::search(bit, eit, substring.begin(), substring.end());
     		if (result != eit) {
     			++ret;
     			bit = result + 1;
@@ -237,17 +291,17 @@ public:
 
     const int
     indexOf(const char c, const int from = 0) const {
-        iterator it = prism::find(this->begin() + from, this->end(), c);
+        const_iterator it = prism::find(this->begin() + from, this->end(), c);
         if (it == end()) return -1;
         return it - begin();
     }
 
     const int
     lastIndexOf(const char c, const int from = -1) const {
-        iterator bit = begin();
-        iterator eit = end();
+        const_iterator bit = begin();
+        const_iterator eit = end();
         if (from != -1) eit = begin() + from;
-        iterator it = prism::find_last(bit, eit, c);
+        const_iterator it = prism::find_last(bit, eit, c);
         if (it == eit) return -1;
         return it - begin();
     }
@@ -270,9 +324,32 @@ public:
     }
 
     String
-    sub(const int startIndex) const {
-        String s(begin() + startIndex, end());
+    sub(const int startIndex, const int numChars = -1) const {
+        if (startIndex < 0 || startIndex >= length())
+            return String();
+        const_iterator bit = begin();
+        const_iterator eit;
+        if (numChars == -1 || startIndex + numChars >= length())
+            eit = end();
+        else
+            eit = bit + startIndex + numChars;
+        String s(bit + startIndex, eit);
         return s;
+    }
+
+    void
+    append(const char c) {
+        impl->insertAtEnd(c);
+    }
+
+    void
+    append(const String& str) {
+        impl->insertAtEnd(str.begin(), str.end());
+    }
+
+    void
+    prepend(const char c) {
+        impl->insert(0, c);
     }
 private:
     // class StringImpl;
@@ -486,6 +563,56 @@ TEST(StringTests, ReturnsSubstringStartingFromGivenIndex) {
     String s = "this is a string";
     ASSERT_EQ(String("a string"), s.sub(8));
     ASSERT_EQ(String("string"), s.sub(10));
+}
+
+TEST(StringTests, ReturnsSubstringStartingFromGivenIndexForGivenNumOfChars) {
+    String s = "this is a string";
+    ASSERT_EQ(String("is a"), s.sub(5, 4));
+    ASSERT_EQ(String(), s.sub(-1));
+    ASSERT_EQ(String(), s.sub(s.size()));
+    ASSERT_EQ(String("string"), s.sub(10, 100));
+}
+
+TEST(StringTests, CanAppendCharToDefaultString) {
+    String s;
+    s.append('q');
+    ASSERT_EQ(String("q"), s);
+    ASSERT_EQ(1, s.length());
+}
+
+TEST(StringTests, CanAppendCharToExistingString) {
+    String s = "prism";
+    s.append('s');
+    ASSERT_EQ(String("prisms"), s);
+    ASSERT_EQ(6, s.size());
+}
+
+TEST(StringTests, CanAppendStringToDefaultString) {
+    String s;
+    s.append(String("prism"));
+    ASSERT_EQ(String("prism"), s);
+    ASSERT_EQ(5, s.length());
+}
+
+TEST(StringTests, CanAppendStringToExistingString) {
+    String s = "hello";
+    s.append(" world!");
+    ASSERT_EQ(String("hello world!"), s);
+    ASSERT_EQ(12, s.length());
+}
+
+TEST(StringTests, CanPrependCharToDefaultString) {
+    String s;
+    s.prepend('q');
+    ASSERT_EQ(String("q"), s);
+    ASSERT_EQ(1, s.length());
+}
+
+TEST(StringTests, CanPrependCharToExistingString) {
+    String s = "test";
+    s.prepend('a');
+    ASSERT_EQ(String("atest"), s);
+    ASSERT_EQ(5, s.length());
 }
 
 PRISM_END_TEST_NAMESPACE
