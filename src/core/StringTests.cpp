@@ -36,8 +36,7 @@ public:
         const int numChars = last - first;
         if (capacity == -1) capacity = numChars;
         m_start = this->allocate(capacity);
-        prism::copy(first, last, m_start);
-        m_end = m_start + numChars;
+        m_end = prism::copy(first, last, m_start);
         m_finish = m_start + capacity;
     }
 
@@ -76,8 +75,7 @@ public:
     insertAtEnd(const_iterator first, const_iterator last) {
         const int numCharsToInsert = last - first;
         ensureSufficientCapacity(numCharsToInsert);
-        prism::copy(first, last, m_end);
-        m_end += numCharsToInsert;
+        m_end = prism::copy(first, last, m_end);
     }
 
     void
@@ -98,6 +96,32 @@ public:
         prism::copy_backward(m_start + insertIndex, m_end, m_end + numCharsToInsert);
         prism::copy(first, last, m_start + insertIndex);
         m_end += numCharsToInsert;
+    }
+
+    void
+    remove(const_iterator pos, const int numCharsToRemove) {
+        const int removalIndex = pos - begin();
+        const_iterator first = begin() + removalIndex + numCharsToRemove;
+        const_iterator last = end();
+        char * otherFirst = m_start + removalIndex;
+        m_end = prism::copy(first, last, otherFirst);
+    }
+
+    void
+    removeAll(const char c) {
+        m_end = prism::remove(m_start, m_end, c);
+    }
+
+    void
+    removeAll(const_iterator first, const_iterator last) {
+        const int rangeLength = last - first;
+        iterator subrangeBegin = prism::search(begin(), end(), first, last);
+
+        while (subrangeBegin != end()) {
+            iterator destinationEnd = prism::copy(subrangeBegin + rangeLength, end(), subrangeBegin);
+            m_end = &*destinationEnd;
+            subrangeBegin = prism::search(subrangeBegin, end(), first, last);
+        }
     }
 
     const int
@@ -138,7 +162,7 @@ private:
             this->swap(&newImpl);
         }
     }
-private:
+public:
     char * m_start{nullptr};
     char * m_end{nullptr};
     char * m_finish{nullptr};
@@ -200,10 +224,19 @@ public:
     void append(const String& str);
     void prepend(const char c);
     void prepend(const String& str);
+
     String& insert(const int index, const char c);
     String& insert(const int index, const String& str);
     iterator insert(const_iterator pos, const char c);
     iterator insert(const_iterator pos, const String& str);
+
+    String& remove(const int index, const int numCharsToRemove);
+    String& remove(const char c);
+    String& remove(const String& str);
+
+    String repeated(const int nTimes) const;
+
+    String& operator+=(const String& rhs);
 private:
     // class StringImpl;
     std::shared_ptr<StringImpl> impl;
@@ -467,6 +500,39 @@ String::insert(const_iterator pos, const String& str) {
     return begin() + insertIndex;
 }
 
+String&
+String::remove(const int index, const int numCharsToRemove) {
+    impl->remove(begin() + index, numCharsToRemove);
+    return *this;
+}
+
+String&
+String::remove(const char c) {
+    impl->removeAll(c);
+    return *this;
+}
+
+String&
+String::remove(const String& str) {
+    impl->removeAll(str.begin(), str.end());
+    return *this;
+}
+
+String
+String::repeated(const int nTimes) const {
+    String ret;
+    for (int i = 0; i < nTimes; ++i)
+        ret += *this;
+
+    return ret;
+}
+
+String&
+String::operator+=(const String& rhs) {
+    impl->insertAtEnd(rhs.begin(), rhs.end());
+    return *this;
+}
+
 const bool
 operator==(const String& lhs, const String& rhs) {
     if (lhs.length() != rhs.length()) return false;
@@ -482,6 +548,7 @@ operator<<(std::ostream& out, const String& s) {
         out << s[i];
     return out;
 }
+
 //==============================================================================
 // Tests
 //==============================================================================
@@ -673,6 +740,10 @@ TEST(StringTests, CanRemoveUnusedBytes) {
 TEST(StringTests, ReturnsSubstringStartingFromGivenIndex) {
     String s = "this is a string";
     ASSERT_EQ(String("a string"), s.sub(8));
+}
+
+TEST(StringTests, SubstringFromOutOfBoundsIndexReturnsDefaultString) {
+    String s = "prism";
     ASSERT_EQ(String(), s.sub(-1));
     ASSERT_EQ(String(), s.sub(s.size()));
 }
@@ -730,12 +801,14 @@ TEST(StringTests, CanPrependStringToDefaultString) {
     String s;
     s.prepend("prism");
     ASSERT_EQ(String("prism"), s);
+    ASSERT_EQ(5, s.length());
 }
 
 TEST(StringTests, CanPrependStringToExistingString) {
     String s = "oni";
     s.prepend("pepper");
     ASSERT_EQ(String("pepperoni"), s);
+    ASSERT_EQ(9, s.length());
 }
 
 TEST(StringTests, CanInsertCharAtIndex) {
@@ -780,6 +853,59 @@ TEST(StringTests, CanInsertStringByIterator) {
 
     ASSERT_EQ(s3.end() - 3, s3.insert(s3.end(), "@@@"));
     ASSERT_EQ(String("prism@@@"), s3);
+}
+
+TEST(StringTests, CanRemoveCharAtIndex) {
+    String s1, s2, s3;
+    s3 = s2 = s1 = "prism";
+    const int numCharsToRemove = 1;
+    ASSERT_EQ(String("rism"), s1.remove(0, numCharsToRemove));
+    ASSERT_EQ(String("prsm"), s2.remove(2, numCharsToRemove));
+    ASSERT_EQ(String("pris"), s3.remove(4, numCharsToRemove));
+}
+
+TEST(StringTests, CanRemoveMultipleCharsStartingFromIndex) {
+    String s = "prism";
+    const int startIndex = 1;
+    const int numCharsToRemove = 3;
+    ASSERT_EQ(String("pm"), s.remove(startIndex, numCharsToRemove));
+    ASSERT_EQ(2, s.length());
+}
+
+TEST(StringTests, CanRemoveAllOccurrencesOfGivenChar) {
+    String s1, s2;
+    s2 = s1 = "tests";
+    ASSERT_EQ(String("tet"), s1.remove('s'));
+    ASSERT_EQ(3, s1.size());
+    ASSERT_EQ(String("ess"), s2.remove('t'));
+    ASSERT_EQ(3, s2.size());
+}
+
+TEST(StringTests, ReturnsUnmodifiedStringWhenTryingToRemoveNonExistentChars) {
+    String s = "tests";
+    String unmodified = s;
+    ASSERT_EQ(unmodified, s.remove('q'));
+}
+
+TEST(StringTests, CanRemoveAllOccurrencesOfGivenString) {
+    String s1, s2, s3;
+    s3 = s2 = s1 = "the catcher in the rye";
+    ASSERT_EQ(String("the catcher in the "), s1.remove("rye"));
+    ASSERT_EQ(String("the catcher in the"), s2.remove(" rye"));
+    ASSERT_EQ(String("catcher in rye"), s3.remove("the "));
+}
+
+TEST(StringTests, ReturnsUnmodifiedStringWhenTryingToRemoveNonExistentString) {
+    String s = "the catcher in the rye";
+    String unmodified = s;
+    ASSERT_EQ(unmodified, s.remove("prism"));
+}
+
+TEST(StringTests, ReturnsCopyOfStringRepeatedNumTimes) {
+    String s = "prism";
+    const int repeatTimes = 3;
+    ASSERT_EQ(String("prismprismprism"), s.repeated(repeatTimes));
+
 }
 
 PRISM_END_TEST_NAMESPACE
