@@ -2,6 +2,7 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/OutOfBoundsException>
+#include <prism/BadSizeException>
 #include <prism/algorithm>
 #include <prism/Iterator>
 #include <string>
@@ -64,11 +65,13 @@ public:
     }
 
     void
-    insertAtEnd(const char c) {
-        const int numCharsToInsert = 1;
+    insertAtEnd(const char c, const int count = 1) {
+        const int numCharsToInsert = count;
         ensureSufficientCapacity(numCharsToInsert);
-        *m_end = c;
-        ++m_end;
+        for (int i = 0; i < count; ++i) {
+            *m_end = c;
+            ++m_end;
+        }
     }
 
     void
@@ -105,6 +108,14 @@ public:
         const_iterator last = end();
         char * otherFirst = m_start + removalIndex;
         m_end = prism::copy(first, last, otherFirst);
+    }
+
+    void
+    removeRange(const_iterator first, const_iterator last) {
+        const int firstRemovalIndex = first - begin();
+        const int lastRemovalIndex = last - begin();
+        char * copyFrom = m_start + lastRemovalIndex;
+        m_end = prism::copy(copyFrom, m_end, m_start + firstRemovalIndex);
     }
 
     void
@@ -192,9 +203,10 @@ public:
     const bool isEmpty() const;
     const int capacity() const;
     void reserve(const int newCapacity);
+    void resize(const int newSize, const char paddingChar = ' ');
     void squeeze();
 
-    const char & at(const int index);
+    const char & at(const int index) const;
     char& operator[](const int index);
     const char& operator[](const int index) const;
 
@@ -222,8 +234,10 @@ public:
 
     void append(const char c);
     void append(const String& str);
+    void append(const char * str);
     void prepend(const char c);
     void prepend(const String& str);
+    void prepend(const char * str);
 
     String& insert(const int index, const char c);
     String& insert(const int index, const String& str);
@@ -304,8 +318,23 @@ String::reserve(const int newCapacity) {
     impl->swap(&newImpl);
 }
 
+void
+String::resize(const int newSize, const char paddingChar) {
+    if (newSize == size())
+        return;
+    else if (newSize < 0)
+        throw prism::BadSizeException(newSize);
+    else if (newSize < size())
+        impl->removeRange(begin() + newSize, end());
+    else {
+        reserve(newSize);
+        const int numPaddingChars = newSize - this->size();
+        impl->insertAtEnd(paddingChar, numPaddingChars);
+    }
+}
+
 const char &
-String::at(const int index) {
+String::at(const int index) const {
     if (impl->outOfBounds(index))
         throw prism::OutOfBoundsException(index);
     return operator[](index);
@@ -461,6 +490,14 @@ String::append(const String& str) {
 }
 
 void
+String::append(const char * str) {
+    const char * first = str;
+    const char * last = first;
+    while (*last != '\0') ++last;
+    impl->insertAtEnd(first, last);
+}
+
+void
 String::prepend(const char c) {
     impl->insert(begin(), c);
 }
@@ -468,6 +505,14 @@ String::prepend(const char c) {
 void
 String::prepend(const String& str) {
     impl->insert(begin(), str.begin(), str.end());
+}
+
+void
+String::prepend(const char * str) {
+    const char * first = str;
+    const char * last = first;
+    while (*last != '\0') ++last;
+    impl->insert(begin(), first, last);
 }
 
 String&
@@ -626,12 +671,39 @@ TEST(StringTests, RequestToDecreaseReservedMemoryToLessThanCurrentLengthIsIgnore
     ASSERT_EQ(capacityBeforeReserve, s.capacity());
 }
 
+TEST(StringTests, CanResizeStringToShorterLength) {
+    String s = "prism";
+    const int newLength = 3;
+    s.resize(newLength);
+    ASSERT_EQ(String("pri"), s);
+}
+
+TEST(StringTests, StringResizedGreaterAddsDefaultCharAtEnd) {
+    String s = "prism";
+    const int newLength = 8;
+    s.resize(newLength);
+    ASSERT_EQ(String("prism   "), s);
+}
+
+TEST(StringTests, StringResizedGreaterAddsGivenCharAtEnd) {
+    String s = "prism";
+    const int newLength = 8;
+    s.resize(newLength, '!');
+    ASSERT_EQ(String("prism!!!"), s);
+}
+
+TEST(StringTests, ThrowsWhenResizingToNegativeSize) {
+    String s = "prism";
+    ASSERT_THROW(s.resize(-1), prism::BadSizeException);
+}
+
 TEST(StringTests, ReturnsTrueIfContainsGivenChar) {
     String s = "abc";
     ASSERT_TRUE(s.contains('a'));
     ASSERT_TRUE(s.contains('b'));
     ASSERT_TRUE(s.contains('c'));
     ASSERT_FALSE(s.contains('q'));
+    ASSERT_FALSE(s.contains('A'));
 }
 
 TEST(StringTests, ReturnsTrueIfContainsSubstring) {
@@ -783,6 +855,20 @@ TEST(StringTests, CanAppendStringToExistingString) {
     ASSERT_EQ(12, s.length());
 }
 
+TEST(StringTests, CanAppendCStyleStringToDefaultString) {
+    char cstring[] = "c string";
+    String s;
+    s.append(cstring);
+    ASSERT_EQ(String("c string"), s);
+}
+
+TEST(StringTests, CanAppendCStyleStringToExistingString) {
+    const char * cstring = "c string";
+    String s = "using a ";
+    s.append(cstring);
+    ASSERT_EQ(String("using a c string"), s);
+}
+
 TEST(StringTests, CanPrependCharToDefaultString) {
     String s;
     s.prepend('q');
@@ -809,6 +895,20 @@ TEST(StringTests, CanPrependStringToExistingString) {
     s.prepend("pepper");
     ASSERT_EQ(String("pepperoni"), s);
     ASSERT_EQ(9, s.length());
+}
+
+TEST(StringTests, CanPrependCStyleStringToDefaultString) {
+    const char * cstring = "c string";
+    String s;
+    s.prepend(cstring);
+    ASSERT_EQ(String("c string"), s);
+}
+
+TEST(StringTests, CanPrependCStyleStringToExistingString) {
+    const char cstring[] = "cstring";
+    String s = " is a string";
+    s.prepend(cstring);
+    ASSERT_EQ(String("cstring is a string"), s);
 }
 
 TEST(StringTests, CanInsertCharAtIndex) {
@@ -905,7 +1005,7 @@ TEST(StringTests, ReturnsCopyOfStringRepeatedNumTimes) {
     String s = "prism";
     const int repeatTimes = 3;
     ASSERT_EQ(String("prismprismprism"), s.repeated(repeatTimes));
-
+    ASSERT_EQ(String("prism"), s);
 }
 
 PRISM_END_TEST_NAMESPACE
