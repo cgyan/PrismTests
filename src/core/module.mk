@@ -7,4 +7,5 @@ SRCS += 	src/core/AlgorithmMoveTests.cpp \
 			src/core/SizeTests.cpp \
 			src/core/StringTests.cpp \
 			src/core/TimeTests.cpp \
+			src/core/TokenizerTests.cpp \
 			src/core/VectorTests.cpp
