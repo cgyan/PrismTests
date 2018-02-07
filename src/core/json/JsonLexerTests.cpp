@@ -2,12 +2,8 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/JsonLexer>
+#include <prism/EmptyException>
 #include <string>
-#include <queue>
-#include <fstream>
-#include <sstream>
-#include <cstdio>
-#include <cerrno>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
@@ -25,7 +21,8 @@ TEST(JsonLexerTests, DefaultLexerThrowsWhenAccessingTokens) {
 }
 
 TEST(JsonLexerTests, LexerHasZeroTokensAfterProcessingUnrecognizedInput) {
-    JsonLexer lex("?&£"); // lexer doesn't know how to tokenize this input
+    std::string unrecognizedInput = "?&£";
+    JsonLexer lex(unrecognizedInput); // lexer doesn't know how to tokenize this input
     ASSERT_FALSE(lex.hasNext());
 }
 
@@ -157,40 +154,43 @@ TEST(JsonLexerTests, ReturnsNegativeExponentialNumericalToken) {
     ASSERT_FALSE(lex.hasNext());
 }
 
-TEST(JsonLexerTests, ParsesObject) {
+TEST(JsonLexerTests, TokenizesObject) {
     std::string input = R"({ "key" : "value" })";
     JsonLexer lex(input);
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::LEFT_BRACE), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "key"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::COLON), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "value"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::RIGHT_BRACE), lex.next());
+    using Type = JsonToken::LexemeType;
+    ASSERT_EQ(JsonToken(Type::LEFT_BRACE), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "key"), lex.next());
+    ASSERT_EQ(JsonToken(Type::COLON), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "value"), lex.next());
+    ASSERT_EQ(JsonToken(Type::RIGHT_BRACE), lex.next());
     ASSERT_FALSE(lex.hasNext());
 }
 
-TEST(JsonLexerTests, ParsesObjectWithMultiplePairs) {
+TEST(JsonLexerTests, TokenizesObjectWithMultipleMembers) {
     std::string input = R"({ "key1" : "value1", "key2" : "value2" })";
     JsonLexer lex(input);
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::LEFT_BRACE), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "key1"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::COLON), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "value1"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::COMMA), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "key2"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::COLON), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "value2"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::RIGHT_BRACE), lex.next());
+    using Type = JsonToken::LexemeType;
+    ASSERT_EQ(JsonToken(Type::LEFT_BRACE), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "key1"), lex.next());
+    ASSERT_EQ(JsonToken(Type::COLON), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "value1"), lex.next());
+    ASSERT_EQ(JsonToken(Type::COMMA), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "key2"), lex.next());
+    ASSERT_EQ(JsonToken(Type::COLON), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "value2"), lex.next());
+    ASSERT_EQ(JsonToken(Type::RIGHT_BRACE), lex.next());
     ASSERT_FALSE(lex.hasNext());
 }
 
-TEST(JsonLexerTests, ParsesArray) {
+TEST(JsonLexerTests, TokenizesArray) {
     std::string input = R"([ 67891, "val" ])";
     JsonLexer lex(input);
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::LEFT_BRACKET), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::NUMBER, "67891"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::COMMA), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::STRING, "val"), lex.next());
-    ASSERT_EQ(JsonToken(JsonToken::LexemeType::RIGHT_BRACKET), lex.next());
+    using Type = JsonToken::LexemeType;
+    ASSERT_EQ(JsonToken(Type::LEFT_BRACKET), lex.next());
+    ASSERT_EQ(JsonToken(Type::NUMBER, "67891"), lex.next());
+    ASSERT_EQ(JsonToken(Type::COMMA), lex.next());
+    ASSERT_EQ(JsonToken(Type::STRING, "val"), lex.next());
+    ASSERT_EQ(JsonToken(Type::RIGHT_BRACKET), lex.next());
     ASSERT_FALSE(lex.hasNext());
 }
 

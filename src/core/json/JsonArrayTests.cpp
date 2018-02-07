@@ -37,7 +37,7 @@ TEST(JsonArrayTests, HasSizeZeroAfterRemovingLastValue) {
 
 TEST(JsonArrayTests, IsEmptyAfterRemovingLastValue) {
     JsonArray ja = { "value" };
-    ja.erase(ja.begin());
+    ja.remove(ja.begin());
     ASSERT_TRUE(ja.empty());
 }
 
@@ -46,6 +46,27 @@ TEST(JsonArrayTests, CanInsertNewValueAtFront) {
     ja.prepend(3.14);
     JsonArray expected = { 3.14, 6.28, 9.56 };
     ASSERT_EQ(expected, ja);
+}
+
+TEST(JsonArrayTests, CanInsertNewValueInMiddleOfExistingElementsByIterator) {
+    JsonArray ja = { "value1", "value2" };
+    ja.insert(ja.end() - 1, "new value");
+    JsonArray expected = { "value1", "new value", "value2" };
+    ASSERT_EQ(expected, ja);
+}
+
+TEST(JsonArrayTests, CanInsertNewValueInMiddleOfExistingElementsByIndex) {
+    JsonArray ja = { "value1", "value2" };
+    const int insertIndex = 1;
+    ja.insert(insertIndex, "new value");
+    JsonArray expected = { "value1", "new value", "value2" };
+    ASSERT_EQ(expected, ja);
+}
+
+TEST(JsonArrayTests, CanConfirmArrayContainsElement) {
+    JsonArray ja = { 3.14, 6.28, 9.56 };
+    ASSERT_TRUE(ja.contains(3.14));
+    ASSERT_FALSE(ja.contains("non existent value"));
 }
 
 TEST(JsonArrayTests, CopiedArrayIsIndependentFromOriginalArray) {
