@@ -1,47 +1,9 @@
 #include <gtest/gtest.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/JsonDoc>
 #include <prism/JsonObjectStub>
-#include <string>
 
 PRISM_BEGIN_NAMESPACE
-//==============================================================================
-// JsonDoc
-//==============================================================================
-class JsonDoc {
-public:
-    JsonDoc() = default;
-    JsonDoc(const JsonObject& obj);
-    JsonDoc(const std::string& json);
-
-    const bool isValid() const;
-    const std::string toJson() const;
-private:
-    bool m_valid{true};
-    std::string m_json{"{}"};
-};
-
-JsonDoc::JsonDoc(const JsonObject& obj) {
-    m_json = R"({ "key" : 123 })";
-}
-
-JsonDoc::JsonDoc(const std::string& json) {
-    m_json = json;
-    if (json == "{ 1 # false }") m_valid = false;
-}
-
-const bool
-JsonDoc::isValid() const {
-    return m_valid;
-}
-
-const std::string
-JsonDoc::toJson() const {
-    return m_json;
-}
-//==============================================================================
-// JsonDocTests
-//==============================================================================
 PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(JsonDocTests, DefaultDocisValid) {
@@ -75,21 +37,66 @@ TEST(JsonDocTests, DefaultDocConvertedToJsonOutputsEmptyObject) {
 
 TEST(JsonDocTests, DocInitializedWithObjectOutputsObjectConvertedToJson) {
     JsonObjectStub stub;
-    stub.json = R"({ "key" : 123 })";
-    JsonDoc doc(stub);
+    stub.json = R"({ "city" : "nyc" })";
+    JsonDoc doc = JsonDoc::fromObject(stub);
+    ASSERT_EQ(stub.json, doc.toJson());
+}
+
+TEST(JsonDocTests, DocInitializedWithObjectContainingArrayOutputsRootObjectConvertedToJson) {
+    JsonObjectStub stub;
+    stub.json = R"({
+        "cities" : [
+            "nyc",
+            "boston",
+            "london"
+        ]
+    })";
+    JsonDoc doc = JsonDoc::fromObject(stub);
+    ASSERT_EQ(stub.json, doc.toJson());
+}
+
+TEST(JsonDocTests, DocInitializedWithObjectContainingObjectOutputsRootObjectConvertedToJson) {
+    JsonObjectStub stub;
+    stub.json = R"({
+        "cities" : {
+            "new york" : "nyc",
+            "boston" : "bst",
+            "london" : "lon"
+        }
+    })";
+    JsonDoc doc = JsonDoc::fromObject(stub);
     ASSERT_EQ(stub.json, doc.toJson());
 }
 
 TEST(JsonDocTests, DocInitializedWithValidJsonStringOutputsTheSameJson) {
-    std::string validJson = R"({ "key1" : "value1" })";
+    std::string validJson = R"({ "key" : 123 })";
     JsonDoc doc(validJson);
     ASSERT_EQ(validJson, doc.toJson());
 }
 
-TEST(JsonDocTests, DocInitializedWithInalidJsonStringOutputsTheSameJson) {
+TEST(JsonDocTests, DocInitializedWithInvalidJsonStringOutputsTheSameJson) {
     std::string invalidJson = "{ 1 # false }";
-    JsonDoc doc(invalidJson);
+    JsonDoc doc = JsonDoc::fromJson(invalidJson);
     ASSERT_EQ(invalidJson, doc.toJson());
+}
+
+TEST(JsonDocTests, CanSwapTheContentsOfTwoDocs) {
+    JsonDoc doc1 = JsonDoc::fromJson(R"({ "doc1key" : 123 })");
+    JsonDoc doc2 = JsonDoc::fromJson(R"({ "doc2key" : 456 })");
+    JsonDoc copyOfDoc1 = doc1;
+    JsonDoc copyOfDoc2 = doc2;
+
+    doc1.swap(doc2);
+
+    ASSERT_EQ(copyOfDoc1, doc2);
+    ASSERT_EQ(copyOfDoc2, doc1);
+}
+
+TEST(JsonDocTests, ReturnsTheNumberOfKeysInRootObject) {
+    JsonObjectStub stub;
+    stub.json = R"({ "on" : true, "in motion" : false })";
+    JsonDoc doc(stub);
+    ASSERT_EQ(2, doc.numKeys());
 }
 
 PRISM_END_TEST_NAMESPACE
