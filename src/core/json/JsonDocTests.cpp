@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 using namespace ::testing;
 #include <prism/JsonDoc>
-#include <prism/JsonObjectStub>
+#include <prism/FakeJsonObjectImpl>
+#include <prism/FakeJsonArrayImpl>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
@@ -12,8 +13,7 @@ TEST(JsonDocTests, DefaultDocisValid) {
 }
 
 TEST(JsonDocTests, DocInitializedWithObjectIsValid) {
-    JsonObjectStub stub;
-    JsonDoc doc(stub);
+    JsonDoc doc(make_fake_json_object("pi", 3.14));
     ASSERT_TRUE(doc.isValid());
 }
 
@@ -24,7 +24,7 @@ TEST(JsonDocTests, DocInitializedFromIncorrectJsonisInvalid) {
 }
 
 TEST(JsonDocTests, DocInitializedFromValidJsonStringIsValid) {
-    std::string validJson = R"({ "key1" : "value1" })";
+    std::string validJson = R"({ "key" : "value" })";
     JsonDoc doc(validJson);
     ASSERT_TRUE(doc.isValid());
 }
@@ -36,36 +36,24 @@ TEST(JsonDocTests, DefaultDocConvertedToJsonOutputsEmptyObject) {
 }
 
 TEST(JsonDocTests, DocInitializedWithObjectOutputsObjectConvertedToJson) {
-    JsonObjectStub stub;
-    stub.json = R"({ "city" : "nyc" })";
-    JsonDoc doc = JsonDoc::fromObject(stub);
-    ASSERT_EQ(stub.json, doc.toJson());
+    JsonObject fakeObj = make_fake_json_object("pi", 3.14);
+    JsonDoc doc = JsonDoc::fromObject(fakeObj);
+    ASSERT_EQ(R"({ "pi" : 3.14 })", doc.toJson());
 }
 
 TEST(JsonDocTests, DocInitializedWithObjectContainingArrayOutputsRootObjectConvertedToJson) {
-    JsonObjectStub stub;
-    stub.json = R"({
-        "cities" : [
-            "nyc",
-            "boston",
-            "london"
-        ]
-    })";
-    JsonDoc doc = JsonDoc::fromObject(stub);
-    ASSERT_EQ(stub.json, doc.toJson());
+    JsonArray fakeArray = make_fake_json_array({3.14, 6.28, 9.56});
+    JsonObject fakeObject = make_fake_json_object("pi multiples", fakeArray);
+    JsonDoc doc = JsonDoc::fromObject(fakeObject);
+    ASSERT_EQ(R"({ "pi multiples" : [ 3.14, 6.28, 9.56 ] })", doc.toJson());
 }
 
-TEST(JsonDocTests, DocInitializedWithObjectContainingObjectOutputsRootObjectConvertedToJson) {
-    JsonObjectStub stub;
-    stub.json = R"({
-        "cities" : {
-            "new york" : "nyc",
-            "boston" : "bst",
-            "london" : "lon"
-        }
-    })";
-    JsonDoc doc = JsonDoc::fromObject(stub);
-    ASSERT_EQ(stub.json, doc.toJson());
+TEST(JsonDocTests, DocInitializedWithObjectContainingSubObjectOutputsRootObjectConvertedToJson) {
+    JsonObject fakeSubObject = make_fake_json_object("pi", 3.14);
+    JsonObject fakeMainObject = make_fake_json_object("key", fakeSubObject);
+    JsonDoc doc = JsonDoc::fromObject(fakeMainObject);
+    std::string expected = R"({ "key" : { "pi" : 3.14 } })";
+    ASSERT_EQ(expected, doc.toJson());
 }
 
 TEST(JsonDocTests, DocInitializedWithValidJsonStringOutputsTheSameJson) {
@@ -93,10 +81,9 @@ TEST(JsonDocTests, CanSwapTheContentsOfTwoDocs) {
 }
 
 TEST(JsonDocTests, ReturnsTheNumberOfKeysInRootObject) {
-    JsonObjectStub stub;
-    stub.json = R"({ "on" : true, "in motion" : false })";
-    JsonDoc doc(stub);
-    ASSERT_EQ(2, doc.numKeys());
+    JsonObject fakeObj = make_fake_json_object("pi", 3.14);
+    JsonDoc doc(fakeObj);
+    ASSERT_EQ(fakeObj.size(), doc.numKeys());
 }
 
 PRISM_END_TEST_NAMESPACE

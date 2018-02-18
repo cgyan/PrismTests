@@ -1,15 +1,9 @@
 #include <gtest/gtest.h>
 #include <prism/JsonObject>
-#include <prism/JsonValue>
+#include <prism/FakeJsonValueImpl>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
-
-class JsonValueStub : public JsonValue {
-public:
-    bool b{};
-    double d{};
-};
 
 TEST(JsonObjectTests, DefaultIsEmpty) {
     JsonObject jo;
@@ -22,14 +16,16 @@ TEST(JsonObjectTests, DefaultHasSizeZero) {
 }
 
 TEST(JsonObjectTests, HasSizeOneAfterAddingNewMember) {
-    JsonValueStub stub;
-    JsonObject jo({{"key", stub}});
+    JsonObject jo({{
+        "key", make_fake_json_value(3.14)
+    }});
     ASSERT_EQ(1, jo.size());
 }
 
 TEST(JsonObjectTests, IsNotEmptyAfterAddingNewMember) {
-    JsonValueStub stub;
-    JsonObject jo = { {"key", stub} };
+    JsonObject jo = { {
+        "key", make_fake_json_value(3.14)
+    } };
     ASSERT_FALSE(jo.empty());
 }
 
@@ -40,22 +36,22 @@ TEST(JsonObjectTests, DefaultDoesNotContainAnyKeys) {
 
 TEST(JsonObjectTests, CanAddMember) {
     JsonObject jo;
-    JsonValueStub stub;
-    jo.insert("key", stub);
-    ASSERT_EQ(stub, jo["key"]);
+    jo.insert("key", make_fake_json_value(3.14));
+    ASSERT_EQ(make_fake_json_value(3.14), jo["key"]);
 }
 
 TEST(JsonObjectTests, CanAlterValueDirectly) {
-    JsonValueStub stub;
-    stub.d = 3.14;
-    JsonObject jo = { {"pi", stub} };
-    jo["pi"] = 6.28;
-    ASSERT_EQ(6.28, jo["pi"]);
+    JsonObject jo = { {
+        "pi", make_fake_json_value(3.14)}
+    };
+    jo["pi"] = make_fake_json_value(6.28);
+    ASSERT_EQ(make_fake_json_value(6.28), jo["pi"]);
 }
 
 TEST(JsonObjectTests, CanConfirmThatInsertedKeyIsContainedInObject) {
-    JsonValueStub stub;
-    JsonObject jo({{"key", stub}});
+    JsonObject jo({{
+        "key", make_fake_json_value(3.14)
+    }});
     ASSERT_TRUE(jo.contains("key"));
 }
 
@@ -65,15 +61,27 @@ TEST(JsonObjectTests, UnusedKeyIsNotContainedInEmptyObject) {
 }
 
 TEST(JsonObjectTests, UnusedKeyIsNotContainedInInitializedObject) {
-    JsonObject jo = { {"key1", JsonValueStub()}, {"key2", JsonValueStub()} };
+    JsonObject jo = {        {
+            "key1", make_fake_json_value(3.14)
+        },
+        {
+            "key2", make_fake_json_value(6.28)
+        }
+    };
     ASSERT_FALSE(jo.contains("unused key"));
 }
 
 TEST(JsonObjectTests, CanReturnAllKeyNames) {
     JsonObject jo = {
-        {"key1", JsonValueStub()},
-        {"key2", JsonValueStub()},
-        {"key3", JsonValueStub()}
+        {
+            "key1", make_fake_json_value(3.14)
+        },
+        {
+            "key2", make_fake_json_value(6.28)
+        },
+        {
+            "key3", make_fake_json_value(9.56)
+        }
     };
     std::list<std::string> expected = { "key1", "key2", "key3" };
     ASSERT_EQ(expected, jo.keys());
@@ -81,8 +89,12 @@ TEST(JsonObjectTests, CanReturnAllKeyNames) {
 
 TEST(JsonObjectTests, SizeIsOneLessAfterRemovingMember) {
     JsonObject jo = {
-        {"key1", JsonValueStub()},
-        {"key2", JsonValueStub()}
+        {
+            "key1", make_fake_json_value(3.14)
+        },
+        {
+            "key2", make_fake_json_value(6.28)
+        }
     };
     jo.remove("key1");
     const int expectedSize = 1;
@@ -91,13 +103,19 @@ TEST(JsonObjectTests, SizeIsOneLessAfterRemovingMember) {
 
 TEST(JsonObjectTests, OnlyOneMemberRemainsAfterRemovingMember) {
     JsonObject jo = {
-        {"key1", JsonValueStub()},
-        {"key2", JsonValueStub()}
+        {
+            "key1", make_fake_json_value(3.14)
+        },
+        {
+            "key2", make_fake_json_value(6.28)
+        }
     };
 
     jo.remove("key1");
     JsonObject expected = {
-        {"key2", JsonValueStub()}
+        {
+            "key2", make_fake_json_value(6.28)
+        }
     };
 
     ASSERT_EQ(expected, jo);
@@ -105,7 +123,9 @@ TEST(JsonObjectTests, OnlyOneMemberRemainsAfterRemovingMember) {
 
 TEST(JsonObjectTests, IsEmptyAfterRemovingLastMember) {
     JsonObject jo = {
-        {"key", JsonValueStub()}
+        {
+            "key", make_fake_json_value(3.14)
+        }
     };
 
     JsonObject::iterator it = jo.begin();
@@ -116,63 +136,54 @@ TEST(JsonObjectTests, IsEmptyAfterRemovingLastMember) {
 
 TEST(JsonObjectTests, CanFindMemberUsingKey) {
     JsonObject jo = {
-        {"pi", JsonValueStub()},
-        {"twopi", JsonValueStub()},
-        {"threepi", JsonValueStub()}
+        {
+            "pi", make_fake_json_value(3.14)
+        },
+        {
+            "twopi", make_fake_json_value(6.28)
+        },
+        {
+            "threepi", make_fake_json_value(9.56)
+        }
     };
     JsonObject::iterator it = jo.find("twopi");
     ASSERT_EQ("twopi", (*it).first);
+    ASSERT_EQ(6.28, (*it).second);
 }
 
 TEST(JsonObjectTests, CopiedObjectIsIndependentOfOriginalObject) {
-    JsonValueStub trueStub;
-    trueStub.b = true;
-    JsonValueStub falseStub;
-    falseStub.b = false;
-
-    JsonObject jo = {
-        {"key1", trueStub}
-    };
+    JsonObject jo = {{
+        "key", make_fake_json_value(3.14)
+    }};
     JsonObject copy = jo;
-    copy["key1"] = falseStub;
+    copy["key"] = make_fake_json_value(6.28);
 
-    ASSERT_EQ(JsonObject({{"key1",trueStub}}), jo);
-    ASSERT_EQ(JsonObject({{"key1",falseStub}}), copy);
+    ASSERT_EQ(JsonObject({{"key", make_fake_json_value(3.14)}}), jo);
+    ASSERT_EQ(JsonObject({{"key", make_fake_json_value(6.28)}}), copy);
 }
 
 TEST(JsonObjectTests, AssignedObjectIsIndependentOfOriginalObject) {
-    JsonValueStub trueStub;
-    trueStub.b = true;
-    JsonValueStub falseStub;
-    falseStub.b = false;
-
-    JsonObject jo = { {"key1", trueStub} };
+    JsonObject jo = { {
+        "key", make_fake_json_value(3.14)}
+    };
     JsonObject copy;
     copy = jo;
-    copy["key1"] = falseStub;
+    copy["key"] = make_fake_json_value(6.28);
 
-    ASSERT_EQ(JsonObject({{"key1",trueStub}}), jo);
-    ASSERT_EQ(JsonObject({{"key1",falseStub}}), copy);
+    ASSERT_EQ(JsonObject({{"key",make_fake_json_value(3.14)}}), jo);
+    ASSERT_EQ(JsonObject({{"key",make_fake_json_value(6.28)}}), copy);
 }
 
 TEST(JsonObjectTests, InsertingNewMemberWithDuplicateKeyOverwritesExistingAssociatedValue) {
-    JsonValueStub stubPi;
-    stubPi.d = 3.14;
-    JsonValueStub stubTwoPi;
-    stubTwoPi.d = 6.28;
-    JsonValueStub stubHalfPi;
-    stubTwoPi.d = 1.57;
+    JsonObject jo = {{
+        "pi", make_fake_json_value(3.14)
+    }};
+    
+    jo.insert("pi", make_fake_json_value(9.56));
 
-    JsonObject jo = {
-        {"pi", stubPi},
-        {"twopi", stubTwoPi}
-    };
-    jo.insert("pi", stubHalfPi);
-
-    JsonObject expected = {
-        {"pi",stubHalfPi},
-        {"twopi",stubTwoPi}
-    };
+    JsonObject expected = {{
+        "pi", make_fake_json_value(9.56)
+    }};
     ASSERT_EQ(expected, jo);
 }
 

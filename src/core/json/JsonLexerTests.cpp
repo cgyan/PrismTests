@@ -2,6 +2,8 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/JsonLexer>
+#include <prism/JsonLexerException>
+#include <prism/JsonToken>
 #include <prism/EmptyException>
 #include <string>
 
@@ -10,11 +12,11 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(JsonLexerTests, ThrowsWhenInitializedWithInvalidInput) {
     std::string invalidInput = "?&£";
-    ASSERT_THROW(JsonLexer lex(invalidInput), prism::JsonLexerException);
+    ASSERT_THROW(JsonLexer{invalidInput}, prism::JsonLexerException);
 }
 
 TEST(JsonLexerTests, LexerHasOneTokenAfterGivenValidInput) {
-    JsonLexer lex("{}");
+    JsonLexer lex("{");
     ASSERT_TRUE(lex.hasNext());
 }
 

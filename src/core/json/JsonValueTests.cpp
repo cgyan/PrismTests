@@ -2,8 +2,8 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/JsonValue>
-#include <prism/JsonObjectStub>
-#include <prism/JsonArrayStub>
+#include <prism/FakeJsonObjectImpl>
+#include <prism/FakeJsonArrayImpl>
 #include <prism/InvalidConversionException>
 
 PRISM_BEGIN_NAMESPACE
@@ -18,8 +18,8 @@ TEST(JsonValueTests, IsNotNullWhenInitializedWithValue) {
     ASSERT_FALSE(JsonValue(3.14).isNull());
     ASSERT_FALSE(JsonValue(false).isNull());
     ASSERT_FALSE(JsonValue("string value").isNull());
-    ASSERT_FALSE(JsonValue(JsonObjectStub()).isNull());
-    ASSERT_FALSE(JsonValue(JsonArrayStub()).isNull());
+    ASSERT_FALSE(JsonValue(make_fake_json_object("pi", 3.14)).isNull());
+    ASSERT_FALSE(JsonValue(make_fake_json_array({3.14, 6.28})).isNull());
 }
 
 TEST(JsonValueTests, ThrowsWhenConvertingDoubleToNonDoubleType) {
@@ -53,8 +53,7 @@ TEST(JsonValueTests, ThrowsWhenConvertingStringToNonStringType) {
 }
 
 TEST(JsonValueTests, ThrowsWhenConvertingObjectToNonObjectType) {
-    JsonObjectStub stub;
-    JsonValue jv(stub);
+    JsonValue jv(make_fake_json_object("pi", 3.14));
     ASSERT_NO_THROW(jv.toObject());
     ASSERT_THROW(jv.toDouble(), prism::InvalidConversionException);
     ASSERT_THROW(jv.toBool(), prism::InvalidConversionException);
@@ -63,8 +62,7 @@ TEST(JsonValueTests, ThrowsWhenConvertingObjectToNonObjectType) {
 }
 
 TEST(JsonValueTests, ThrowsWhenConvertingArrayToNonArrayType) {
-    JsonArrayStub stub;
-    JsonValue jv(stub);
+    JsonValue jv(make_fake_json_array({3.14, 6.28, 9.56}));
     ASSERT_NO_THROW(jv.toArray());
     ASSERT_THROW(jv.toDouble(), prism::InvalidConversionException);
     ASSERT_THROW(jv.toObject(), prism::InvalidConversionException);
