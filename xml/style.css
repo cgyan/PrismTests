@@ -1,0 +1,87 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #000000;
+    font: 0.8em Arial, Helvetica, sans-serif;
+    border-top: 2px solid #2a4f6f;
+}
+
+#header {
+    border-top: 1px solid #778899;
+    border-bottom: 1px dotted #b2bcc6;
+    height: 5em;
+    margin-left: 1em;
+}
+
+#content {
+    margin-left: 5em;
+    margin-right: 5em;
+    padding-left: 10px;
+}
+
+#summary {
+    padding-bottom: 2em;
+}
+
+h1 {
+    font: 200% Georgia, "Times New Roman", Times, serif;
+}
+
+table {
+    text-align: left;
+    width: 100%;
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+#overview,
+#test_cases {
+    margin-top: 50px;
+}
+
+#summary_table col.odd,
+#overview_table col.odd,
+#test_cases table col.odd {
+    background-color: #80c9ff;
+    color: #000000;
+}
+
+#summary_table col.even,
+#overview_table col.even,
+#test_cases table col.even {
+    background-color: #bfe4ff;
+    color: #000000;
+}
+
+#summary_table td,
+#overview_table td,
+#test_cases table td {
+    border: 2px solid #ffffff;
+    padding: 0.75em;
+}
+
+#summary_table th,
+#overview_table th,
+#test_cases table th {
+    border: 2px solid #ffffff;
+    background-color: #00487d;
+    color: white;
+    font-weight: bold;
+    font-size: 120%;
+    padding: 0.3em;
+}
+
+#overview_table a:link, #overview_table a:visited {
+    text-decoration: none;
+    color: black;
+    background-color: transparent;
+}
+
+#overview_table a:hover {
+    color: #00487d;
+}
+
+.align_right {
+    text-align: right;
+}

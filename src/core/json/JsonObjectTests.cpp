@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <prism/JsonObject>
-#include <prism/FakeJsonValueImpl>
+#include <prism/FakeJsonValue>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
@@ -178,7 +178,7 @@ TEST(JsonObjectTests, InsertingNewMemberWithDuplicateKeyOverwritesExistingAssoci
     JsonObject jo = {{
         "pi", make_fake_json_value(3.14)
     }};
-    
+
     jo.insert("pi", make_fake_json_value(9.56));
 
     JsonObject expected = {{

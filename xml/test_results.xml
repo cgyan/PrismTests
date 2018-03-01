@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="59" failures="0" disabled="0" errors="0" timestamp="2018-03-01T00:15:40" time="0.984" name="AllTests">
+  <testsuite name="JsonDocTests" tests="59" failures="0" disabled="0" errors="0" time="0.956">
+    <testcase name="WhenDefaultDocIsCreatedExpectItToBeValid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDefaultDocIsCreatedExpectDocToBeEmpty" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenConvertingDefaultDocToJsonExpectStringOfEmptyObject" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInvalidExpectConversionStringToBeEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInitializedWithEmptyStringExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInitializedWithEmptyObjectStringExpectDocToBeEmpty" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInitializedWithNonEmptyObjectStringExpectDocToBeNotEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenStringObjectIsMissingLeftBraceExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringIsMissingRightBraceExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringIsMissingKeyNameExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringIsMissingValueExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringIsMissingColonBetweenKeyAndValueExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasDoubleTypeAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasLiteralTrueAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasLiteralFalseAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasLiteralNullAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasObjectAsKeyExpectDocToBeInvalid" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringHasArrayAsKeyExpectDocToBeInvalid" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringIsMissingCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenJsonStringDoesNotUseCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenArrayInJsonStringIsMissingLeftBracketExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenArrayInJsonStringIsMissingRightBracketExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenArrayInJsonStringIsMissingCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenArrayInJsonStringDoesNotUseCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenParsingStringWithMoreThanOneRootObjectExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenSwappingTwoDocsExpectTheContentsOfEachDocToTransferToTheOtherDoc" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenResettingDocExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenResettingDocExpectDocToBeValid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenConvertingResetDocToJsonExpectStringOfEmptyObject" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenModifyingCopyOfDocExpectOriginalDocToRetainState" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenCreatingCopyOfDocExpectBothDocsToContainSameState" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenModifyingCopyAssignedDocExpectOriginalDocToRetainState" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenCopyAssigningExpectBothDocsToContainSameState" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenMoveConstructingExpectOriginalDocToBeEmptyAfterwards" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenMoveConstructingExpectOriginalDocToBeValidAfterwards" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenMoveConstructingExpectStateOfOriginalDocToMoveToNewDoc" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenMoveAssigningExpectOriginalDocToBeEmptyAfterwards" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenMoveAssigningExpectOriginalDocToBeValidAfterwards" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenMoveAssigningExpectStateOfOriginalDocToMoveToNewDoc" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingEmptyObject" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingDoubleValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralTrueValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralFalseValue" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralNullValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingArrayValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingStringValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithEmptyObjectExpectDocToBeValid" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithEmptyObjectExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithNonEmptyObjectExpectDocToBeNotEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithEmptyObjectThenConvertingDocToJsonExpectEmptyObjectString" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingDoubleValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingLiteralTrueValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingLiteralFalseValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingLiteralNullValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingStringValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingArrayValue" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingCommaSeperatingMembers" status="run" time="0" classname="JsonDocTests" />
+  </testsuite>
+</testsuites>
