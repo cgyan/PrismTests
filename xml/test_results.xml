@@ -1,53 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="59" failures="0" disabled="0" errors="0" timestamp="2018-03-01T00:15:40" time="0.984" name="AllTests">
-  <testsuite name="JsonDocTests" tests="59" failures="0" disabled="0" errors="0" time="0.956">
+<testsuites tests="59" failures="30" disabled="0" errors="0" timestamp="2018-03-01T11:31:48" time="1.169" name="AllTests">
+  <testsuite name="JsonDocTests" tests="59" failures="30" disabled="0" errors="0" time="1.145">
     <testcase name="WhenDefaultDocIsCreatedExpectItToBeValid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenDefaultDocIsCreatedExpectDocToBeEmpty" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenDefaultDocIsCreatedExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenConvertingDefaultDocToJsonExpectStringOfEmptyObject" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenDocIsInvalidExpectConversionStringToBeEmpty" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenDocIsInitializedWithEmptyStringExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenDocIsInitializedWithEmptyObjectStringExpectDocToBeEmpty" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenDocIsInitializedWithNonEmptyObjectStringExpectDocToBeNotEmpty" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenStringObjectIsMissingLeftBraceExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringIsMissingRightBraceExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringIsMissingKeyNameExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringIsMissingValueExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringIsMissingColonBetweenKeyAndValueExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasDoubleTypeAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasLiteralTrueAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasLiteralFalseAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasLiteralNullAsKeyExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasObjectAsKeyExpectDocToBeInvalid" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringHasArrayAsKeyExpectDocToBeInvalid" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringIsMissingCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenJsonStringDoesNotUseCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenArrayInJsonStringIsMissingLeftBracketExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenArrayInJsonStringIsMissingRightBracketExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenArrayInJsonStringIsMissingCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenArrayInJsonStringDoesNotUseCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenParsingStringWithMoreThanOneRootObjectExpectDocToBeInvalid" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInvalidExpectConversionStringToBeEmpty" status="run" time="0.021" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:318&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:318
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+      <failure message="src/core/json/JsonDocTests.cpp:319&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: expectedConversionString&#x0A;Which is: &quot;&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:319
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: expectedConversionString
+Which is: ""]]></failure>
+    </testcase>
+    <testcase name="WhenDocIsInitializedWithEmptyStringExpectDocToBeInvalid" status="run" time="0.006" classname="JsonDocTests">
+      <failure message="unknown file&#x0A;Unknown C++ exception thrown in the test body." type=""><![CDATA[unknown file
+Unknown C++ exception thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="WhenDocIsInitializedWithEmptyObjectStringExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenDocIsInitializedWithNonEmptyObjectStringExpectDocToBeNotEmpty" status="run" time="0.01" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:337&#x0A;Value of: doc.empty()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:337
+Value of: doc.empty()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenStringObjectIsMissingLeftBraceExpectDocToBeInvalid" status="run" time="0.014" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:343&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:343
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringIsMissingRightBraceExpectDocToBeInvalid" status="run" time="0.009" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:349&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:349
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringIsMissingKeyNameExpectDocToBeInvalid" status="run" time="0.012" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:355&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:355
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringIsMissingValueExpectDocToBeInvalid" status="run" time="0.016" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:361&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:361
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringIsMissingColonBetweenKeyAndValueExpectDocToBeInvalid" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:367&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:367
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasDoubleTypeAsKeyExpectDocToBeInvalid" status="run" time="0.007" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:373&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:373
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasLiteralTrueAsKeyExpectDocToBeInvalid" status="run" time="0.01" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:379&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:379
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasLiteralFalseAsKeyExpectDocToBeInvalid" status="run" time="0.013" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:385&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:385
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasLiteralNullAsKeyExpectDocToBeInvalid" status="run" time="0.009" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:391&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:391
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasObjectAsKeyExpectDocToBeInvalid" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:397&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:397
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringHasArrayAsKeyExpectDocToBeInvalid" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:403&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:403
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringIsMissingCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0.014" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:409&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:409
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenJsonStringDoesNotUseCommaBetweenMembersExpectDocToBeInvalid" status="run" time="0.01" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:415&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:415
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenArrayInJsonStringIsMissingLeftBracketExpectDocToBeInvalid" status="run" time="0.014" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:421&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:421
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenArrayInJsonStringIsMissingRightBracketExpectDocToBeInvalid" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:427&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:427
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenArrayInJsonStringIsMissingCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0.009" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:433&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:433
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenArrayInJsonStringDoesNotUseCommaBetweenValuesExpectDocToBeInvalid" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:439&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:439
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
+    <testcase name="WhenParsingStringWithMoreThanOneRootObjectExpectDocToBeInvalid" status="run" time="0.009" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:445&#x0A;Value of: doc.valid()&#x0A;  Actual: true&#x0A;Expected: false" type=""><![CDATA[src/core/json/JsonDocTests.cpp:445
+Value of: doc.valid()
+  Actual: true
+Expected: false]]></failure>
+    </testcase>
     <testcase name="WhenSwappingTwoDocsExpectTheContentsOfEachDocToTransferToTheOtherDoc" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenResettingDocExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenResettingDocExpectDocToBeValid" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenConvertingResetDocToJsonExpectStringOfEmptyObject" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenModifyingCopyOfDocExpectOriginalDocToRetainState" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenModifyingCopyOfDocExpectOriginalDocToRetainState" status="run" time="0.007" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:479&#x0A;Expected: (originalDoc) != (copyOfDoc), actual: {} vs {}" type=""><![CDATA[src/core/json/JsonDocTests.cpp:479
+Expected: (originalDoc) != (copyOfDoc), actual: {} vs {}]]></failure>
+    </testcase>
     <testcase name="WhenCreatingCopyOfDocExpectBothDocsToContainSameState" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenModifyingCopyAssignedDocExpectOriginalDocToRetainState" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenModifyingCopyAssignedDocExpectOriginalDocToRetainState" status="run" time="0.01" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:495&#x0A;Expected: (doc1) != (doc2), actual: {} vs {}" type=""><![CDATA[src/core/json/JsonDocTests.cpp:495
+Expected: (doc1) != (doc2), actual: {} vs {}]]></failure>
+    </testcase>
     <testcase name="WhenCopyAssigningExpectBothDocsToContainSameState" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenMoveConstructingExpectOriginalDocToBeEmptyAfterwards" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenMoveConstructingExpectOriginalDocToBeValidAfterwards" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenMoveConstructingExpectOriginalDocToBeValidAfterwards" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenMoveConstructingExpectStateOfOriginalDocToMoveToNewDoc" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenMoveAssigningExpectOriginalDocToBeEmptyAfterwards" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenMoveAssigningExpectOriginalDocToBeValidAfterwards" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenMoveAssigningExpectStateOfOriginalDocToMoveToNewDoc" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingEmptyObject" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingDoubleValue" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralTrueValue" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralFalseValue" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralNullValue" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingArrayValue" status="run" time="0" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingStringValue" status="run" time="0" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingDoubleValue" status="run" time="0.013" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:558&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;pi\&quot;:3.14}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:558
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"pi\":3.14}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralTrueValue" status="run" time="0.015" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:565&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;valid\&quot;:true}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:565
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"valid\":true}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralFalseValue" status="run" time="0.013" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:572&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;valid\&quot;:false}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:572
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"valid\":false}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingLiteralNullValue" status="run" time="0.014" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:579&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;valid\&quot;:null}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:579
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"valid\":null}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0.013" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:586&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;student\&quot;:{\&quot;current\&quot;:true}}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:586
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"student\":{\"current\":true}}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingArrayValue" status="run" time="0.011" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:593&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;pi multiples\&quot;:[3.14,6.28,9.56]}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:593
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"pi multiples\":[3.14,6.28,9.56]}"]]></failure>
+    </testcase>
+    <testcase name="WhenInitializingDocWithStringThenConvertingDocToJsonExpectStringContainingStringValue" status="run" time="0.017" classname="JsonDocTests">
+      <failure message="src/core/json/JsonDocTests.cpp:600&#x0A;Value of: doc.toJson()&#x0A;  Actual: &quot;{}&quot;&#x0A;Expected: json&#x0A;Which is: &quot;{\&quot;nyc\&quot;:\&quot;new york city\&quot;}&quot;" type=""><![CDATA[src/core/json/JsonDocTests.cpp:600
+Value of: doc.toJson()
+  Actual: "{}"
+Expected: json
+Which is: "{\"nyc\":\"new york city\"}"]]></failure>
+    </testcase>
     <testcase name="WhenInitializingDocWithEmptyObjectExpectDocToBeValid" status="run" time="0.001" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithEmptyObjectExpectDocToBeEmpty" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithNonEmptyObjectExpectDocToBeNotEmpty" status="run" time="0" classname="JsonDocTests" />
@@ -58,7 +214,7 @@
     <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingLiteralNullValue" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingStringValue" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingArrayValue" status="run" time="0.001" classname="JsonDocTests" />
-    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0.001" classname="JsonDocTests" />
+    <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingObjectValue" status="run" time="0" classname="JsonDocTests" />
     <testcase name="WhenInitializingDocWithObjectThenConvertingDocToJsonExpectStringContainingCommaSeperatingMembers" status="run" time="0" classname="JsonDocTests" />
   </testsuite>
 </testsuites>

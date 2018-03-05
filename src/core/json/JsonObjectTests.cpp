@@ -187,5 +187,17 @@ TEST(JsonObjectTests, InsertingNewMemberWithDuplicateKeyOverwritesExistingAssoci
     ASSERT_EQ(expected, jo);
 }
 
+TEST(JsonObjectTests, WhenInsertingMembersExpectTheInsertionOrderToBePreserved) {
+    JsonObject jo;
+    jo.insert("name", "al");
+    jo.insert("account", "123");
+    jo.insert("department", "legal");
+    JsonObject::const_iterator cit = jo.cbegin();
+
+    EXPECT_EQ("name", (*cit).first);
+    EXPECT_EQ("account", (*++cit).first);
+    EXPECT_EQ("department", (*++cit).first);
+}
+
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
