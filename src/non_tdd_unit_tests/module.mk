@@ -9,10 +9,10 @@ SRCS +=	src/non_tdd_unit_tests/algorithmTest.cpp \
 			src/non_tdd_unit_tests/ReverseIteratorTest.cpp \
 			src/non_tdd_unit_tests/SharedDataPointerTest.cpp \
 			src/non_tdd_unit_tests/SharedDataTest.cpp \
-			src/non_tdd_unit_tests/StackTest.cpp \
 			src/non_tdd_unit_tests/StringTest.cpp \
 			src/non_tdd_unit_tests/TimeTest.cpp \
 			src/non_tdd_unit_tests/type_traitsTest.cpp \
 			src/non_tdd_unit_tests/UniquePointerArrayTest.cpp \
 			src/non_tdd_unit_tests/UniquePointerTest.cpp \
 			src/non_tdd_unit_tests/VersionTest.cpp
+			

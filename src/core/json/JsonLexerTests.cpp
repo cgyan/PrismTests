@@ -23,32 +23,32 @@ TEST(JsonLexerTests, LexerHasOneTokenAfterGivenValidInput) {
 
 TEST(JsonLexerTests, ReturnsCommaToken) {
     JsonLexer lex(",");
-    ASSERT_EQ(JsonToken(JsonToken::Type::Comma), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::Comma, ","), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsColonToken) {
     JsonLexer lex(":");
-    ASSERT_EQ(JsonToken(JsonToken::Type::Colon), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::Colon, ":"), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsLeftBraceToken) {
     JsonLexer lex("{");
-    ASSERT_EQ(JsonToken(JsonToken::Type::LeftBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::LeftBrace, "{"), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsRightBraceToken) {
     JsonLexer lex("}");
-    ASSERT_EQ(JsonToken(JsonToken::Type::RightBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::RightBrace, "}"), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsLeftBracketToken) {
     JsonLexer lex("[");
-    ASSERT_EQ(JsonToken(JsonToken::Type::LeftBracket), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::LeftBracket, "["), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsRightBracketToken) {
     JsonLexer lex("]");
-    ASSERT_EQ(JsonToken(JsonToken::Type::RightBracket), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::RightBracket, "]"), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ReturnsTrueConstantToken) {
@@ -66,7 +66,7 @@ TEST(JsonLexerTests, ReturnsFalseConstantToken) {
 TEST(JsonLexerTests, ReturnsNullConstantToken) {
     std::string input = "null";
     JsonLexer lex(input);
-    ASSERT_EQ(JsonToken(JsonToken::Type::NullLiteral), lex.getNextToken());
+    ASSERT_EQ(JsonToken(JsonToken::Type::NullLiteral, "null"), lex.getNextToken());
 }
 
 TEST(JsonLexerTests, ParsesEmptyString) {
@@ -148,11 +148,11 @@ TEST(JsonLexerTests, TokenizesObject) {
     std::string input = R"({ "key" : "value" })";
     JsonLexer lex(input);
     using Type = JsonToken::Type;
-    ASSERT_EQ(JsonToken(Type::LeftBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::LeftBrace, "{"), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "key"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::Colon), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::Colon, ":"), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "value"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::RightBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::RightBrace, "}"), lex.getNextToken());
     ASSERT_FALSE(lex.hasMoreTokens());
 }
 
@@ -160,15 +160,15 @@ TEST(JsonLexerTests, TokenizesObjectWithMultipleMembers) {
     std::string input = R"({ "key1" : "value1", "key2" : "value2" })";
     JsonLexer lex(input);
     using Type = JsonToken::Type;
-    ASSERT_EQ(JsonToken(Type::LeftBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::LeftBrace, "{"), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "key1"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::Colon), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::Colon, ":"), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "value1"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::Comma), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::Comma, ","), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "key2"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::Colon), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::Colon, ":"), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "value2"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::RightBrace), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::RightBrace, "}"), lex.getNextToken());
     ASSERT_FALSE(lex.hasMoreTokens());
 }
 
@@ -176,11 +176,11 @@ TEST(JsonLexerTests, TokenizesArray) {
     std::string input = R"([ 67891, "val" ])";
     JsonLexer lex(input);
     using Type = JsonToken::Type;
-    ASSERT_EQ(JsonToken(Type::LeftBracket), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::LeftBracket, "["), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::Number, "67891"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::Comma), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::Comma, ","), lex.getNextToken());
     ASSERT_EQ(JsonToken(Type::String, "val"), lex.getNextToken());
-    ASSERT_EQ(JsonToken(Type::RightBracket), lex.getNextToken());
+    ASSERT_EQ(JsonToken(Type::RightBracket, "]"), lex.getNextToken());
     ASSERT_FALSE(lex.hasMoreTokens());
 }
 
