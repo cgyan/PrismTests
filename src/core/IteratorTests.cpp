@@ -9,13 +9,13 @@
 #include "gtest/gtest.h"
 #include <prism/global>
 #include <prism/Iterator>
-#include <prism/DynamicNumber>
+// #include <prism/DynamicNumber>
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-using NumberType			= prism::test::DynamicNumber;
+using NumberType			= int;
 using SequenceIter 			= prism::SequenceIterator<NumberType, false>;
 using ConstSequenceIter 	= prism::SequenceIterator<NumberType, true>;
 using MoveIter 				= prism::MoveIterator<SequenceIter>;
@@ -370,21 +370,21 @@ class SequenceIteratorPublicTypes : public SequenceIteratorTestBase {
 
 TEST_F(SequenceIteratorPublicTypes,
 HasValueType) {
-	bool isSame = std::is_same<DynamicNumber, SequenceIter::value_type>::value;
+	bool isSame = std::is_same<NumberType, SequenceIter::value_type>::value;
 	ASSERT_TRUE(isSame);
 }
 
 TEST_F(SequenceIteratorPublicTypes,
 HasReferenceToValueType) {
 	bool isRefToValueType = std::is_lvalue_reference<SequenceIter::reference>::value &&
-			std::is_same<DynamicNumber, std::remove_reference<SequenceIter::reference>::type>::value;
+			std::is_same<NumberType, std::remove_reference<SequenceIter::reference>::type>::value;
 	ASSERT_TRUE(isRefToValueType);
 }
 
 TEST_F(SequenceIteratorPublicTypes,
 HasReferenceToConstValueType) {
 	bool isRefToConstValueType = std::is_lvalue_reference<ConstSequenceIter::reference>::value &&
-			std::is_same<const DynamicNumber, std::remove_reference<ConstSequenceIter::reference>::type>::value &&
+			std::is_same<const NumberType, std::remove_reference<ConstSequenceIter::reference>::type>::value &&
 			std::is_const<std::remove_reference<ConstSequenceIter::reference>::type>::value;
 	ASSERT_TRUE(isRefToConstValueType);
 }
@@ -392,14 +392,14 @@ HasReferenceToConstValueType) {
 TEST_F(SequenceIteratorPublicTypes,
 HasPointerToValueType) {
 	bool isPointerToValueType = std::is_pointer<SequenceIter::pointer>::value &&
-			std::is_same<DynamicNumber, std::remove_pointer<SequenceIter::pointer>::type>::value;
+			std::is_same<NumberType, std::remove_pointer<SequenceIter::pointer>::type>::value;
 	ASSERT_TRUE(isPointerToValueType);
 }
 
 TEST_F(SequenceIteratorPublicTypes,
 HasPointerToConstValueType) {
 	bool isPointerToConstValueType = std::is_pointer<ConstSequenceIter::pointer>::value &&
-			std::is_same<const DynamicNumber, std::remove_pointer<ConstSequenceIter::pointer>::type>::value &&
+			std::is_same<const NumberType, std::remove_pointer<ConstSequenceIter::pointer>::type>::value &&
 			std::is_const<std::remove_pointer<ConstSequenceIter::pointer>::type>::value;
 	ASSERT_TRUE(isPointerToConstValueType);
 }
@@ -704,18 +704,3 @@ ReturnsTrueWhenLhsIsGreater) {
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

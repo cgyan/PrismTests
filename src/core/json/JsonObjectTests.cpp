@@ -83,7 +83,7 @@ TEST(JsonObjectTests, CanReturnAllKeyNames) {
             "key3", make_fake_json_value(9.56)
         }
     };
-    std::list<std::string> expected = { "key1", "key2", "key3" };
+    prism::Vector<std::string> expected = { "key1", "key2", "key3" };
     ASSERT_EQ(expected, jo.keys());
 }
 

@@ -24,17 +24,19 @@ public:
     }
 
     void insertNewMember(const std::string& key, const JsonValue& value) override {
+        vec << key;
         map[key] = value;
     }
 
     JsonObject::iterator begin() override {
-        return map.begin();
+        return JsonObject::iterator(&vec, &map, 0);
     }
 
     JsonObject::iterator end() override {
-        return map.end();
+        return JsonObject::iterator(&vec, &map, vec.size());
     }
 public:
+    prism::Vector<std::string> vec;
     std::map<std::string, JsonValue> map;
 };
 
@@ -47,7 +49,7 @@ make_fake_json_object() {
 JsonObject
 make_fake_json_object(const std::string& key, const JsonValue& fakeValue) {
     FakeJsonObjectImpl * fakeImpl = new FakeJsonObjectImpl;
-    fakeImpl->map[key] = fakeValue;
+    fakeImpl->insertNewMember(key, fakeValue);
     return JsonObject(fakeImpl);
 }
 

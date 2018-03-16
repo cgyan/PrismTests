@@ -11,13 +11,13 @@
 #include <prism/algorithm>
 #include <prism/Vector>
 
-#include "../inc/prism/h/DynamicNumber.h"
+// #include "../../inc/prism/h/DynamicNumber.h"
 using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-using NumberType = prism::test::DynamicNumber;
+using NumberType = int;
 using Container = prism::Vector<NumberType>;
 
 class AlgorithmTestBase : public Test {
@@ -33,7 +33,8 @@ DestinationRangeHasMovedElements) {
 	Container destination(original.size());
 	prism::move(original.cbegin(), original.cend(), destination.begin());
 
-	ASSERT_EQ(6, destination.size());
+	const unsigned expectedSize = 6;
+	ASSERT_EQ(expectedSize, destination.size());
 	ASSERT_EQ(NumberType(1), destination[0]);
 	ASSERT_EQ(NumberType(2), destination[1]);
 	ASSERT_EQ(NumberType(3), destination[2]);
@@ -44,15 +45,3 @@ DestinationRangeHasMovedElements) {
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
-
-
-
-
-
-
-
-
-
-
-
-

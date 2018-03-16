@@ -811,7 +811,7 @@ SwapsElements) {
 class VectorMemoryReducer : public VectorTestBase {
 public:
 	Vec emptyVecWithReservedMemory;
-	int sizeBeforeMemoryReduced{v.size()};
+	unsigned int sizeBeforeMemoryReduced{v.size()};
 
 	void SetUp() {
 		int newCapacity = 10;

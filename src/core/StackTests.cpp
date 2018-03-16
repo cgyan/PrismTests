@@ -133,9 +133,7 @@ TEST(StackTests, WhenSwappingStacksWithPrismSwapExpectTheContentOfEachStackToSwa
 
 TEST(StackTests, WhenMakingCopyOfStackExpectNewCopyToContainSameDataAsOriginalStack) {
     Stack<int> stack;
-    stack.push(7);
-    stack.push(8);
-    stack.push(9);
+    stack << 7 << 8 << 9;
 
     Stack<int> copy = stack;
 
@@ -144,14 +142,10 @@ TEST(StackTests, WhenMakingCopyOfStackExpectNewCopyToContainSameDataAsOriginalSt
 
 TEST(StackTests, WhenCreatingStackFromVectorExpectStackToContainSameDataAsVector) {
     prism::Vector<int> vector;
-    vector.append(1);
-    vector.append(3);
-    vector.append(5);
+    vector << 1 << 3 << 5;
 
     Stack<int> expected;
-    expected.push(1);
-    expected.push(3);
-    expected.push(5);
+    expected << 1 << 3 << 5;
 
     Stack<int> stack(vector);
 
@@ -160,14 +154,10 @@ TEST(StackTests, WhenCreatingStackFromVectorExpectStackToContainSameDataAsVector
 
 TEST(StackTests, WhenStaticallyCreatingStackFromVectorExpectStackToContainSameDataAsVector) {
     prism::Vector<int> vector;
-    vector.append(1);
-    vector.append(3);
-    vector.append(5);
+    vector << 1 << 3 << 5;
 
     Stack<int> expected;
-    expected.push(1);
-    expected.push(3);
-    expected.push(5);
+    expected << 1 << 3 << 5;
 
     Stack<int> stack = Stack<int>::fromVector(vector);
 
@@ -176,8 +166,8 @@ TEST(StackTests, WhenStaticallyCreatingStackFromVectorExpectStackToContainSameDa
 
 TEST(StackTests, WhenAssigningOtherStackToThisStackExpectTheContentsOfOtherStackCopiedToThisStack) {
     Stack<int> otherStack;
-    otherStack.push(1);
-    otherStack.push(2);
+    otherStack += 1;
+    otherStack += 2;
 
     Stack<int> originalStack;
     originalStack = otherStack;
