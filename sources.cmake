@@ -42,7 +42,6 @@ set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
     src/non_tdd_unit_tests/SharedDataTest.cpp
     src/non_tdd_unit_tests/StringTest.cpp
     src/non_tdd_unit_tests/TimeTest.cpp
-    # src/non_tdd_unit_tests/type_traitsTest.cpp
     src/non_tdd_unit_tests/UniquePointerArrayTest.cpp
     src/non_tdd_unit_tests/UniquePointerTest.cpp
     src/non_tdd_unit_tests/VersionTest.cpp
