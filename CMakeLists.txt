@@ -19,6 +19,20 @@ if (WIN32)
     set(GTEST_INC_PATH C:/Users/Iain/GitHub/googletest/googletest/include)
     set(GTEST_LIB_PATH C:/Users/Iain/GitHub/googletest/build/googlemock/gtest)
 
+elseif(APPLE)
+
+    set(PRISM_LIB_NAME prism)
+    set(PRISM_INC_PATH /Users/iainhemstock/GitHub/prism/inc)
+    set(PRISM_LIB_PATH /Users/iainhemstock/GitHub/prism/build)
+
+    set(GMOCK_LIB_NAME gmock)
+    set(GMOCK_INC_PATH /Users/iainhemstock/GitHub/googletest/googlemock/include)
+    set(GMOCK_LIB_PATH /Users/iainhemstock/GitHub/googletest/build/googlemock)
+
+    set(GTEST_LIB_NAME gtest)
+    set(GTEST_INC_PATH /Users/iainhemstock/GitHub/googletest/googletest/include)
+    set(GTEST_LIB_PATH /Users/iainhemstock/GitHub/googletest/build/googlemock/gtest)
+
 endif()
 
 include_directories(
