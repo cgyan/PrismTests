@@ -12,7 +12,7 @@
 #include <prism/global>
 #include <prism/Allocator>
 #include <prism/iterator>
-#include <prism/type_traits>
+#include <type_traits>
 #include <ostream>
 
 PRISM_BEGIN_NAMESPACE
