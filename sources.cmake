@@ -5,17 +5,6 @@ set(MAIN_SOURCE ${MAIN_SOURCE}
 set(CORE_SOURCES ${CORE_SOURCES}
     src/core/AlgorithmMoveTests.cpp
     src/core/IteratorTests.cpp
-    src/core/ListTests.cpp
-    src/core/ObjectTests.cpp
-    src/core/PairTests.cpp
-    src/core/PointTests.cpp
-    src/core/PStringTests.cpp
-    src/core/RectTests.cpp
-    src/core/SizeTests.cpp
-    src/core/StackTests.cpp
-    src/core/StringBuilderTests.cpp
-    src/core/TimeTests.cpp
-    src/core/VectorTests.cpp
     src/core/json/JsonArrayTests.cpp
     src/core/json/JsonDocTests.cpp
     src/core/json/JsonLexerTests.cpp
@@ -27,6 +16,17 @@ set(CORE_SOURCES ${CORE_SOURCES}
     src/core/json/fakes/FakeJsonArray.cpp
     src/core/json/fakes/FakeJsonObject.cpp
     src/core/json/fakes/FakeJsonValue.cpp
+    src/core/ListTests.cpp
+    src/core/ObjectTests.cpp
+    src/core/PairTests.cpp
+    src/core/PointTests.cpp
+    src/core/PStringTests.cpp
+    src/core/RectTests.cpp
+    src/core/SizeTests.cpp
+    src/core/StackTests.cpp
+    src/core/StringBuilderTests.cpp
+    src/core/TimeTests.cpp
+    src/core/VectorTests.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
