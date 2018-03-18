@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prism/Iterator>
+#include <prism/iterator>
 // #include <prism/DynamicNumber>
 using namespace ::testing;
 
