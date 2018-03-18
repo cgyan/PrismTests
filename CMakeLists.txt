@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 project("PrismTests")
 set(EXE_NAME runner)
 
-add_definitions(-std=c++11)
+# add_definitions(-std=c++11)
+set(CMAKE_CXX_STANDARD 11)
 
 if (WIN32)
 
@@ -32,6 +33,8 @@ elseif(APPLE)
     set(GTEST_LIB_NAME gtest)
     set(GTEST_INC_PATH /Users/iainhemstock/GitHub/googletest/googletest/include)
     set(GTEST_LIB_PATH /Users/iainhemstock/GitHub/googletest/build/googlemock/gtest)
+
+    message(${PRISM_INC_PATH})
 
 endif()
 
