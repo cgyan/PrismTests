@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 
-project("Prism Tests")
+project("PrismTests")
 set(EXE_NAME runner)
 
 add_definitions(-std=c++11)
