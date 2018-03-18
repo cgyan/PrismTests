@@ -15,7 +15,7 @@ set(CORE_SOURCES ${CORE_SOURCES}
     src/core/StackTests.cpp
     src/core/StringBuilderTests.cpp
     src/core/TimeTests.cpp
-    # src/core/VectorTests.cpp
+    src/core/VectorTests.cpp
     src/core/json/JsonArrayTests.cpp
     src/core/json/JsonDocTests.cpp
     src/core/json/JsonLexerTests.cpp
@@ -61,7 +61,7 @@ set(GUI_SOURCES ${GUI_SOURCES}
 set(SOURCES
     ${MAIN_SOURCE}
     ${CORE_SOURCES}
-    # ${NON_TDD_SOURCES}
+    ${NON_TDD_SOURCES}
     # ${EVENT_SOURCES}
     # ${GUI_SOURCES}
 )
