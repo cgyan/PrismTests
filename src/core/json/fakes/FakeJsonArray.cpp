@@ -18,10 +18,10 @@ public:
     void insert(JsonArray::const_iterator pos, const JsonValue& value) override
     {}
 
-    void remove(JsonArray::const_iterator pos)
+    void remove(JsonArray::const_iterator pos) override
     {}
 
-    const bool containsElement(const JsonValue& value) const {
+    const bool containsElement(const JsonValue& value) const override {
         for (auto it = vec.begin(); it != vec.end(); ++it)
             if (*it == value) return true;
         return false;
