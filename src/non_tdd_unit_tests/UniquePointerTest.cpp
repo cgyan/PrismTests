@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <prism/UniquePointer>
-#include <prism/type_traits>
+// #include <prism/type_traits>
 #include <string>
 
 namespace prism {
@@ -55,7 +55,7 @@ TEST_F(UniquePointerTest, ctor_with_pointer) {
  * Test: UniquePointer(UniquePointer&&)
  */
 TEST_F(UniquePointerTest, move_ctor) {
-	UniquePointer<int> p(prism::move(iup));
+	UniquePointer<int> p(std::move(iup));
 	ASSERT_TRUE(*p == 20);
 }
 
@@ -66,7 +66,7 @@ TEST_F(UniquePointerTest, move_assignment) {
 	prism::UniquePointer<int> up;
 //	int * p_up = up.data();
 	int * p_iup = iup.data();
-	up = prism::move(iup);
+	up = std::move(iup);
 
 	ASSERT_TRUE(up.data() == p_iup);
 //	ASSERT_TRUE(iup.data() == p_up); // can't read it after a move

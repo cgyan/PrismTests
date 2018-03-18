@@ -35,8 +35,8 @@ make_node(const T& value) {
 template <typename T, bool IsConst>
 struct PListIterator {
 	using value_type 			= T;
-	using reference 			= typename prism::ConditionalType<IsConst, const T&, T&>::type;
-	using pointer 				= typename prism::ConditionalType<IsConst, const T*, T*>::type;
+	using reference 			= typename std::conditional<IsConst, const T&, T&>::type;
+	using pointer 				= typename std::conditional<IsConst, const T*, T*>::type;
 	using difference_type 		= std::ptrdiff_t;
 	using iterator_category 	= std::bidirectional_iterator_tag;
 };

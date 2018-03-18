@@ -12,7 +12,8 @@
 #include <prism/global>
 #include <prism/Vector>
 #include <prism/OutOfBoundsException>
-#include <prism/type_traits>
+// #include <prism/type_traits>
+#include <type_traits>
 #include <prism/LogAllocator>
 #include <vector>
 #include <list>
@@ -27,7 +28,7 @@ PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
 //using NumberType = prism::test::Number;
-using NumberType = prism::test::DynamicNumber;
+using NumberType = test::DynamicNumber;
 using Vec = prism::Vector<NumberType, prism::Allocator<NumberType>>;
 using CustomAllocatorVec = prism::Vector<NumberType, prism::LogAllocator<NumberType>>;
 
@@ -244,7 +245,7 @@ TEST_F(VectorInstantiations,
 MoveAssignedVectorHasSizeEqualToOtherVector) {
 	int vectorSize = initializerListVector.size();
 	Vec moveVector;
-	moveVector = prism::move(initializerListVector);
+	moveVector = std::move(initializerListVector);
 
 	expectedSize = vectorSize;
 	actualSize = moveVector.size();
@@ -1138,7 +1139,7 @@ AppendsLValueByStream) {
 TEST_F(VectorAppendAndPrependInserter,
 ReturnsReferenceToVectorWhenAppendingByStream) {
 	using Type = decltype(v << newValue);
-	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
+	ASSERT_TRUE(std::is_lvalue_reference<Type>::value);
 }
 
 TEST_F(VectorAppendAndPrependInserter,
@@ -1150,7 +1151,7 @@ AppendsLValueByAdditionAssignment) {
 TEST_F(VectorAppendAndPrependInserter,
 ReturnsReferenceToVectorWhenAppendingLValueByAdditionAssignment) {
 	using Type = decltype(v += newValue);
-	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
+	ASSERT_TRUE(std::is_lvalue_reference<Type>::value);
 }
 
 TEST_F(VectorAppendAndPrependInserter,
@@ -1275,7 +1276,7 @@ AppendsRangeFromOtherVectorToThisVector) {
 TEST_F(VectorIteratorRangeInserter,
 ReturnsVectorReferenceWhenAppendingRangeFromOtherVectorToThisVector) {
 	using Type = decltype(v << sourceRange);
-	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
+	ASSERT_TRUE(std::is_lvalue_reference<Type>::value);
 }
 
 TEST_F(VectorIteratorRangeInserter,
@@ -1303,7 +1304,7 @@ ConcatenateOtherVectorRangeToThisVector) {
 TEST_F(VectorIteratorRangeInserter,
 ReturnsVectorReferenceWhenConcatenatingOtherVectorRangeToThisVector) {
 	using Type = decltype(v += sourceRange);
-	ASSERT_TRUE(prism::IsLValueReference<Type>::value);
+	ASSERT_TRUE(std::is_lvalue_reference<Type>::value);
 }
 
 TEST_F(VectorIteratorRangeInserter,
@@ -1789,25 +1790,25 @@ public:
 	template <typename Type>
 	const bool
 	isPointer() {
-		return prism::IsPointer<Type>::value;
+		return std::is_pointer<Type>::value;
 	}
 
 	template <typename Type>
 	const bool
 	isPointerToConst() {
-		return prism::IsConst<typename prism::RemovePointer<Type>::type>::value;
+		return std::is_const<typename std::remove_pointer<Type>::type>::value;
 	}
 
 	template <typename Type>
 	const bool
 	isLValueReference() {
-		return prism::IsLValueReference<Type>::value;
+		return std::is_lvalue_reference<Type>::value;
 	}
 
 	template <typename Type>
 	const bool
 	isReferenceToConst() {
-		return prism::IsConst<typename prism::RemoveReference<Type>::type>::value;
+		return std::is_const<typename std::remove_reference<Type>::type>::value;
 	}
 };
 
