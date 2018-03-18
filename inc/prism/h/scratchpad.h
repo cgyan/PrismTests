@@ -11,7 +11,7 @@
 
 #include <prism/global>
 #include <prism/Allocator>
-#include <prism/Iterator>
+#include <prism/iterator>
 #include <prism/type_traits>
 #include <ostream>
 
