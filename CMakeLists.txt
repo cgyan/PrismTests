@@ -29,6 +29,10 @@ elseif(APPLE)
     set(PRISM_INC_PATH /Users/iainhemstock/GitHub/prism/inc)
     set(PRISM_LIB_PATH /Users/iainhemstock/GitHub/prism/build)
 
+    set(PRISM_BASE_LIB_NAME prismbase)
+    set(PRISM_BASE_INC_PATH /Users/iainhemstock/GitHub/prismbase/inc)
+    set(PRISM_BASE_LIB_PATH /Users/iainhemstock/GitHub/prismbase/build)
+
     set(GMOCK_LIB_NAME gmock)
     set(GMOCK_INC_PATH /Users/iainhemstock/GitHub/googletest/googlemock/include)
     set(GMOCK_LIB_PATH /Users/iainhemstock/GitHub/googletest/build/googlemock)
