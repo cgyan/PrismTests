@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 project(PrismTests)
 
 option(integ "BuildIntegrationTests" OFF)
-option(unit "BuildUnitTests" OFF)
+option(unit "BuildUnitTests" ON)
 
 if (integ AND unit)
     message("PrismTests: build integration tests = YES")
