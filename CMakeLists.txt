@@ -72,8 +72,13 @@ find_library(GTEST_LIB
     PATHS ${GTEST_LIB_PATH}
 )
 
+include(integration/sources.cmake)
 include(unit/sources.cmake)
-add_executable(${EXE_NAME} ${MAIN_SRC} ${UNIT_SOURCES})
+add_executable(${EXE_NAME}
+    ${MAIN_SRC}
+    ${INTEGRATION_SOURCES}
+    ${UNIT_SOURCES}
+)
 
 target_link_libraries(${EXE_NAME}
     ${PRISM_LIB}
