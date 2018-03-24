@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+set(CMAKE_CXX_STANDARD 11)
 
 project(prismunittests)
 set(EXE_NAME runner)
