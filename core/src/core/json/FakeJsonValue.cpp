@@ -1,5 +1,5 @@
 #include <prism/global>
-#include <prism/FakeJsonValue>
+#include <prismtests/FakeJsonValue>
 #include <prism/AbstractJsonValueImpl>
 #include <prism/JsonObject>
 #include <prism/JsonArray>

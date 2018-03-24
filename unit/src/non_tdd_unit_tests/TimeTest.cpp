@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <prism/Time>
-#include <prism/Time_WithETMStub>
+#include <prismtests/Time_WithETMStub>
 #include <prism/String>
 #include <iostream>
 using namespace std;
@@ -386,14 +386,3 @@ TEST_F(TimeTest, opMinus) {
 
 } // end namespace test
 } // end namespace prism
-
-
-
-
-
-
-
-
-
-
-

@@ -8,10 +8,10 @@
 
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prism/scratchpad>
+#include <prismtests/scratchpad>
+#include <prismtests/DynamicNumber>
 #include <prism/Allocator>
 #include <prism/LogAllocator>
-#include <prism/DynamicNumber>
 #include <type_traits>
 
 PRISM_BEGIN_NAMESPACE
@@ -245,19 +245,3 @@ AddsDefaultConstructedValueToEmptyList) {
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

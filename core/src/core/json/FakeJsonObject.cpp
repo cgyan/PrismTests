@@ -1,7 +1,7 @@
 #include <prism/global>
 #include <prism/AbstractJsonObjectImpl>
-#include <prism/FakeJsonObject>
-#include <prism/FakeJsonValue>
+#include <prismtests/FakeJsonObject>
+#include <prismtests/FakeJsonValue>
 #include <prism/JsonArray>
 #include <map>
 #include <iostream>

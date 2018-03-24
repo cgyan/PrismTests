@@ -2,9 +2,9 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/JsonDoc>
-#include <prism/FakeJsonObject>
-#include <prism/FakeJsonArray>
-#include <prism/FakeJsonValue>
+#include <prismtests/FakeJsonObject>
+#include <prismtests/FakeJsonArray>
+#include <prismtests/FakeJsonValue>
 #include <string>
 
 PRISM_BEGIN_NAMESPACE

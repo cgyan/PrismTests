@@ -1,3 +1,5 @@
-# folders
-build
 .DS_Store
+build
+unit/build
+integration/build
+core/build

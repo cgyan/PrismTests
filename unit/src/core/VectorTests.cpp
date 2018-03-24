@@ -22,7 +22,8 @@
 using namespace ::testing;
 
 //#include <prism/Number>
-#include "../inc/prism/DynamicNumber"
+// #include "../inc/prism/DynamicNumber"
+#include <prismtests/DynamicNumber>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE

@@ -1,7 +1,7 @@
-set(CORE_SOURCES ${CORE_SOURCES}
-    
+set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
+    integration/src/core/FileInfo/FileExists.cpp
 )
 
 set(INTEGRATION_SOURCES ${INTEGRATION_SOURCES}
-    ${CORE_SOURCES}
+    ${FILE_INFO_SOURCES}
 )
