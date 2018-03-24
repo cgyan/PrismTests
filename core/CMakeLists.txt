@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 
-project(prismtestcore)
+project(prismtestscore)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -29,8 +29,8 @@ find_library(PRISM_LIB
 )
 
 include(sources.cmake)
-add_library(prismtestcore STATIC ${SOURCES})
+add_library(prismtestscore STATIC ${SOURCES})
 
-target_link_libraries(PrismTestCore
+target_link_libraries(prismtestscore
     ${PRISM_LIB}
 )
