@@ -32,7 +32,6 @@ set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
     src/non_tdd_unit_tests/CircleTest.cpp
     src/non_tdd_unit_tests/DequeTest.cpp
     src/non_tdd_unit_tests/functorTest.cpp
-    src/non_tdd_unit_tests/ListTest.cpp
     src/non_tdd_unit_tests/ReverseIteratorTest.cpp
     src/non_tdd_unit_tests/SharedDataPointerTest.cpp
     src/non_tdd_unit_tests/SharedDataTest.cpp

@@ -8,7 +8,7 @@
 
 #include "gtest/gtest.h"
 #include <prism/global>
-#include <prismtests/scratchpad>
+// #include <prismtests/scratchpad>
 #include <prismtests/DynamicNumber>
 #include <prism/Allocator>
 #include <prism/LogAllocator>
