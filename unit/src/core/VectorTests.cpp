@@ -21,15 +21,10 @@
 #include <functional>
 using namespace ::testing;
 
-//#include <prism/Number>
-// #include "../inc/prism/DynamicNumber"
-#include <prismtests/DynamicNumber>
-
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-//using NumberType = prism::test::Number;
-using NumberType = test::DynamicNumber;
+using NumberType = int;
 using Vec = prism::Vector<NumberType, prism::Allocator<NumberType>>;
 using CustomAllocatorVec = prism::Vector<NumberType, prism::LogAllocator<NumberType>>;
 

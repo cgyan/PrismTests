@@ -13,7 +13,6 @@ set(CORE_SOURCES ${CORE_SOURCES}
     src/core/json/JsonParserExceptionTests.cpp
     src/core/json/JsonStringBuilderTests.cpp
     src/core/json/JsonValueTests.cpp
-    src/core/ListTests.cpp
     src/core/ObjectTests.cpp
     src/core/PairTests.cpp
     src/core/PointTests.cpp
