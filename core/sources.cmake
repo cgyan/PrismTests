@@ -1,9 +1,10 @@
 set(CORE_SOURCES ${CORE_SOURCES}
-    src/core/json/FakeJsonArray.cpp
-    src/core/json/FakeJsonObject.cpp
-    src/core/json/FakeJsonValue.cpp
+        src/FakeFileSystem.cpp
+        src/json/FakeJsonArray.cpp
+        src/json/FakeJsonObject.cpp
+        src/json/FakeJsonValue.cpp
 )
 
 set(SOURCES
-    ${CORE_SOURCES}
+        ${CORE_SOURCES}
 )

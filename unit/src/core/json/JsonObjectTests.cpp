@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include <prism/JsonObject>
-#include <prismtests/FakeJsonValue>
+#include <prism/FakeJsonValue>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE

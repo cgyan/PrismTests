@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 using namespace ::testing;
 #include <prism/global>
-#include <prismtests/FakeJsonArray>
-#include <prismtests/FakeJsonValue>
+#include <prism/FakeJsonArray>
+#include <prism/FakeJsonValue>
 #include <prism/OutOfBoundsException>
 
 PRISM_BEGIN_NAMESPACE

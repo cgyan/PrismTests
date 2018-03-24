@@ -4,6 +4,7 @@ set(MAIN_SOURCE ${MAIN_SOURCE}
 
 set(CORE_SOURCES ${CORE_SOURCES}
     src/core/AlgorithmMoveTests.cpp
+    src/core/FileInfoUnitTests.cpp
     src/core/IteratorTests.cpp
     src/core/json/JsonArrayTests.cpp
     src/core/json/JsonDocTests.cpp

@@ -10,7 +10,7 @@ if (WIN32)
     set(PRISM_INC_PATH C:/Users/Iain/GitHub/prism/inc)
     set(PRISM_LIB_PATH C:/Users/Iain/GitHub/prism/build)
 
-    set(PRISM_TESTS_CORE_LIB_NAME libprismtestcore)
+    set(PRISM_TESTS_CORE_LIB_NAME libprismtestscore)
     set(PRISM_TESTS_CORE_INC_PATH C:/Users/Iain/GitHub/prismtests/core/inc)
     set(PRISM_TESTS_CORE_LIB_PATH C:/Users/Iain/GitHub/prismtests/core/build)
 
@@ -71,7 +71,6 @@ find_library(GTEST_LIB
 
 include(sources.cmake)
 add_executable(${EXE_NAME}
-    ${MAIN_SRC}
     ${SOURCES}
 )
 

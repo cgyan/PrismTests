@@ -8,7 +8,7 @@
 
 #include <gtest/gtest.h>
 #include <prism/Time>
-#include <prismtests/Time_WithETMStub>
+#include <prism/Time_WithETMStub>
 #include <prism/String>
 #include <iostream>
 using namespace std;
