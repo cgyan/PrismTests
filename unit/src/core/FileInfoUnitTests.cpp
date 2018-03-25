@@ -12,9 +12,6 @@ PRISM_BEGIN_TEST_NAMESPACE
 //==============================================================================
 class FileInfoUnitTests : public Test {
 public:
-        void SetUp();
-        void TearDown();
-
         const char * testFilename() const;
 public:
         const char * m_filename{"file.txt"};
