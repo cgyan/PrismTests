@@ -53,7 +53,7 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToNonExistentFileOnDiskExpectFileNot
 TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectFileToExist)
 {
         FileSystemFactory::get()->setFileSystem(&FakeFileSystem::create);
-        AbstractFileSystem * fakeFileSystem = FileSystemFactory::get()->createFileSystem();
+        AbstractFileSystem * fakeFileSystem = FileSystemFactory::get()->getFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         testSubject.setFile(this->testFilename());
         EXPECT_TRUE(testSubject.exists());
