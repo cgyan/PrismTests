@@ -21,16 +21,6 @@ public:
         FileInfo testSubject{m_filename};
 };
 
-void
-FileInfoUnitTests::SetUp() {
-
-}
-
-void
-FileInfoUnitTests::TearDown() {
-
-}
-
 const char *
 FileInfoUnitTests::testFilename() const {
         return m_filename;
