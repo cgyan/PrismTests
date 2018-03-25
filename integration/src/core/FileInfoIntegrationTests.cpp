@@ -4,7 +4,6 @@ using namespace ::testing;
 #include <prism/FileInfo>
 #include <fstream>
 #include <cstdio>
-#include <iostream>
 #include <cassert>
 
 PRISM_BEGIN_NAMESPACE
@@ -16,10 +15,10 @@ class FileInfoIntegrationTests : public Test {
 public:
         void SetUp();
         void TearDown();
-        const char * testFilename() const;
         void setFile(const char * filename);
+        const char * testFilename() const;
 private:
-        const bool createFileInThisDirectory();
+        const bool createAndOpenFile();
         void closeFile();
         const bool deleteFile();
 private:
@@ -32,7 +31,7 @@ public:
 void
 FileInfoIntegrationTests::SetUp()
 {
-        assert(createFileInThisDirectory());
+        assert(createAndOpenFile());
 }
 
 void
@@ -48,7 +47,7 @@ FileInfoIntegrationTests::testFilename() const {
 }
 
 const bool
-FileInfoIntegrationTests::createFileInThisDirectory()
+FileInfoIntegrationTests::createAndOpenFile()
 {
         m_fstream.open(m_filename, std::fstream::out);
         return m_fstream.is_open();
@@ -73,7 +72,8 @@ TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToFileOnDiskExpectFileToExist
         EXPECT_TRUE(testSubject.exists());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectFileNotToExist) {
+TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectFileNotToExist)
+{
         testSubject.setFile("path/to/file/that/does/not/exist");
         EXPECT_FALSE(testSubject.exists());
 }
