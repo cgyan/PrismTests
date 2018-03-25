@@ -17,13 +17,17 @@ public:
         void TearDown();
         void setFile(const char * filename);
         const char * testFilename() const;
+        const unsigned int bytesInFile() const;
 private:
         const bool createAndOpenFile();
+        void writeDataToFile();
         void closeFile();
         const bool deleteFile();
 private:
-        const char * m_filename{"file.txt"};
+        const char * m_filename{"integration_test_file.txt"};
+        const char * m_fileContents = "Hello tests!";
         std::fstream m_fstream;
+        unsigned int m_fileSize{0};
 public:
         FileInfo testSubject{m_filename};
 };
@@ -32,12 +36,14 @@ void
 FileInfoIntegrationTests::SetUp()
 {
         assert(createAndOpenFile());
+        writeDataToFile();
+        m_fileSize = strlen(m_fileContents);
+        closeFile();
 }
 
 void
 FileInfoIntegrationTests::TearDown()
 {
-        closeFile();
         assert(deleteFile());
 }
 
@@ -46,11 +52,21 @@ FileInfoIntegrationTests::testFilename() const {
         return m_filename;
 }
 
+const unsigned int
+FileInfoIntegrationTests::bytesInFile() const {
+        return m_fileSize;
+}
+
 const bool
 FileInfoIntegrationTests::createAndOpenFile()
 {
         m_fstream.open(m_filename, std::fstream::out);
         return m_fstream.is_open();
+}
+
+void
+FileInfoIntegrationTests::writeDataToFile() {
+        m_fstream << m_fileContents;
 }
 
 void
@@ -76,6 +92,16 @@ TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectFileNo
 {
         testSubject.setFile("path/to/file/that/does/not/exist");
         EXPECT_FALSE(testSubject.exists());
+}
+
+TEST_F(FileInfoIntegrationTests, WhenFileRefersToFileOnDiskExpectSizeOfThatFile) {
+        const int expectedSizeInBytes = bytesInFile();
+        EXPECT_EQ(expectedSizeInBytes, testSubject.size());
+}
+
+TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfZero) {
+        testSubject.setFile("path/to/file/that/does/not/exist");
+        EXPECT_EQ(0, testSubject.size());
 }
 
 PRISM_END_TEST_NAMESPACE
