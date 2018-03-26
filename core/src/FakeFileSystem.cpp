@@ -14,34 +14,32 @@ FakeFileSystem::create()
 }
 
 void
-FakeFileSystem::createFile(const char * filename)
+FakeFileSystem::createFile(const std::string& filename)
 {
         using FilePair = std::pair<std::string, unsigned int>;
         const unsigned int defaultFileSize = 0;
-        m_createdFiles.insert(FilePair(std::string(filename), defaultFileSize));
+        m_createdFiles.insert(FilePair(filename, defaultFileSize));
 }
 
 const bool
-FakeFileSystem::exists(const char * filename) const
+FakeFileSystem::exists(const std::string& filename) const
 {
-        FilesMap::const_iterator it = m_createdFiles.find(std::string(filename));
+        FilesMap::const_iterator it = m_createdFiles.find(filename);
         if (it == m_createdFiles.cend())
                 return false;
         return true;
 }
 
 void
-FakeFileSystem::setFileSize(const char * filename, const unsigned int fileSize) {
-        m_createdFiles[std::string(filename)] = fileSize;
+FakeFileSystem::setFileSize(const std::string& filename, const unsigned int fileSize) {
+        m_createdFiles[filename] = fileSize;
 }
 
 const unsigned int
-FakeFileSystem::fileSizeInBytes(const char * filename) const {
+FakeFileSystem::fileSizeInBytes(const std::string& filename) const {
         if (exists(filename)) {
-                std::cout << "filesize is " << m_createdFiles.at(std::string(filename)) << std::endl;
-                return m_createdFiles.at(std::string(filename));
+                return m_createdFiles.at(filename);
         }
-        std::cout << "filename does not exist " << std::endl;
         return 0;
 }
 

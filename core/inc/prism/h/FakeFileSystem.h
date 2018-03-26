@@ -12,10 +12,10 @@ class FakeFileSystem : public AbstractFileSystem {
 public:
         static AbstractFileSystem * create();
 
-        void createFile(const char * filename) override;
-        const bool exists(const char * filename) const override;
-        void setFileSize(const char * filename, const unsigned int filesize);
-        const unsigned int fileSizeInBytes(const char * filename) const override;
+        void createFile(const std::string& filename) override;
+        const bool exists(const std::string& filename) const override;
+        void setFileSize(const std::string& filename, const unsigned int filesize);
+        const unsigned int fileSizeInBytes(const std::string& filename) const override;
         void deleteAllFiles();
 private:
         FakeFileSystem() = default;
