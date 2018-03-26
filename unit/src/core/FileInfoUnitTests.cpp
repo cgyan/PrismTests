@@ -35,14 +35,14 @@ FileInfoUnitTests::TearDown()
         getFakeFileSystem()->deleteAllFiles();
 }
 
-void
-FileInfoUnitTests::setFakeFileSystemAsGlobalFileSystem() {
-        FileSystemFactory::get()->setFileSystem(&FakeFileSystem::create);
-}
-
 const char *
 FileInfoUnitTests::testFilename() const {
         return m_filename;
+}
+
+void
+FileInfoUnitTests::setFakeFileSystemAsGlobalFileSystem() {
+        FileSystemFactory::get()->setFileSystem(&FakeFileSystem::create);
 }
 
 FakeFileSystem *
@@ -71,7 +71,7 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectFileToExist)
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         testSubject.setFile(this->testFilename());
-        EXPECT_TRUE(testSubject.exists());
+        EXPECT_TRUE(testSubject.exists()) << "file with name called " << testFilename() << " should exist";
 }
 
 TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfZero)
