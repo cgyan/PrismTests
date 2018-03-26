@@ -4,6 +4,7 @@
 #include <prism/global>
 #include <prism/AbstractFileSystem>
 #include <map>
+#include <string>
 
 PRISM_BEGIN_NAMESPACE
 
@@ -21,7 +22,7 @@ private:
         FakeFileSystem(const FakeFileSystem& other) = default;
         FakeFileSystem& operator=(const FakeFileSystem& rhs) = default;
 private:
-        using FilesMap = std::map<const char *, unsigned int>;
+        using FilesMap = std::map<std::string, unsigned int>;
         FilesMap m_createdFiles;
 };
 
