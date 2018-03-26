@@ -3,8 +3,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 project(prismtestscore)
 
-set(CMAKE_CXX_STANDARD 11)
-
 if (WIN32)
 
     set(PRISM_LIB_NAME libprism)
