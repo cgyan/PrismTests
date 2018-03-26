@@ -2,6 +2,7 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
+#include <prism/FileSystemFactory>
 #include <fstream>
 #include <cstdio>
 #include <cassert>
@@ -11,7 +12,8 @@ PRISM_BEGIN_TEST_NAMESPACE
 //==============================================================================
 // test setup
 //==============================================================================
-class FileInfoIntegrationTests : public Test {
+class FileInfoIntegrationTests : public Test
+{
 public:
         void SetUp();
         void TearDown();
@@ -19,6 +21,7 @@ public:
         const char * testFilename() const;
         const unsigned int bytesInFile() const;
 private:
+        void setRealFIleSystemAsGlobalFileSystem();
         const bool createAndOpenFile();
         void writeDataToFile();
         void closeFile();
@@ -35,6 +38,7 @@ public:
 void
 FileInfoIntegrationTests::SetUp()
 {
+        setRealFIleSystemAsGlobalFileSystem();
         assert(createAndOpenFile());
         writeDataToFile();
         m_fileSize = strlen(m_fileContents);
@@ -47,13 +51,21 @@ FileInfoIntegrationTests::TearDown()
         assert(deleteFile());
 }
 
+void
+FileInfoIntegrationTests::setRealFIleSystemAsGlobalFileSystem()
+{
+        FileSystemFactory::get()->setFileSystem(&FileSystem::create);
+}
+
 const char *
-FileInfoIntegrationTests::testFilename() const {
+FileInfoIntegrationTests::testFilename() const
+{
         return m_filename;
 }
 
 const unsigned int
-FileInfoIntegrationTests::bytesInFile() const {
+FileInfoIntegrationTests::bytesInFile() const
+{
         return m_fileSize;
 }
 
@@ -65,7 +77,8 @@ FileInfoIntegrationTests::createAndOpenFile()
 }
 
 void
-FileInfoIntegrationTests::writeDataToFile() {
+FileInfoIntegrationTests::writeDataToFile()
+{
         m_fstream << m_fileContents;
 }
 
@@ -94,12 +107,14 @@ TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectFileNo
         EXPECT_FALSE(testSubject.exists());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFileRefersToFileOnDiskExpectSizeOfThatFile) {
+TEST_F(FileInfoIntegrationTests, WhenFileRefersToFileOnDiskExpectSizeOfThatFile)
+{
         const int expectedSizeInBytes = bytesInFile();
         EXPECT_EQ(expectedSizeInBytes, testSubject.size());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfZero) {
+TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfZero)
+{
         testSubject.setFile("path/to/file/that/does/not/exist");
         EXPECT_EQ(0, testSubject.size());
 }

@@ -1,12 +1,12 @@
 set(MAIN_SOURCE ${MAIN_SOURCE}
-    src/main.cpp
+    integration/src/main.cpp
 )
 
 set(CORE_SOURCES ${CORE_SOURCES}
-    src/core/FileInfoIntegrationTests.cpp
+    integration/src/core/FileInfoIntegrationTests.cpp
 )
 
-set(SOURCES ${SOURCES}
-    ${MAIN_SOURCE}
+set(INTEGRATION_SOURCES ${INTEGRATION_SOURCES}
+    # ${MAIN_SOURCE}
     ${CORE_SOURCES}
 )
