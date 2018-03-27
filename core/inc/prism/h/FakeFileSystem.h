@@ -16,6 +16,7 @@ public:
         const bool exists(const std::string& filename) const override;
         void setFileSize(const std::string& filename, const unsigned int filesize);
         const int fileSizeInBytes(const std::string& filename) const override;
+        const std::string convertToUnixSeparators(const std::string& filename) const override;
         void deleteAllFiles();
 private:
         FakeFileSystem() = default;

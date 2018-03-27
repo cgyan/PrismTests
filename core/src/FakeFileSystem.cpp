@@ -48,4 +48,9 @@ FakeFileSystem::deleteAllFiles() {
         m_createdFiles.clear();
 }
 
+const std::string
+FakeFileSystem::convertToUnixSeparators(const std::string& filename) const {
+        return "";
+}
+
 PRISM_END_NAMESPACE
