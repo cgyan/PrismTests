@@ -10,10 +10,6 @@ if (WIN32)
         set(PRISM_INC_PATH C:/Users/Iain/GitHub/prism/inc)
         set(PRISM_LIB_PATH C:/Users/Iain/GitHub/prism/build)
 
-        # set(PRISM_TESTS_CORE_LIB_NAME libtestcore)
-        # set(PRISM_TESTS_CORE_INC_PATH C:/Users/Iain/GitHub/PrismTests/core/inc)
-        # set(PRISM_TESTS_CORE_LIB_PATH C:/Users/Iain/GitHub/PrismTests/build/core)
-
         set(GMOCK_LIB_NAME libgmock)
         set(GMOCK_INC_PATH C:/Users/Iain/GitHub/googletest/googlemock/include)
         set(GMOCK_LIB_PATH C:/Users/Iain/GitHub/googletest/build/googlemock)
@@ -54,6 +50,11 @@ find_library(GTEST_LIB
     PATHS ${GTEST_LIB_PATH}
 )
 
+find_library(SHLWAPI
+        NAMES libshlwapi
+        PATHS C:/Program_Files/mingw-w64/x86_64-6.3.0-posix-sjlj-rt_v5-rev2/mingw64/x86_64-w64-mingw32/lib
+)
+
 include(core/sources.cmake)
 include(integration/sources.cmake)
 include(unit/sources.cmake)
@@ -69,6 +70,7 @@ target_link_libraries(${PROJECT_NAME}
         ${PRISM_LIB}
         ${GMOCK_LIB}
         ${GTEST_LIB}
+        ${SHLWAPI}
 )
 
 
