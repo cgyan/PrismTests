@@ -1,7 +1,5 @@
 #include <prism/global>
-#include <prism/FileSystemFactory>
 #include <prism/FakeFileSystem>
-#include <prism/algorithm>
 #include <cstring>
 #include <cassert>
 #include <iostream>
@@ -18,9 +16,7 @@ FakeFileSystem::create()
 void
 FakeFileSystem::createFile(const std::string& filename)
 {
-        std::string s = filename;
-        FileSystemFactory::get()->getFileSystem()->convertToUnixSeparators(s);
-        m_createdFile = s;
+        m_createdFile = filename;
 }
 
 const bool
@@ -42,16 +38,9 @@ FakeFileSystem::fileSizeInBytes(const std::string& filename) const {
 }
 
 void
-FakeFileSystem::deleteAllFiles() {
+FakeFileSystem::clear() {
         m_createdFile = "";
         m_createdFileSize = 0;
-}
-
-const std::string
-FakeFileSystem::convertToUnixSeparators(const std::string& filename) const {
-        std::string ret = filename;
-        prism::replace(ret.begin(), ret.end(), '\\', '/');
-        return ret;
 }
 
 PRISM_END_NAMESPACE

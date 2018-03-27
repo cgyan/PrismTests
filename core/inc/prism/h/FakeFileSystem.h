@@ -12,12 +12,14 @@ class FakeFileSystem : public AbstractFileSystem {
 public:
         static AbstractFileSystem * create();
 
+        // overriding methods
         void createFile(const std::string& filename) override;
         const bool exists(const std::string& filename) const override;
-        void setFileSize(const unsigned int filesize);
         const int fileSizeInBytes(const std::string& filename) const override;
-        const std::string convertToUnixSeparators(const std::string& filename) const override;
-        void deleteAllFiles();
+
+        // helper methods
+        void setFileSize(const unsigned int filesize);
+        void clear();
 private:
         FakeFileSystem() = default;
         FakeFileSystem(const FakeFileSystem& other) = default;

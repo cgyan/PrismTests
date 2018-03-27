@@ -32,7 +32,7 @@ FileInfoUnitTests::SetUp()
 void
 FileInfoUnitTests::TearDown()
 {
-        getFakeFileSystem()->deleteAllFiles();
+        getFakeFileSystem()->clear();
 }
 
 const char *
@@ -82,11 +82,9 @@ TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfZero)
 
 TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
 {
-        std::cout << "setting test filename: " << this->testFilename() << std::endl;
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         testSubject.setFile(this->testFilename());
-        std::cout << "testSubject.filename = " << testSubject.filename() << std::endl;
         const int newFileSize = 200;
         fakeFileSystem->setFileSize(newFileSize);
         const int expectedFileSize = newFileSize;
