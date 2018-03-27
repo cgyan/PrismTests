@@ -23,8 +23,6 @@ private:
         FakeFileSystem(const FakeFileSystem& other) = default;
         FakeFileSystem& operator=(const FakeFileSystem& rhs) = default;
 private:
-        // using FilesMap = std::map<std::string, unsigned int>;
-        // FilesMap m_createdFiles;
         std::string m_createdFile{""};
         unsigned int m_createdFileSize{0};
 };
