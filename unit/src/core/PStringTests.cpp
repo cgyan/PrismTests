@@ -4,7 +4,7 @@ using namespace ::testing;
 #include <prism/OutOfBoundsException>
 #include <prism/BadSizeException>
 #include <prism/algorithm>
-#include <prism/Iterator>
+#include <prism/iterator>
 #include <prism/StringBuilder>
 #include <string>
 #include <memory>
