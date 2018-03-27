@@ -711,11 +711,8 @@ operator==(const PString& lhs, const PString& rhs) {
 
 std::ostream&
 operator<<(std::ostream& out, const PString& s) {
-    // StringBuilder sb;
-    // for (int i=0; i<s.length(); ++i) {
-    //     sb.append(s[i]);
-    // }
-    // out << sb.toString();
+        std::string strOut(s.cbegin(), s.cend());
+        out << strOut;
 	return out;
 }
 
