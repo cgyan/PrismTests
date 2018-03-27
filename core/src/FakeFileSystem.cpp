@@ -1,5 +1,7 @@
 #include <prism/global>
+#include <prism/FileSystemFactory>
 #include <prism/FakeFileSystem>
+#include <prism/algorithm>
 #include <cstring>
 #include <cassert>
 #include <iostream>
@@ -16,41 +18,40 @@ FakeFileSystem::create()
 void
 FakeFileSystem::createFile(const std::string& filename)
 {
-        using FilePair = std::pair<std::string, unsigned int>;
-        const unsigned int defaultFileSize = 0;
-        m_createdFiles.insert(FilePair(filename, defaultFileSize));
+        std::string s = filename;
+        FileSystemFactory::get()->getFileSystem()->convertToUnixSeparators(s);
+        m_createdFile = s;
 }
 
 const bool
 FakeFileSystem::exists(const std::string& filename) const
 {
-        FilesMap::const_iterator it = m_createdFiles.find(filename);
-        if (it == m_createdFiles.cend())
-                return false;
-        return true;
+        if (m_createdFile == "") return false;
+        if (m_createdFile == filename) return true;
+        return false;
 }
 
 void
-FakeFileSystem::setFileSize(const std::string& filename, const unsigned int fileSize) {
-        m_createdFiles[filename] = fileSize;
+FakeFileSystem::setFileSize(const unsigned int fileSize) {
+        m_createdFileSize = fileSize;
 }
 
 const int
 FakeFileSystem::fileSizeInBytes(const std::string& filename) const {
-        if (exists(filename)) {
-                return m_createdFiles.at(filename);
-        }
-        return 0;
+        return m_createdFileSize;
 }
 
 void
 FakeFileSystem::deleteAllFiles() {
-        m_createdFiles.clear();
+        m_createdFile = "";
+        m_createdFileSize = 0;
 }
 
 const std::string
 FakeFileSystem::convertToUnixSeparators(const std::string& filename) const {
-        return "";
+        std::string ret = filename;
+        prism::replace(ret.begin(), ret.end(), '\\', '/');
+        return ret;
 }
 
 PRISM_END_NAMESPACE

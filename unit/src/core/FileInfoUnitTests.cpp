@@ -82,11 +82,13 @@ TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfZero)
 
 TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
 {
+        std::cout << "setting test filename: " << this->testFilename() << std::endl;
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         testSubject.setFile(this->testFilename());
+        std::cout << "testSubject.filename = " << testSubject.filename() << std::endl;
         const int newFileSize = 200;
-        fakeFileSystem->setFileSize(this->testFilename(), newFileSize);
+        fakeFileSystem->setFileSize(newFileSize);
         const int expectedFileSize = newFileSize;
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
@@ -102,13 +104,16 @@ TEST_F(FileInfoUnitTests, WhenFileHasNoContentExpectSizeOfZero)
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         const int newFileSize = 0;
-        fakeFileSystem->setFileSize(this->testFilename(), newFileSize);
+        fakeFileSystem->setFileSize(newFileSize);
         testSubject.setFile(this->testFilename());
         const int expectedFileSize = newFileSize;
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
 
 class FileInfoFilenameUnitTests : public Test {
+        void SetUp() {
+                FileSystemFactory::get()->setFileSystem(&FileSystem::create);
+        }
 public:
         FileInfo testSubject;
 };

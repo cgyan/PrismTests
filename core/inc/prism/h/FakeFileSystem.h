@@ -14,7 +14,7 @@ public:
 
         void createFile(const std::string& filename) override;
         const bool exists(const std::string& filename) const override;
-        void setFileSize(const std::string& filename, const unsigned int filesize);
+        void setFileSize(const unsigned int filesize);
         const int fileSizeInBytes(const std::string& filename) const override;
         const std::string convertToUnixSeparators(const std::string& filename) const override;
         void deleteAllFiles();
@@ -23,8 +23,10 @@ private:
         FakeFileSystem(const FakeFileSystem& other) = default;
         FakeFileSystem& operator=(const FakeFileSystem& rhs) = default;
 private:
-        using FilesMap = std::map<std::string, unsigned int>;
-        FilesMap m_createdFiles;
+        // using FilesMap = std::map<std::string, unsigned int>;
+        // FilesMap m_createdFiles;
+        std::string m_createdFile{""};
+        unsigned int m_createdFileSize{0};
 };
 
 PRISM_END_NAMESPACE
