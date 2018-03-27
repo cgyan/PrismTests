@@ -85,9 +85,9 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
         testSubject.setFile(this->testFilename());
-        const unsigned int newFileSize = 200;
+        const int newFileSize = 200;
         fakeFileSystem->setFileSize(this->testFilename(), newFileSize);
-        const unsigned int expectedFileSize = newFileSize;
+        const int expectedFileSize = newFileSize;
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
 
@@ -101,10 +101,10 @@ TEST_F(FileInfoUnitTests, WhenFileHasNoContentExpectSizeOfZero)
 {
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());
-        const unsigned int newFileSize = 0;
+        const int newFileSize = 0;
         fakeFileSystem->setFileSize(this->testFilename(), newFileSize);
         testSubject.setFile(this->testFilename());
-        const unsigned int expectedFileSize = newFileSize;
+        const int expectedFileSize = newFileSize;
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
 

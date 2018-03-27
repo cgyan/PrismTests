@@ -35,7 +35,7 @@ FakeFileSystem::setFileSize(const std::string& filename, const unsigned int file
         m_createdFiles[filename] = fileSize;
 }
 
-const unsigned int
+const int
 FakeFileSystem::fileSizeInBytes(const std::string& filename) const {
         if (exists(filename)) {
                 return m_createdFiles.at(filename);
