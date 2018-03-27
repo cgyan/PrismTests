@@ -40,7 +40,7 @@ FakeFileSystem::fileSizeInBytes(const std::string& filename) const {
 void
 FakeFileSystem::clear() {
         m_createdFile = "";
-        m_createdFileSize = 0;
+        m_createdFileSize = -1;
 }
 
 PRISM_END_NAMESPACE

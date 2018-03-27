@@ -74,10 +74,11 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectFileToExist)
         EXPECT_TRUE(testSubject.exists()) << "file with name called " << testFilename() << " should exist";
 }
 
-TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfZero)
+TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfNegativeOne)
 {
         testSubject.setFile("");
-        EXPECT_EQ(0, testSubject.size());
+        const int fileDoesNotExist = -1;
+        EXPECT_EQ(fileDoesNotExist, testSubject.size());
 }
 
 TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
@@ -91,13 +92,14 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
 
-TEST_F(FileInfoUnitTests, WhenFilenameRefersToNonExistentFileExpectSizeOfZero)
+TEST_F(FileInfoUnitTests, WhenFilenameRefersToNonExistentFileExpectSizeOfNegativeOne)
 {
         testSubject.setFile("path/to/file/that/does/not/exist");
-        EXPECT_EQ(0, testSubject.size());
+        const int fileDoesNotExist = -1;
+        EXPECT_EQ(fileDoesNotExist, testSubject.size());
 }
 
-TEST_F(FileInfoUnitTests, WhenFileHasNoContentExpectSizeOfZero)
+TEST_F(FileInfoUnitTests, WhenFileThatExistsHasNoContentExpectSizeOfZero)
 {
         FakeFileSystem * fakeFileSystem = getFakeFileSystem();
         fakeFileSystem->createFile(this->testFilename());

@@ -113,10 +113,11 @@ TEST_F(FileInfoIntegrationTests, WhenFileRefersToFileOnDiskExpectSizeOfThatFile)
         EXPECT_EQ(expectedSizeInBytes, testSubject.size());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfZero)
+TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfNegativeOne)
 {
         testSubject.setFile("path/to/file/that/does/not/exist");
-        EXPECT_EQ(0, testSubject.size());
+        const int fileDoesNotExist = -1;
+        EXPECT_EQ(fileDoesNotExist, testSubject.size());
 }
 
 PRISM_END_TEST_NAMESPACE

@@ -26,7 +26,7 @@ private:
         FakeFileSystem& operator=(const FakeFileSystem& rhs) = default;
 private:
         std::string m_createdFile{""};
-        unsigned int m_createdFileSize{0};
+        int m_createdFileSize{-1};
 };
 
 PRISM_END_NAMESPACE
