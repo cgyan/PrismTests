@@ -61,10 +61,10 @@ find_library(GTEST_LIB
 )
 
 if (WIN32)
-find_library(SHLWAPI_LIB
-        NAMES ${SHLWAPI_LIB_NAME}
-        PATHS ${SHLWAPI_LIB_PATH}
-)
+        find_library(SHLWAPI_LIB
+                NAMES ${SHLWAPI_LIB_NAME}
+                PATHS ${SHLWAPI_LIB_PATH}
+        )
 endif()
 
 include(core/sources.cmake)
@@ -85,9 +85,15 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 )
 
 if(WIN32)
-target_link_libraries(${CMAKE_PROJECT_NAME}
-        ${SHLWAPI_LIB}
-)
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+                ${SHLWAPI_LIB}
+        )
+elseif(APPLE)
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+                stdc++
+                "-framework Cocoa"
+                objc
+        )
 endif()
 
 
