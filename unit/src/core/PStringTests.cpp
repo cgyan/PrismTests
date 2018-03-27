@@ -334,7 +334,7 @@ PString::PString(const PString& copy)
 PString&
 PString::operator=(const PString& rhs) {
     PString copy(rhs);
-    impl->swap(copy.impl.get());
+    std::swap(impl, copy.impl);
     return *this;
 }
 
