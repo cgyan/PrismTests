@@ -4,7 +4,6 @@ set(MAIN_SOURCE ${MAIN_SOURCE}
 
 set(CORE_SOURCES ${CORE_SOURCES}
     unit/src/core/AlgorithmMoveTests.cpp
-    unit/src/core/FileInfoUnitTests.cpp
     unit/src/core/IteratorTests.cpp
     unit/src/core/json/JsonArrayTests.cpp
     unit/src/core/json/JsonDocTests.cpp
@@ -23,6 +22,11 @@ set(CORE_SOURCES ${CORE_SOURCES}
     unit/src/core/StackTests.cpp
     unit/src/core/StringBuilderTests.cpp
     unit/src/core/VectorTests.cpp
+)
+
+set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
+        unit/src/core/FileInfo/FileInfoUnitTests.cpp
+        unit/src/core/FileInfo/FileInfoExtractBasename.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
@@ -45,5 +49,6 @@ set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
 set(UNIT_SOURCES ${UNIT_SOURCES}
     # ${MAIN_SOURCE}
     ${CORE_SOURCES}
+    ${FILE_INFO_SOURCES}
     ${NON_TDD_SOURCES}
 )

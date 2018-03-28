@@ -110,7 +110,7 @@ TEST_F(FileInfoUnitTests, WhenFileThatExistsHasNoContentExpectSizeOfZero)
         EXPECT_EQ(expectedFileSize, testSubject.size());
 }
 
-class FileInfoFilenameUnitTests : public Test {
+class FileInfoExtractFilename : public Test {
         void SetUp() {
                 FileSystemFactory::get()->setFileSystem(&FileSystem::create);
         }
@@ -118,28 +118,28 @@ public:
         FileInfo testSubject;
 };
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameHasBasenameAndSuffixExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameHasBasenameAndSuffixExpectBasenameAndSuffixReturned)
 {
         const std::string filenameWithBaseAndSuffix = "file.txt";
         testSubject.setFile(filenameWithBaseAndSuffix);
         EXPECT_EQ(filenameWithBaseAndSuffix, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameHasNoBasenameExpectSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameHasNoBasenameExpectSuffixReturned)
 {
         const std::string filenameWithoutBasename = ".txt";
         testSubject.setFile(filenameWithoutBasename);
         EXPECT_EQ(filenameWithoutBasename, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameHasNoSuffixExpectSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameHasNoSuffixExpectSuffixReturned)
 {
         const std::string filenameWithoutSuffix = "file";
         testSubject.setFile(filenameWithoutSuffix);
         EXPECT_EQ(filenameWithoutSuffix, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInCurrentDirectoryExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameIsInCurrentDirectoryExpectBasenameAndSuffixReturned)
 {
         const std::string filenameInCurrentDirectory = "./file.txt";
         testSubject.setFile(filenameInCurrentDirectory);
@@ -147,7 +147,7 @@ TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInCurrentDirectoryExpectBasename
         EXPECT_EQ(expected, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInParentDirectoryExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameIsInParentDirectoryExpectBasenameAndSuffixReturned)
 {
         const std::string filenameInParentDirectory = "../file.txt";
         testSubject.setFile(filenameInParentDirectory);
@@ -155,7 +155,7 @@ TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInParentDirectoryExpectBasenameA
         EXPECT_EQ(expected, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInSubdirectoryExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameIsInSubdirectoryExpectBasenameAndSuffixReturned)
 {
         const std::string filenameInSubdirectory = "/files/file.txt";
         testSubject.setFile(filenameInSubdirectory);
@@ -163,24 +163,40 @@ TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsInSubdirectoryExpectBasenameAndS
         EXPECT_EQ(expected, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameIsAbsoluteExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenWindowsFilenameIsAbsoluteExpectBasenameAndSuffixReturned)
 {
-        const std::string filenameAbsolutePath = "c:/file.txt";
+        const std::string filenameAbsolutePath = "c:\\file.txt";
         testSubject.setFile(filenameAbsolutePath);
         const std::string expected = "file.txt";
         EXPECT_EQ(expected, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameHasNotBeenSetExpectEmptyStringReturned)
+TEST_F(FileInfoExtractFilename, WhenUnixFilenameIsAbsoluteExpectBasenameAndSuffixReturned)
+{
+        const std::string filenameAbsolutePath = "/usr/file.txt";
+        testSubject.setFile(filenameAbsolutePath);
+        const std::string expected = "file.txt";
+        EXPECT_EQ(expected, testSubject.filename());
+}
+
+TEST_F(FileInfoExtractFilename, WhenFilenameHasNotBeenSetExpectEmptyStringReturned)
 {
         EXPECT_EQ("", testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameUnitTests, WhenFilenameUsesBackslashesExpectBasenameAndSuffixReturned)
+TEST_F(FileInfoExtractFilename, WhenFilenameUsesBackslashesExpectBasenameAndSuffixReturned)
 {
-        const std::string filenameWithBackslash = "c:\\file.txt";
+        const std::string filenameWithBackslash = "..\\file.txt";
         testSubject.setFile(filenameWithBackslash);
         const std::string expected = "file.txt";
+        EXPECT_EQ(expected, testSubject.filename());
+}
+
+TEST_F(FileInfoExtractFilename, WhenFilenameContainsMultipleSuffixesExpectBasenameAndSuffixesReturned)
+{
+        const std::string filenameContainingMultipleSuffixes = "files/compressed/file.tar.gz";
+        testSubject.setFile(filenameContainingMultipleSuffixes);
+        const std::string expected = "file.tar.gz";
         EXPECT_EQ(expected, testSubject.filename());
 }
 
