@@ -7,7 +7,7 @@
  */
 
 #include <gtest/gtest.h>
-#include <prism/Iterator>
+#include <prism/iterator>
 #include <prism/String>
 
 namespace prism {
@@ -214,21 +214,3 @@ TEST_F(ReverseIteratorTest, iter_A_greater_than_or_equal_to_iter_B) {
 
 } // end namespace test
 } // end namespace prism
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
