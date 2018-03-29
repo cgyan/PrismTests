@@ -51,12 +51,13 @@ public:
         FileInfo testSubject;
 };
 
-TEST_F(FileInfoFilenameTests, WhenFilenameHasNotBeenSetExpectEmptyStringReturned)
+TEST_F(FileInfoFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
+        testSubject.setFile("");
         EXPECT_EQ("", testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameTests, WhenFilenameContainsMultipleSuffixesExpectBasenameAndSuffixesReturned)
+TEST_F(FileInfoFilenameTests, ShouldReturnBasenameAndAllSuffixesWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filenameContainingMultipleSuffixes = "files/compressed/file.tar.gz";
         testSubject.setFile(filenameContainingMultipleSuffixes);
@@ -64,14 +65,14 @@ TEST_F(FileInfoFilenameTests, WhenFilenameContainsMultipleSuffixesExpectBasename
         EXPECT_EQ(expected, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameTests, WhenFilenameHasNoBasenameExpectSuffixReturned)
+TEST_F(FileInfoFilenameTests, ShouldReturnSuffixWhenFilenameHasNoBasename)
 {
         const std::string filenameWithoutBasename = ".txt";
         testSubject.setFile(filenameWithoutBasename);
         EXPECT_EQ(filenameWithoutBasename, testSubject.filename());
 }
 
-TEST_F(FileInfoFilenameTests, WhenFilenameHasNoSuffixExpectSuffixReturned)
+TEST_F(FileInfoFilenameTests,  ShouldReturnBasenameWhenFilenameHasNoSuffix)
 {
         const std::string filenameWithoutSuffix = "file";
         testSubject.setFile(filenameWithoutSuffix);

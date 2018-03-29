@@ -8,7 +8,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoSizeTests : public Test
+class FileInfoTests : public Test
 {
 public:
         void SetUp()
