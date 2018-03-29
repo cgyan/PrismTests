@@ -74,41 +74,5 @@ TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectFileToExist)
         EXPECT_TRUE(testSubject.exists()) << "file with name called " << testFilename() << " should exist";
 }
 
-TEST_F(FileInfoUnitTests, WhenFilenameIsEmptyExpectSizeOfNegativeOne)
-{
-        testSubject.setFile("");
-        const int fileDoesNotExist = -1;
-        EXPECT_EQ(fileDoesNotExist, testSubject.size());
-}
-
-TEST_F(FileInfoUnitTests, WhenFilenameRefersToFileOnDiskExpectSizeOfThatFile)
-{
-        FakeFileSystem * fakeFileSystem = getFakeFileSystem();
-        fakeFileSystem->createFile(this->testFilename());
-        testSubject.setFile(this->testFilename());
-        const int newFileSize = 200;
-        fakeFileSystem->setFileSize(newFileSize);
-        const int expectedFileSize = newFileSize;
-        EXPECT_EQ(expectedFileSize, testSubject.size());
-}
-
-TEST_F(FileInfoUnitTests, WhenFilenameRefersToNonExistentFileExpectSizeOfNegativeOne)
-{
-        testSubject.setFile("path/to/file/that/does/not/exist");
-        const int fileDoesNotExist = -1;
-        EXPECT_EQ(fileDoesNotExist, testSubject.size());
-}
-
-TEST_F(FileInfoUnitTests, WhenFileThatExistsHasNoContentExpectSizeOfZero)
-{
-        FakeFileSystem * fakeFileSystem = getFakeFileSystem();
-        fakeFileSystem->createFile(this->testFilename());
-        const int newFileSize = 0;
-        fakeFileSystem->setFileSize(newFileSize);
-        testSubject.setFile(this->testFilename());
-        const int expectedFileSize = newFileSize;
-        EXPECT_EQ(expectedFileSize, testSubject.size());
-}
-
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE

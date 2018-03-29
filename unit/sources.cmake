@@ -28,6 +28,7 @@ set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
         unit/src/core/FileInfo/FileInfoUnitTests.cpp
         unit/src/core/FileInfo/FileInfoBasenameTests.cpp
         unit/src/core/FileInfo/FileInfoFilenameTests.cpp
+        unit/src/core/FileInfo/FileInfoSizeTests.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}

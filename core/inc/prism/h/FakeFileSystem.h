@@ -3,7 +3,7 @@
 
 #include <prism/global>
 #include <prism/AbstractFileSystem>
-#include <map>
+#include <vector>
 #include <string>
 
 PRISM_BEGIN_NAMESPACE
@@ -18,7 +18,7 @@ public:
         const int fileSizeInBytes(const std::string& filename) const override;
 
         // helper methods
-        void setFileSize(const unsigned int filesize);
+        void setFileSize(const int filesize);
         void clear();
 private:
         FakeFileSystem() = default;
