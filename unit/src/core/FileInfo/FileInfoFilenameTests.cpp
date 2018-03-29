@@ -11,7 +11,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 //======================================================================================================================
 // FileInfoFilenameParamTests
 //======================================================================================================================
-std::string paths[] = {
+std::string pathsForFilenameTests[] = {
         "file.txt",
         "./file.txt",
         "../file.txt",
@@ -34,7 +34,7 @@ private:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoFilenameParamTests,
-        ValuesIn(paths)
+        ValuesIn(pathsForFilenameTests)
 );
 
 TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
