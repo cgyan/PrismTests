@@ -11,11 +11,22 @@ PRISM_BEGIN_TEST_NAMESPACE
 //======================================================================================================================
 // FileInfoFilenameParamTests
 //======================================================================================================================
+std::string paths[] = {
+        "file.txt",
+        "./file.txt",
+        "../file.txt",
+        "/files/file.txt",
+        "c:\\file.txt",
+        "/usr/file.txt",
+        "..\\file.txt"
+};
+
 class FileInfoFilenameParamTests : public TestWithParam<std::string>
 {
 public:
         FileInfo testSubject;
-        const std::string expectedFilename() { return m_expectedFilename; }
+        const std::string getPath() const { return GetParam(); }
+        const std::string expectedFilename() const { return m_expectedFilename; }
 private:
         std::string m_expectedFilename{"file.txt"};
 };
@@ -23,20 +34,12 @@ private:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoFilenameParamTests,
-        Values(
-                "file.txt",
-                "./file.txt",
-                "../file.txt",
-                "/files/file.txt",
-                "c:\\file.txt",
-                "/usr/file.txt",
-                "..\\file.txt"
-        )
+        ValuesIn(paths)
 );
 
-TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromFilePath)
+TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
 {
-        std::string filePath = GetParam();
+        std::string filePath = getPath();
         testSubject.setFile(filePath);
         EXPECT_EQ(expectedFilename(), testSubject.filename());
 }
