@@ -6,79 +6,42 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoBasenameTest : public Test {
+class FileInfoBasenameParamTest : public TestWithParam<std::string> {
 public:
         FileInfo testSubject;
+        const std::string expectedBasename() { return m_expectedBasename; }
+private:
+        std::string m_expectedBasename{"file"};
 };
 
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameContainsBasenameAndSuffix)
+INSTANTIATE_TEST_CASE_P(
+        ,
+        FileInfoBasenameParamTest,
+        Values(
+                "file",
+                "file.txt",
+                "./file.txt",
+                "../file.txt",
+                "files/file.txt",
+                "c:\\file.txt",
+                "/usr/file.txt",
+                "file.tar.gz"
+        )
+);
+
+TEST_P(FileInfoBasenameParamTest, ShouldExtractBasenameFromFilePath)
 {
-        const std::string filenameContainingBasenameAndSuffix = "file.txt";
-        testSubject.setFile(filenameContainingBasenameAndSuffix);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
+        std::string testFilePath = GetParam();
+        testSubject.setFile(testFilePath);
+        EXPECT_EQ(expectedBasename(), testSubject.basename());
 }
 
-TEST_F(FileInfoBasenameTest, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
+TEST(FileInfoBasenameTest, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
 {
-        const std::string filenameContainingSuffix = ".txt";
-        testSubject.setFile(filenameContainingSuffix);
-        EXPECT_EQ("", testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameIsLocatedInCurrentDirectory)
-{
-        const std::string filenameInThisDirectory = "./file.txt";
-        testSubject.setFile(filenameInThisDirectory);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameIsLocatedInParentDirectory)
-{
-        const std::string filenameInParentDir = "../file.txt";
-        testSubject.setFile(filenameInParentDir);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameIsLocatedInSubdirectory)
-{
-        const std::string filenameInSubdirectory = "files/file.txt";
-        testSubject.setFile(filenameInSubdirectory);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenWindowsFilenameIsAbsolute)
-{
-        const std::string filenameAbsolute = "c:\\file.txt";
-        testSubject.setFile(filenameAbsolute);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenUnixFilenameIsAbsolute)
-{
-        const std::string filenameAbsolute = "/usr/file.txt";
-        testSubject.setFile(filenameAbsolute);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameOnlyContainsBasename)
-{
-        const std::string filenameWithOnlyBasename = "file";
-        testSubject.setFile(filenameWithOnlyBasename);
-        EXPECT_EQ(filenameWithOnlyBasename, testSubject.basename());
-}
-
-TEST_F(FileInfoBasenameTest, ShouldReturnBasenameWhenFilenameHasMultipleSuffixes)
-{
-        const std::string filenameWithMultipleSuffixes = "file.tar.gz";
-        testSubject.setFile(filenameWithMultipleSuffixes);
-        const std::string expected = "file";
-        EXPECT_EQ(expected, testSubject.basename());
+        const std::string filenameContainingOnlySuffix = ".bat";
+        FileInfo testSubject(filenameContainingOnlySuffix);
+        const std::string expectedBasename = "";
+        EXPECT_EQ(expectedBasename, testSubject.basename());
 }
 
 PRISM_END_TEST_NAMESPACE
