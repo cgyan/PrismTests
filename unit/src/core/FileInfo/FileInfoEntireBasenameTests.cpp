@@ -32,8 +32,7 @@ TEST_P(FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpec
 
 TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        const std::string emptyFilename = "";
-        FileInfo testSubject(emptyFilename);
+        FileInfo testSubject;
         EXPECT_THAT(testSubject.entireBasename(), Eq(""));
 }
 
