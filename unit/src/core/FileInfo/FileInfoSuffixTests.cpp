@@ -42,8 +42,7 @@ TEST(FileInfoSuffixTests, ShouldReturnEmptyStringWhenFilenameHasNoSuffix)
 
 TEST(FileInfoSuffixTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        const std::string emptyFilename = "";
-        FileInfo testSubject(emptyFilename);
+        FileInfo testSubject;
         EXPECT_THAT(testSubject.suffix(), Eq(""));
 }
 

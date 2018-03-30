@@ -34,8 +34,7 @@ TEST_P(FileInfoEntireSuffixParamTests, ShouldReturnEntireSuffixWhenFilenameIsNot
 
 TEST(FileInfoEntireSuffixTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        const std::string emptyFilename = "";
-        FileInfo testSubject(emptyFilename);
+        FileInfo testSubject;
         EXPECT_THAT(testSubject.entireSuffix(), Eq(""));
 }
 
