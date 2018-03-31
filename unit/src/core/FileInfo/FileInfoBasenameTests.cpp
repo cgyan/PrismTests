@@ -6,17 +6,6 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-std::string pathsForBasenameTests[] = {
-        "file",
-        "file.txt",
-        "./file.txt",
-        "../file.txt",
-        "files/file.txt",
-        "c:\\file.txt",
-        "/usr/file.txt",
-        "file.tar.gz"
-};
-
 class FileInfoBasenameParamTests : public TestWithParam<std::string> {
 public:
         FileInfo cut;
@@ -28,10 +17,19 @@ private:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoBasenameParamTests,
-        ValuesIn(pathsForBasenameTests)
+        ValuesIn(
+                "file",
+                "file.txt",
+                "./file.txt",
+                "../file.txt",
+                "files/file.txt",
+                "c:\\file.txt",
+                "/usr/file.txt",
+                "file.tar.gz"
+        )
 );
 
-TEST_P(FileInfoBasenameParamTests, ShouldExtractBasenameFromFilePath)
+TEST_P(FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
 {
         std::string testFilePath = GetParam();
         cut.setFile(testFilePath);
