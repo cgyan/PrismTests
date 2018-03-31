@@ -3,7 +3,6 @@ using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
 #include <prism/FileSystemFactory>
-#include <prism/FakeFileSystem>
 #include <map>
 
 PRISM_BEGIN_NAMESPACE
