@@ -9,9 +9,6 @@ PRISM_BEGIN_TEST_NAMESPACE
 class FileInfoBasenameParamTests : public TestWithParam<std::string> {
 public:
         FileInfo cut;
-        const std::string expectedBasename() { return m_expectedBasename; }
-private:
-        std::string m_expectedBasename{"file"};
 };
 
 INSTANTIATE_TEST_CASE_P(
