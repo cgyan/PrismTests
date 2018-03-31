@@ -21,7 +21,7 @@ public:
         const char * testFilename() const;
         const unsigned int bytesInFile() const;
 private:
-        void setRealFIleSystemAsGlobalFileSystem();
+        void setRealFileSystemAsGlobalFileSystem();
         const bool createAndOpenFile();
         void writeDataToFile();
         void closeFile();
@@ -38,7 +38,7 @@ public:
 void
 FileInfoIntegrationTests::SetUp()
 {
-        setRealFIleSystemAsGlobalFileSystem();
+        setRealFileSystemAsGlobalFileSystem();
         assert(createAndOpenFile());
         writeDataToFile();
         m_fileSize = strlen(m_fileContents);
@@ -52,7 +52,7 @@ FileInfoIntegrationTests::TearDown()
 }
 
 void
-FileInfoIntegrationTests::setRealFIleSystemAsGlobalFileSystem()
+FileInfoIntegrationTests::setRealFileSystemAsGlobalFileSystem()
 {
         FileSystemFactory::get()->setFileSystem(&FileSystem::create);
 }
