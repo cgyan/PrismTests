@@ -9,7 +9,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 class FileInfoSuffixParamTests : public TestWithParam<std::string>
 {
 public:
-        FileInfo testSubject;
+        FileInfo cut;
 };
 
 INSTANTIATE_TEST_CASE_P(
@@ -29,21 +29,21 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(FileInfoSuffixParamTests, ShouldReturnSuffixWhenFilenameIsNotEmpty)
 {
         const std::string filePath = GetParam();
-        testSubject.setFile(filePath);
-        EXPECT_THAT(testSubject.suffix(), Eq("txt"));
+        cut.setFile(filePath);
+        EXPECT_THAT(cut.suffix(), Eq("txt"));
 }
 
 TEST(FileInfoSuffixTests, ShouldReturnEmptyStringWhenFilenameHasNoSuffix)
 {
         const std::string filenameWithNoSuffix = "files/file_with_no_suffix";
-        FileInfo testSubject(filenameWithNoSuffix);
-        EXPECT_THAT(testSubject.suffix(), Eq(""));
+        FileInfo cut(filenameWithNoSuffix);
+        EXPECT_THAT(cut.suffix(), Eq(""));
 }
 
 TEST(FileInfoSuffixTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        FileInfo testSubject;
-        EXPECT_THAT(testSubject.suffix(), Eq(""));
+        FileInfo cut;
+        EXPECT_THAT(cut.suffix(), Eq(""));
 }
 
 PRISM_END_TEST_NAMESPACE

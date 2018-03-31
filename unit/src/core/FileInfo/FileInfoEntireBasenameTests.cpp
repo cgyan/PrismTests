@@ -8,7 +8,7 @@ PRISM_BEGIN_TEST_NAMESPACE
 class FileInfoEntireBasenameParamTests : public TestWithParam<std::string>
 {
 public:
-        FileInfo testSubject;
+        FileInfo cut;
 };
 
 INSTANTIATE_TEST_CASE_P(
@@ -26,35 +26,35 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpectLastSuffixWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filepath = GetParam();
-        testSubject.setFile(filepath);
-        EXPECT_THAT(testSubject.entireBasename(), Eq("file.tar"));
+        cut.setFile(filepath);
+        EXPECT_THAT(cut.entireBasename(), Eq("file.tar"));
 }
 
 TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        FileInfo testSubject;
-        EXPECT_THAT(testSubject.entireBasename(), Eq(""));
+        FileInfo cut;
+        EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
 TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameContainsNoBasenameAndOnlyOneSuffix)
 {
         const std::string filenameWithNoBasenameAndOnlyOneSuffix = ".txt";
-        FileInfo testSubject(filenameWithNoBasenameAndOnlyOneSuffix);
-        EXPECT_THAT(testSubject.entireBasename(), Eq(""));
+        FileInfo cut(filenameWithNoBasenameAndOnlyOneSuffix);
+        EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
 TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsNoSuffixes)
 {
         const std::string filenameWithBasenameAndNoSuffixes = "file";
-        FileInfo testSubject(filenameWithBasenameAndNoSuffixes);
-        EXPECT_THAT(testSubject.entireBasename(), Eq("file"));
+        FileInfo cut(filenameWithBasenameAndNoSuffixes);
+        EXPECT_THAT(cut.entireBasename(), Eq("file"));
 }
 
 TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsBasenameAndOneSuffix)
 {
         const std::string filenameWithBasenameAndOneSuffix = "file.txt";
-        FileInfo testSubject(filenameWithBasenameAndOneSuffix);
-        EXPECT_THAT(testSubject.entireBasename(), "file");
+        FileInfo cut(filenameWithBasenameAndOneSuffix);
+        EXPECT_THAT(cut.entireBasename(), "file");
 }
 
 PRISM_END_TEST_NAMESPACE
