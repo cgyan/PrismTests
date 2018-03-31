@@ -17,7 +17,7 @@ private:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoBasenameParamTests,
-        ValuesIn(
+        Values(
                 "file",
                 "file.txt",
                 "./file.txt",
@@ -33,15 +33,14 @@ TEST_P(FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
 {
         std::string testFilePath = GetParam();
         cut.setFile(testFilePath);
-        EXPECT_EQ(expectedBasename(), cut.basename());
+        EXPECT_THAT(cut.basename(), Eq("file"));
 }
 
 TEST(FileInfoBasenameTests, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
 {
         const std::string filenameContainingOnlySuffix = ".bat";
         FileInfo cut(filenameContainingOnlySuffix);
-        const std::string expectedBasename = "";
-        EXPECT_EQ(expectedBasename, cut.basename());
+        EXPECT_THAT(cut.basename(), Eq(""));
 }
 
 PRISM_END_TEST_NAMESPACE
