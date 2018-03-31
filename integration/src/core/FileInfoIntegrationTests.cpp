@@ -96,24 +96,24 @@ FileInfoIntegrationTests::deleteFile()
 //==============================================================================
 // tests
 //==============================================================================
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToFileOnDiskExpectFileToExist)
+TEST_F(FileInfoIntegrationTests, ShouldReturnTrueWhenFileExists)
 {
         EXPECT_TRUE(testSubject.exists());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectFileNotToExist)
+TEST_F(FileInfoIntegrationTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         testSubject.setFile("path/to/file/that/does/not/exist");
         EXPECT_FALSE(testSubject.exists());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFileRefersToFileOnDiskExpectSizeOfThatFile)
+TEST_F(FileInfoIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
 {
         const int expectedSizeInBytes = bytesInFile();
         EXPECT_EQ(expectedSizeInBytes, testSubject.size());
 }
 
-TEST_F(FileInfoIntegrationTests, WhenFilenameRefersToNonExistentFileExpectSizeOfNegativeOne)
+TEST_F(FileInfoIntegrationTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
 {
         testSubject.setFile("path/to/file/that/does/not/exist");
         const int errorSize = -1;
