@@ -24,10 +24,6 @@ class FileInfoFilenameParamTests : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
-        const std::string getPath() const { return GetParam(); }
-        const std::string expectedFilename() const { return m_expectedFilename; }
-private:
-        std::string m_expectedFilename{"file.txt"};
 };
 
 INSTANTIATE_TEST_CASE_P(
@@ -38,44 +34,36 @@ INSTANTIATE_TEST_CASE_P(
 
 TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
 {
-        std::string filePath = getPath();
+        std::string filePath = GetParam();
         cut.setFile(filePath);
-        EXPECT_EQ(expectedFilename(), cut.filename());
+        EXPECT_THAT(cut.filename(), "file.txt");
 }
-//======================================================================================================================
-// FileInfoFilenameTests
-//======================================================================================================================
-class FileInfoFilenameTests : public Test {
-public:
-        FileInfo cut;
-};
 
-TEST_F(FileInfoFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+TEST(FileInfoFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
-        cut.setFile("");
-        EXPECT_EQ("", cut.filename());
+        FileInfo cut;
+        EXPECT_THAT(cut.filename(), Eq(""));
 }
 
-TEST_F(FileInfoFilenameTests, ShouldReturnBasenameAndAllSuffixesWhenFilenameContainsMultipleSuffixes)
+TEST(FileInfoFilenameTests, ShouldReturnBasenameAndAllSuffixesWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filenameContainingMultipleSuffixes = "files/compressed/file.tar.gz";
-        cut.setFile(filenameContainingMultipleSuffixes);
-        const std::string expected = "file.tar.gz";
-        EXPECT_EQ(expected, cut.filename());
+        FileInfo cut(filenameContainingMultipleSuffixes);
+        EXPECT_THAT(cut.filename(), Eq("file.tar.gz"));
 }
 
-TEST_F(FileInfoFilenameTests, ShouldReturnSuffixWhenFilenameHasNoBasename)
+TEST(FileInfoFilenameTests, ShouldReturnSuffixWhenFilenameHasNoBasename)
 {
         const std::string filenameWithoutBasename = ".txt";
-        cut.setFile(filenameWithoutBasename);
-        EXPECT_EQ(filenameWithoutBasename, cut.filename());
+        FileInfo cut(filenameWithoutBasename);
+        EXPECT_THAT(cut.filename(), Eq(filenameWithoutBasename));
 }
 
-TEST_F(FileInfoFilenameTests,  ShouldReturnBasenameWhenFilenameHasNoSuffix)
+TEST(FileInfoFilenameTests,  ShouldReturnBasenameWhenFilenameHasNoSuffix)
 {
         const std::string filenameWithoutSuffix = "file";
-        cut.setFile(filenameWithoutSuffix);
-        EXPECT_EQ(filenameWithoutSuffix, cut.filename());
+        FileInfo cut(filenameWithoutSuffix);
+        EXPECT_THAT(cut.filename(), Eq(filenameWithoutSuffix));
 }
 
 PRISM_END_TEST_NAMESPACE
