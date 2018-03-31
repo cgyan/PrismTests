@@ -7,18 +7,6 @@ using namespace ::testing;
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
-//======================================================================================================================
-// FileInfoFilenameParamTests
-//======================================================================================================================
-std::string pathsForFilenameTests[] = {
-        "file.txt",
-        "./file.txt",
-        "../file.txt",
-        "/files/file.txt",
-        "c:\\file.txt",
-        "/usr/file.txt",
-        "..\\file.txt"
-};
 
 class FileInfoFilenameParamTests : public TestWithParam<std::string>
 {
@@ -29,7 +17,15 @@ public:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoFilenameParamTests,
-        ValuesIn(pathsForFilenameTests)
+        ValuesIn(
+                "file.txt",
+                "./file.txt",
+                "../file.txt",
+                "/files/file.txt",
+                "c:\\file.txt",
+                "/usr/file.txt",
+                "..\\file.txt"
+        )
 );
 
 TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
