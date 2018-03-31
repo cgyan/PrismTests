@@ -3,31 +3,46 @@ using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
 #include <prism/FileSystemFactory>
-#include <prism/FakeFileSystem>
-#include "FileInfoTests.h"
+#include <prism/MockFileSystem>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoExistsTests : public FileInfoTests {};
-
-TEST_F(FileInfoExistsTests, ShouldNotExistWhenFilenameIsEmpty)//WhenFilenameIsEmptyExpectFileNotToExist)
+class FileInfoExistsTests : public Test
 {
-        testSubject.setFile("");
-        EXPECT_FALSE(testSubject.exists());
+public:
+        void SetUp()
+        {
+                FileSystemFactory::get()->setFileSystem(&MockFileSystem::create);
+                mockFileSystem = dynamic_cast<MockFileSystem*>(FileSystemFactory::get()->getFileSystem());
+        }
+public:
+        FileInfo cut;
+        MockFileSystem * mockFileSystem;
+};
+
+TEST_F(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
+{
+        const std::string filePath = "";
+        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(false));
+        cut.setFile(filePath);
+        EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST_F(FileInfoExistsTests, ShouldNotExistWhenFileIsNotOnDisk)//WhenFilenameRefersToNonExistentFileOnDiskExpectFileNotToExist)
+TEST_F(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
-        testSubject.setFile("path/to/file/that/does/not/exist");
-        EXPECT_FALSE(testSubject.exists());
+        const std::string filePath = "path/to/file/that/does/not/exist";
+        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(false));
+        cut.setFile(filePath);
+        EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST_F(FileInfoExistsTests, ShouldExistWhenFileIsOnDisk)//WhenFilenameRefersToFileOnDiskExpectFileToExist)
+TEST_F(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
-        writeFileToDiskWithSize(testFilename(), 0);
-        testSubject.setFile(this->testFilename());
-        EXPECT_TRUE(testSubject.exists());
+        const std::string filePath = "file.txt";
+        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(true));
+        cut.setFile(filePath);
+        EXPECT_THAT(cut.exists(), Eq(true));
 }
 
 PRISM_END_TEST_NAMESPACE
