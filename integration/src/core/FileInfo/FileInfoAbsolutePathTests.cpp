@@ -5,7 +5,9 @@ using namespace ::testing;
 #include <prism/FileSystemFactory>
 #include <string>
 
-#if defined __APPLE__
+#if defined _WIN32
+#       include <windows.h>
+#elif defined __APPLE__
 #       include <unistd.h>
 #endif
 
@@ -17,8 +19,8 @@ class FileInfoAbsolutePathIntegrationTests : public Test
 public:
         void SetUp()
         {
-                m_currentWorkingDirectory = getCurrentWorkingDirectory();
                 FileSystemFactory::get()->setFileSystem(&FileSystem::create);
+                m_currentWorkingDirectory = getCurrentWorkingDirectory();
         }
 
         const std::string currentWorkingDirectory()
@@ -29,7 +31,13 @@ private:
         const std::string getCurrentWorkingDirectory()
         {
                 char cwd[4096];
-                #if defined __APPLE__
+                #if defined _WIN32
+                        int foundIt = GetFullPathName(".", 4096, cwd, NULL);
+                        if (foundIt == 0) {
+                                std::cerr << __FILE__ << ":" << __LINE__;
+                                std::cerr << " could not retrieve absolute path\n";
+                        }
+                #elif defined __APPLE__
                         if (getwd(cwd) == nullptr) {
                                 std::cerr << __FILE__ << ":" << __LINE__;
                                 std::cerr << " could not retrieve absolute path\n";
