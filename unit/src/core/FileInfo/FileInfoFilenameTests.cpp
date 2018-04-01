@@ -17,7 +17,7 @@ public:
 INSTANTIATE_TEST_CASE_P(
         ,
         FileInfoFilenameParamTests,
-        ValuesIn(
+        Values(
                 "file.txt",
                 "./file.txt",
                 "../file.txt",
