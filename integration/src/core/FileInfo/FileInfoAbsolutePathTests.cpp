@@ -20,33 +20,25 @@ public:
         void SetUp()
         {
                 FileSystemFactory::get()->setFileSystem(&FileSystem::create);
-                m_currentWorkingDirectory = getCurrentWorkingDirectory();
         }
 
         const std::string currentWorkingDirectory()
         {
-                return m_currentWorkingDirectory;
-        }
-private:
-        const std::string getCurrentWorkingDirectory()
-        {
                 char cwd[4096];
+                bool error{false};
                 #if defined _WIN32
-                        int foundIt = GetFullPathName(".", 4096, cwd, NULL);
-                        if (foundIt == 0) {
-                                std::cerr << __FILE__ << ":" << __LINE__;
-                                std::cerr << " could not retrieve absolute path\n";
-                        }
+                        if (GetFullPathName(".", 4096, cwd, NULL) == 0) error = true;
                 #elif defined __APPLE__
-                        if (getwd(cwd) == nullptr) {
-                                std::cerr << __FILE__ << ":" << __LINE__;
-                                std::cerr << " could not retrieve absolute path\n";
-                        }
+                        if (getwd(cwd) == nullptr) error = true;
                 #endif
+
+                if (error) {
+                        std::cerr << __FILE__ << ":" << __LINE__;
+                        std::cerr << " could not retrieve absolute path\n";
+                }
+
                 return std::string(cwd);
         }
-private:
-        std::string m_currentWorkingDirectory;
 public:
         FileInfo cut;
 };
