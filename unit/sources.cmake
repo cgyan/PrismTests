@@ -32,6 +32,7 @@ set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
         unit/src/core/FileInfo/FileInfoSuffixTests.cpp
         unit/src/core/FileInfo/FileInfoEntireSuffixTests.cpp
         unit/src/core/FileInfo/FileInfoEntireBasenameTests.cpp
+        unit/src/core/FileInfo/FileInfoAbsolutePathTests.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}

@@ -12,9 +12,10 @@ PRISM_BEGIN_TEST_NAMESPACE
 class MockFileSystem : public AbstractFileSystem
 {
 public:
-        MOCK_METHOD1(createFile, void(const std::string& filename));
-        MOCK_CONST_METHOD1(exists, const bool(const std::string& filename));
-        MOCK_CONST_METHOD1(fileSizeInBytes, const int(const std::string& filename));
+        MOCK_METHOD1(createFile, void(const std::string&));
+        MOCK_CONST_METHOD1(exists, const bool(const std::string&));
+        MOCK_CONST_METHOD1(fileSizeInBytes, const int(const std::string&));
+        MOCK_CONST_METHOD1(absolutePath, const std::string(const std::string&));
 
         static AbstractFileSystem * create()
         {
