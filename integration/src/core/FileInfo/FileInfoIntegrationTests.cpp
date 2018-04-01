@@ -107,18 +107,7 @@ TEST_F(FileInfoIntegrationTests, ShouldReturnFalseWhenFileDoesNotExist)
         EXPECT_FALSE(testSubject.exists());
 }
 
-TEST_F(FileInfoIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
-{
-        const int expectedSizeInBytes = bytesInFile();
-        EXPECT_EQ(expectedSizeInBytes, testSubject.size());
-}
 
-TEST_F(FileInfoIntegrationTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
-{
-        testSubject.setFile("path/to/file/that/does/not/exist");
-        const int errorSize = -1;
-        EXPECT_EQ(errorSize, testSubject.size());
-}
 
 PRISM_END_TEST_NAMESPACE
 PRISM_END_NAMESPACE

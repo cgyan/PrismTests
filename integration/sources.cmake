@@ -4,8 +4,8 @@ set(MAIN_SOURCE ${MAIN_SOURCE}
 
 set(FILE_INFO_SOURCES ${CORE_SOURCES}
     integration/src/core/FileInfo/FileInfoIntegrationTests.cpp
-    integration/src/core/FileInfo/FileInfoAbsolutePathTests.cpp
     integration/src/core/FileInfo/FileInfoAbsolutePathIntegrationTests.cpp
+    integration/src/core/FileInfo/FileInfoSizeIntegrationTests.cpp
 )
 
 set(INTEGRATION_SOURCES ${INTEGRATION_SOURCES}
