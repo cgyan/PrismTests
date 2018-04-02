@@ -21,6 +21,7 @@ INSTANTIATE_TEST_CASE_P(
                 "file.old.txt",
                 "./file.txt",
                 "../file.txt",
+                "data/./files/../file.txt",
                 "/files/file.txt",
                 "c:/file.txt"
         )

@@ -36,6 +36,7 @@ INSTANTIATE_TEST_CASE_P(
                 "file.txt",
                 "file.tar.gz",
                 "./file.txt",
+                "data/./files/../file.txt",
                 "/rootfolder/file.txt"
         )
 );

@@ -20,6 +20,7 @@ INSTANTIATE_TEST_CASE_P(
                 "file.tar.gz",
                 "./file.tar.gz",
                 "../file.tar.gz",
+                "data/./files/../file.tar.gz",
                 "/files/file.tar.gz",
                 "c:/file.tar.gz"
         )
