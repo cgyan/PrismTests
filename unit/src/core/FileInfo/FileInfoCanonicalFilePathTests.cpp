@@ -42,7 +42,7 @@ TEST(FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenFilePathContains
 
 TEST(FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenThereAreMoreDoubleDotComponentsThanPathComponents)
 {
-        const std::string filePathThatResolvesToHigherThanRootDirectory = "/usr/../../";
+        const std::string filePathThatResolvesToHigherThanRootDirectory = "/usr/../bin../..";
         FileInfo cut(filePathThatResolvesToHigherThanRootDirectory);
         EXPECT_THAT(cut.canonicalFilePath(), Eq(""));
 }
