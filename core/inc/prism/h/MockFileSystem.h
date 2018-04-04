@@ -15,12 +15,6 @@ public:
         MOCK_CONST_METHOD1(exists, const bool(const std::string&));
         MOCK_CONST_METHOD1(fileSizeInBytes, const int(const std::string&));
         MOCK_CONST_METHOD1(absolutePath, const std::string(const std::string&));
-
-        static AbstractFileSystem * create()
-        {
-                static MockFileSystem instance;
-                return &instance;
-        }
 };
 
 PRISM_END_TEST_NAMESPACE
