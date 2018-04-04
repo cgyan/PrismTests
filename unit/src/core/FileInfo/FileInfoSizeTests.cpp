@@ -9,25 +9,25 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
 {
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, fileSizeInBytes("")).WillOnce(Return(-1));
-        FileInfo cut("", &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, fileSizeInBytes("")).WillOnce(Return(-1));
+        FileInfo cut("", mfs);
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 
 TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
 {
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
-        FileInfo cut("path/to/file.txt", &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
+        FileInfo cut("path/to/file.txt", mfs);
         EXPECT_THAT(cut.size(), Eq(200));
 }
 
 TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
 {
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));
-        FileInfo cut("path/to/file/that/does/not/exist", &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));
+        FileInfo cut("path/to/file/that/does/not/exist", mfs);
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 

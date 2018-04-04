@@ -10,27 +10,27 @@ PRISM_BEGIN_TEST_NAMESPACE
 TEST(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
 {
         const std::string filePath = "";
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(false));
-        FileInfo cut(filePath, &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, exists(filePath)).WillOnce(Return(false));
+        FileInfo cut(filePath, mfs);
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
 TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         const std::string filePath = "path/to/file/that/does/not/exist";
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(false));
-        FileInfo cut(filePath, &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, exists(filePath)).WillOnce(Return(false));
+        FileInfo cut(filePath, mfs);
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
 TEST(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         const std::string filePath = "file.txt";
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(true));
-        FileInfo cut(filePath, &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, exists(filePath)).WillOnce(Return(true));
+        FileInfo cut(filePath, mfs);
         EXPECT_THAT(cut.exists(), Eq(true));
 }
 

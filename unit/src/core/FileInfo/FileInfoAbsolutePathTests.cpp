@@ -12,11 +12,12 @@ class FileInfoAbsolutePathParamTests : public TestWithParam<std::string>
 public:
         void SetUp()
         {
-                cut = FileInfo(GetParam(), &mockFileSystem);
+                mockFileSystem = std::make_shared<MockFileSystem>();
+                cut = FileInfo(GetParam(), mockFileSystem);
         }
 public:
         FileInfo cut;
-        MockFileSystem mockFileSystem;
+        std::shared_ptr<MockFileSystem> mockFileSystem;
 };
 
 INSTANTIATE_TEST_CASE_P(
@@ -36,7 +37,7 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(FileInfoAbsolutePathParamTests, ShouldReturnAbsolutePathWhenFilenameIsNotEmpty)
 {
         const std::string expectedPath = "/rootfolder";
-        EXPECT_CALL(mockFileSystem, absolutePath(GetParam())).WillOnce(Return(expectedPath));
+        EXPECT_CALL(*mockFileSystem, absolutePath(GetParam())).WillOnce(Return(expectedPath));
         EXPECT_THAT(cut.absolutePath(), Eq(expectedPath));
 }
 
@@ -49,9 +50,9 @@ TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         const std::string path = "path/to/file/that/does/not/exist";
-        MockFileSystem mfs;
-        EXPECT_CALL(mfs, absolutePath(path)).WillOnce(Return(""));
-        FileInfo cut(path, &mfs);
+        auto mfs = std::make_shared<MockFileSystem>();
+        EXPECT_CALL(*mfs, absolutePath(path)).WillOnce(Return(""));
+        FileInfo cut(path, mfs);
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 
