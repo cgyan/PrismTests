@@ -2,46 +2,35 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/FileSystemFactory>
 #include <prism/MockFileSystem>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoExistsTests : public Test
-{
-public:
-        void SetUp()
-        {
-                FileSystemFactory::get()->setFileSystem(&MockFileSystem::create);
-                mockFileSystem = dynamic_cast<MockFileSystem*>(FileSystemFactory::get()->getFileSystem());
-        }
-public:
-        FileInfo cut;
-        MockFileSystem * mockFileSystem;
-};
-
-TEST_F(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
+TEST(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
 {
         const std::string filePath = "";
-        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(false));
-        cut.setFile(filePath);
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(false));
+        FileInfo cut(filePath, &mfs);
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST_F(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
+TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         const std::string filePath = "path/to/file/that/does/not/exist";
-        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(false));
-        cut.setFile(filePath);
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(false));
+        FileInfo cut(filePath, &mfs);
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST_F(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
+TEST(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         const std::string filePath = "file.txt";
-        EXPECT_CALL(*mockFileSystem, exists(filePath)).WillOnce(Return(true));
-        cut.setFile(filePath);
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, exists(filePath)).WillOnce(Return(true));
+        FileInfo cut(filePath, &mfs);
         EXPECT_THAT(cut.exists(), Eq(true));
 }
 

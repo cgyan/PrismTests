@@ -2,7 +2,6 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/FileSystemFactory>
 #include <string>
 
 #if defined _WIN32
@@ -17,16 +16,11 @@ PRISM_BEGIN_TEST_NAMESPACE
 class FileInfoAbsolutePathIntegrationTests : public Test
 {
 public:
-        void SetUp()
-        {
-                FileSystemFactory::get()->setFileSystem(&FileSystem::create);
-        }
-
         const std::string currentWorkingDirectory()
         {
                 char cwd[4096];
                 bool error{false};
-                
+
                 #if defined _WIN32
                         if (GetFullPathName(".", 4096, cwd, NULL) == 0) error = true;
                 #elif defined __APPLE__

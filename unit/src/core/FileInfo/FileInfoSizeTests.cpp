@@ -2,43 +2,32 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/FileSystemFactory>
 #include <prism/MockFileSystem>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoSizeTests : public Test
+TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
 {
-public:
-        void SetUp()
-        {
-                FileSystemFactory::get()->setFileSystem(&MockFileSystem::create);
-                mockFileSystem = dynamic_cast<MockFileSystem*>(FileSystemFactory::get()->getFileSystem());
-        }
-public:
-        FileInfo cut;
-        MockFileSystem * mockFileSystem;
-};
-
-TEST_F(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
-{
-        EXPECT_CALL(*mockFileSystem, fileSizeInBytes("")).WillOnce(Return(-1));
-        cut.setFile("");
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, fileSizeInBytes("")).WillOnce(Return(-1));
+        FileInfo cut("", &mfs);
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 
-TEST_F(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
+TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
 {
-        EXPECT_CALL(*mockFileSystem, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
-        cut.setFile("path/to/file.txt");
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
+        FileInfo cut("path/to/file.txt", &mfs);
         EXPECT_THAT(cut.size(), Eq(200));
 }
 
-TEST_F(FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
+TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
 {
-        EXPECT_CALL(*mockFileSystem, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));
-        cut.setFile("path/to/file/that/does/not/exist");
+        MockFileSystem mfs;
+        EXPECT_CALL(mfs, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));
+        FileInfo cut("path/to/file/that/does/not/exist", &mfs);
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 

@@ -2,7 +2,6 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/FileSystemFactory>
 #include <fstream>
 #include <cstdio>
 
@@ -11,7 +10,6 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(FileInfoExistsIntegrationTests, ShouldReturnTrueWhenFileExists)
 {
-        FileSystemFactory::get()->setFileSystem(&FileSystem::create);
         const std::string filename = "file.txt";
 
         std::fstream fs(filename, std::fstream::out);

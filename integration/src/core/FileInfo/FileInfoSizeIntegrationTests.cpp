@@ -2,7 +2,6 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/FileSystemFactory>
 #include <fstream>
 #include <cstdio>
 
@@ -11,8 +10,6 @@ PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(FileInfoSizeIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
 {
-        FileSystemFactory::get()->setFileSystem(&FileSystem::create);
-
         const std::string filename = "file.txt";
         const std::string data = "prism";
         const int expectedFileSize = data.length();
