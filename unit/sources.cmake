@@ -25,6 +25,7 @@ set(CORE_SOURCES ${CORE_SOURCES}
 )
 
 set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
+        unit/src/core/FileInfo/FileInfoTests.cpp
         unit/src/core/FileInfo/FileInfoExistsTests.cpp
         unit/src/core/FileInfo/FileInfoBasenameTests.cpp
         unit/src/core/FileInfo/FileInfoFilenameTests.cpp
