@@ -2,7 +2,10 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
+#include <prism/algorithm>
 #include <string>
+#include <fstream>
+#include <cstdio>
 
 #if defined _WIN32
 #       include <windows.h>
@@ -13,30 +16,59 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-const std::string currentWorkingDirectory()
+const std::string normalizePath(const std::string& path)
 {
-        char cwd[4096];
-        bool error{false};
+        std::string ret = path;
+        prism::replace(ret.begin(), ret.end(), '\\', '/');
+        return ret;
+}
 
-        #if defined _WIN32
-                if (GetFullPathName(".", 4096, cwd, NULL) == 0) error = true;
-        #elif defined __APPLE__
-                if (getwd(cwd) == nullptr) error = true;
+class SystemTempDir
+{
+public:
+        static const std::string path()
+        {
+                #if defined _WIN32
+                        return std::string(getenv("TMP"));
+                #elif defined __APPLE__
+                        return std::string(getenv("TMPDIR"));
                 #endif
-
-        if (error) {
-                std::cerr << __FILE__ << ":" << __LINE__;
-                std::cerr << " could not retrieve absolute path\n";
         }
 
-        return std::string(cwd);
-}
-//==============================================================================
-//==============================================================================
-TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathWhenFileIsInCurrentWorkingDirectory)
+        static const bool newFileWithContent(const std::string& filename, const std::string& content)
+        {
+                bool success{false};
+                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
+
+                std::fstream fs(pathFilename, std::fstream::out);
+                if (fs.is_open())
+                {
+                        fs << content;
+                        success = true;
+                }
+                else success = false;
+
+                fs.close();
+                return success;
+        }
+
+        static const bool deleteFile(const std::string& filename)
+        {
+                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
+                std::remove(pathFilename.c_str());
+        }
+};
+
+TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
 {
-        FileInfo cut("Makefile");
-        EXPECT_THAT(cut.absolutePath(), Eq(currentWorkingDirectory()));
+        if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
+        {
+                FileInfo cut(SystemTempDir::path() + "\\file.tmp");
+                EXPECT_THAT(cut.absolutePath(), Eq(SystemTempDir::path()));
+                SystemTempDir::deleteFile("file.tmp");
+        }
+        else ADD_FAILURE_AT(__FILE__, __LINE__)
+                << "Could not create file in temp dir for test";
 }
 
 TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
@@ -65,12 +97,18 @@ TEST(FileInfoAbsolutePathWithFilenameIntegrationTests, ShouldReturnEmptyStringWh
 }
 
 TEST(FileInfoAbsolutePathWithFilenameIntegrationTests,
-ShouldReturnAbsolutePathAndFilenameWhenFileIsInCurrentWorkingDirectory)
+ShouldReturnAbsolutePathOfTempDirAndFilenameWhenFileIsLocatedThere)
 {
-        FileInfo cut("Makefile");
-        std::string expected = currentWorkingDirectory() + "/Makefile";
-        expected = FileInfo::toNormalizedSeparators(expected);
-        EXPECT_THAT(cut.absolutePathWithFilename(), Eq(expected));
+        if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
+        {
+                FileInfo cut(SystemTempDir::path() + "\\file.tmp");
+                std::string expected = SystemTempDir::path() + "\\file.tmp";
+                expected = normalizePath(expected);
+                EXPECT_THAT(cut.absolutePathWithFilename(), Eq(expected));
+                SystemTempDir::deleteFile("file.tmp");
+        }
+        else ADD_FAILURE_AT(__FILE__, __LINE__)
+                << "Could not create file in temp dir for test";
 }
 
 PRISM_END_TEST_NAMESPACE
