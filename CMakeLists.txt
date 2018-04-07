@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
+
+# turn off optimizations
+# seems to be causing a problem with gdb when turned on
+SET(CMAKE_CXX_FLAGS "-O0")
 
 project(runner)
 

@@ -1,7 +1,3 @@
-set(MAIN_SOURCE ${MAIN_SOURCE}
-        unit/src/main.cpp
-)
-
 set(CORE_SOURCES ${CORE_SOURCES}
         unit/src/core/AlgorithmMoveTests.cpp
         unit/src/core/IteratorTests.cpp
@@ -35,6 +31,7 @@ set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
         unit/src/core/FileInfo/FileInfoEntireBasenameTests.cpp
         unit/src/core/FileInfo/FileInfoAbsolutePathTests.cpp
         unit/src/core/FileInfo/FileInfoCanonicalFilePathTests.cpp
+        unit/src/core/FileInfo/FileInfoPathSeparatorTests.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
@@ -55,7 +52,6 @@ set(NON_TDD_SOURCES ${NON_TDD_SOURCES}
 )
 
 set(UNIT_SOURCES ${UNIT_SOURCES}
-        # ${MAIN_SOURCE}
         ${CORE_SOURCES}
         ${FILE_INFO_SOURCES}
         ${NON_TDD_SOURCES}
