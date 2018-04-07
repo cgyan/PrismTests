@@ -102,8 +102,7 @@ ShouldReturnAbsolutePathOfTempDirAndFilenameWhenFileIsLocatedThere)
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
         {
                 FileInfo cut(SystemTempDir::path() + "\\file.tmp");
-                std::string expected = SystemTempDir::path() + "\\file.tmp";
-                expected = normalizePath(expected);
+                const std::string expected = normalizePath(SystemTempDir::path() + "/file.tmp");
                 EXPECT_THAT(cut.absolutePathWithFilename(), Eq(expected));
                 SystemTempDir::deleteFile("file.tmp");
         }
