@@ -2,16 +2,9 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
+#include <prism/SystemTempDir>
 #include <prism/algorithm>
 #include <string>
-#include <fstream>
-#include <cstdio>
-
-#if defined _WIN32
-#       include <windows.h>
-#elif defined __APPLE__
-#       include <unistd.h>
-#endif
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
@@ -22,42 +15,6 @@ const std::string normalizePath(const std::string& path)
         prism::replace(ret.begin(), ret.end(), '\\', '/');
         return ret;
 }
-
-class SystemTempDir
-{
-public:
-        static const std::string path()
-        {
-                #if defined _WIN32
-                        return std::string(getenv("TMP"));
-                #elif defined __APPLE__
-                        return std::string(getenv("TMPDIR"));
-                #endif
-        }
-
-        static const bool newFileWithContent(const std::string& filename, const std::string& content)
-        {
-                bool success{false};
-                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
-
-                std::fstream fs(pathFilename, std::fstream::out);
-                if (fs.is_open())
-                {
-                        fs << content;
-                        success = true;
-                }
-                else success = false;
-
-                fs.close();
-                return success;
-        }
-
-        static const bool deleteFile(const std::string& filename)
-        {
-                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
-                std::remove(pathFilename.c_str());
-        }
-};
 
 TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
 {
