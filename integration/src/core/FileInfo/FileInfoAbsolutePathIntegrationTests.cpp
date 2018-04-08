@@ -20,7 +20,7 @@ TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathOfTempDirWhen
 {
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
         {
-                FileInfo cut(SystemTempDir::path() + "\\file.tmp");
+                FileInfo cut(SystemTempDir::path() + "/file.tmp");
                 EXPECT_THAT(cut.absolutePath(), Eq(SystemTempDir::path()));
                 SystemTempDir::deleteFile("file.tmp");
         }

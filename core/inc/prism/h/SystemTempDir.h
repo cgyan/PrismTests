@@ -7,6 +7,8 @@
 #include <cstdio>
 #if defined _Win32
 #       include <windows.h>
+#elif defined __APPLE__
+#       include <stdlib.h> // for realpath()
 #endif
 
 PRISM_BEGIN_NAMESPACE
@@ -20,14 +22,16 @@ public:
                 #if defined _WIN32
                         return std::string(getenv("TMP"));
                 #elif defined __APPLE__
-                        return std::string(getenv("TMPDIR"));
+                        char buff[PATH_MAX];
+                        realpath(getenv("TMPDIR"), buff);
+                        return std::string(buff);
                 #endif
         }
 
         static const bool newFileWithContent(const std::string& filename, const std::string& content)
         {
                 bool success{false};
-                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
+                const std::string pathFilename = SystemTempDir::path() + "/" + filename;
 
                 std::fstream fs(pathFilename, std::fstream::out);
                 if (fs.is_open())
@@ -41,7 +45,7 @@ public:
                 return success;
         }
 
-        static const bool deleteFile(const std::string& filename)
+        static void deleteFile(const std::string& filename)
         {
                 const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
                 std::remove(pathFilename.c_str());
