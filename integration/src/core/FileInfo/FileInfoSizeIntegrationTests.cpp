@@ -2,31 +2,27 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <fstream>
-#include <cstdio>
+#include <prism/SystemTempDir>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
 TEST(FileInfoSizeIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
 {
-        const std::string filename = "file.txt";
-        const std::string data = "prism";
-        const int expectedFileSize = data.length();
+        const std::string newFile = "file.tmp";
+        const std::string content = "some content...";
+        const int numFileBytes = content.length();
 
-        std::fstream fs(filename, std::fstream::out);
-        if (fs.is_open())
-                fs << data;
-        else ADD_FAILURE_AT(
-                "Could not create file for integration test: "
-                "FileInfoSizeIntegrationTests.ShouldReturnSizeOfFileWhenFileExists",
-                __LINE__
-        );
-        fs.close();
+        if (SystemTempDir::newFileWithContent(newFile, content))
+        {
+                const std::string newFileWithPath = SystemTempDir::path() + "/" + newFile;
+                FileInfo cut(newFileWithPath);
+                EXPECT_THAT(cut.size(), Eq(numFileBytes));
+                SystemTempDir::deleteFile(newFile);
+        }
+        else ADD_FAILURE_AT(__FILE__, __LINE__)
+                << "Could not create file in temp dir for test set up";
 
-        FileInfo cut(filename);
-        EXPECT_THAT(cut.size(), Eq(expectedFileSize));
-        std::remove(filename.c_str());
 }
 
 TEST(FileInfoSizeIntegrationTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
