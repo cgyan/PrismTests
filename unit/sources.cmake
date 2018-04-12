@@ -22,16 +22,6 @@ set(CORE_SOURCES ${CORE_SOURCES}
 
 set(FILE_INFO_SOURCES ${FILE_INFO_SOURCES}
         unit/src/core/FileInfo/FileInfoTests.cpp
-        unit/src/core/FileInfo/FileInfoExistsTests.cpp
-        unit/src/core/FileInfo/FileInfoBasenameTests.cpp
-        unit/src/core/FileInfo/FileInfoFilenameTests.cpp
-        unit/src/core/FileInfo/FileInfoSizeTests.cpp
-        unit/src/core/FileInfo/FileInfoSuffixTests.cpp
-        unit/src/core/FileInfo/FileInfoEntireSuffixTests.cpp
-        unit/src/core/FileInfo/FileInfoEntireBasenameTests.cpp
-        unit/src/core/FileInfo/FileInfoAbsolutePathTests.cpp
-        unit/src/core/FileInfo/FileInfoCanonicalFilePathTests.cpp
-        unit/src/core/FileInfo/FileInfoPathSeparatorTests.cpp
 )
 
 set(NON_TDD_SOURCES ${NON_TDD_SOURCES}

@@ -2,6 +2,16 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
+#include "FileInfoAbsolutePathTests.h"
+#include "FileInfoBasenameTests.h"
+#include "FileInfoCanonicalFilePathTests.h"
+#include "FileInfoEntireBasenameTests.h"
+#include "FileInfoEntireSuffixTests.h"
+#include "FileInfoExistsTests.h"
+#include "FileInfoFilenameTests.h"
+#include "FileInfoPathSeparatorTests.h"
+#include "FileInfoSuffixTests.h"
+#include "FileInfoSizeTests.h"
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
