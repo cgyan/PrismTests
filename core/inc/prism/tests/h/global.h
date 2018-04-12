@@ -3,8 +3,8 @@
 
 #include <prism/global>
 
-#define UNIT_TEST(TestClass) Unit_##TestClass
-#define INTEGRATION_TEST(TestClass) Integration_##TestClass
+#define UNIT_TEST(TestBase) Unit_##TestBase
+#define INTEGRATION_TEST(TestBase) Integration_##TestBase
 #define GROUP_TEST_F(GroupName, TestBase, TestName) TEST_F(GroupName##_##TestBase, TestName)
 #define GROUP_TEST_P(GroupName, TestBase, TestName) TEST_P(GroupName##_##TestBase, TestName)
 #define GROUP_TEST(GroupName, TestBase, TestName) TEST(GroupName##_##TestBase, TestName)
