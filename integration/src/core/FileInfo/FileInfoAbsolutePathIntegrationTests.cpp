@@ -2,7 +2,7 @@
 using namespace ::testing;
 #include <prism/global>
 #include <prism/FileInfo>
-#include <prism/SystemTempDir>
+#include <prism/tests/SystemTempDir>
 #include <prism/algorithm>
 #include <string>
 
