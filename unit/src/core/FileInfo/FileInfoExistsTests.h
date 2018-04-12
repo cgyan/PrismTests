@@ -1,13 +1,13 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/MockFileSystem>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
+GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
 {
         const std::string filePath = "";
         auto mfs = std::make_shared<MockFileSystem>();
@@ -16,7 +16,7 @@ TEST(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
+GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         const std::string filePath = "path/to/file/that/does/not/exist";
         auto mfs = std::make_shared<MockFileSystem>();
@@ -25,7 +25,7 @@ TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-TEST(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
+GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         const std::string filePath = "file.txt";
         auto mfs = std::make_shared<MockFileSystem>();

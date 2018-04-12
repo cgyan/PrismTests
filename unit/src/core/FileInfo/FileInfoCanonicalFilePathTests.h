@@ -1,46 +1,46 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenFilePathIsEmpty)
+GROUP_TEST(Unit, FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenFilePathIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.canonicalFilePath(), Eq(std::string{}));
 }
 
-TEST(FileInfoCanonicalFilePathTests, ShouldReturnSameWhenFilePathIsAlreadyCanonical)
+GROUP_TEST(Unit, FileInfoCanonicalFilePathTests, ShouldReturnSameWhenFilePathIsAlreadyCanonical)
 {
         const std::string filePathAlreadyCanonicalized = "/usr/bin/files/file.txt";
         FileInfo cut(filePathAlreadyCanonicalized);
         EXPECT_THAT(cut.canonicalFilePath(), Eq(filePathAlreadyCanonicalized));
 }
 
-TEST(FileInfoCanonicalFilePathTests, ShouldIgnoreDirectoryWhenFilePathContainsSingleDotComponent)
+GROUP_TEST(Unit, FileInfoCanonicalFilePathTests, ShouldIgnoreDirectoryWhenFilePathContainsSingleDotComponent)
 {
         const std::string filePathWithSingleDotComponent = "files/./file.txt";
         FileInfo cut(filePathWithSingleDotComponent);
         EXPECT_THAT(cut.canonicalFilePath(), Eq("files/file.txt"));
 }
 
-TEST(FileInfoCanonicalFilePathTests, ShouldIgnorePreviousDirectoryWhenFilePathContainsDoubleDotComponent)
+GROUP_TEST(Unit, FileInfoCanonicalFilePathTests, ShouldIgnorePreviousDirectoryWhenFilePathContainsDoubleDotComponent)
 {
         const std::string filePathWithDoubleDotComponent = "/usr/bin/files/../file.txt";
         FileInfo cut (filePathWithDoubleDotComponent);
         EXPECT_THAT(cut.canonicalFilePath(), Eq("/usr/bin/file.txt"));
 }
 
-TEST(FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenFilePathContainsDoubleDotComponentAfterRootDirectory)
+GROUP_TEST(Unit, FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenFilePathContainsDoubleDotComponentAfterRootDirectory)
 {
         const std::string filePathWithDoubleDotComponentAfterRootDirectory = "C:/../";
         FileInfo cut(filePathWithDoubleDotComponentAfterRootDirectory);
         EXPECT_THAT(cut.canonicalFilePath(), Eq(""));
 }
 
-TEST(FileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenThereAreMoreDoubleDotComponentsThanPathComponents)
+GROUP_TEST(Unit, ileInfoCanonicalFilePathTests, ShouldReturnEmptyStringWhenThereAreMoreDoubleDotComponentsThanPathComponents)
 {
         const std::string filePathThatResolvesToHigherThanRootDirectory = "/usr/../bin../..";
         FileInfo cut(filePathThatResolvesToHigherThanRootDirectory);

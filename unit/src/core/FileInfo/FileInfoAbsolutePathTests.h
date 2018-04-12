@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/MockFileSystem>
 
@@ -34,20 +34,20 @@ INSTANTIATE_TEST_CASE_P(
         )
 );
 
-TEST_P(FileInfoAbsolutePathParamTests, ShouldReturnAbsolutePathWhenFilenameIsNotEmpty)
+GROUP_TEST_P(Unit, FileInfoAbsolutePathParamTests, ShouldReturnAbsolutePathWhenFilenameIsNotEmpty)
 {
         const std::string expectedPath = "/rootfolder";
         EXPECT_CALL(*mockFileSystem, absolutePath(GetParam())).WillOnce(Return(expectedPath));
         EXPECT_THAT(cut.absolutePath(), Eq(expectedPath));
 }
 
-TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+GROUP_TEST(Unit, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 
-TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+GROUP_TEST(Unit, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         const std::string path = "path/to/file/that/does/not/exist";
         auto mfs = std::make_shared<MockFileSystem>();

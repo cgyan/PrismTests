@@ -1,13 +1,13 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/MockFileSystem>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
+GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("")).WillOnce(Return(-1));
@@ -15,7 +15,7 @@ TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 
-TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
+GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
@@ -23,7 +23,7 @@ TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
         EXPECT_THAT(cut.size(), Eq(200));
 }
 
-TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
+GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));

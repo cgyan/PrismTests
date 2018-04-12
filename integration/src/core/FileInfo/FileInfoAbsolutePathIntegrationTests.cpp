@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/SystemTempDir>
 #include <prism/algorithm>
@@ -16,7 +16,7 @@ const std::string normalizePath(const std::string& path)
         return ret;
 }
 
-TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
+GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
         {
@@ -28,32 +28,32 @@ TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnAbsolutePathOfTempDirWhen
                 << "Could not create file in temp dir for test";
 }
 
-TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut("");
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 
-TEST(FileInfoAbsolutePathIntegrationTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 //==============================================================================
 //==============================================================================
-TEST(FileInfoAbsolutePathWithFilenameIntegrationTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.absolutePathWithFilename(), Eq(""));
 }
 
-TEST(FileInfoAbsolutePathWithFilenameIntegrationTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.absolutePathWithFilename(), Eq(""));
 }
 
-TEST(FileInfoAbsolutePathWithFilenameIntegrationTests,
+GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests,
 ShouldReturnAbsolutePathOfTempDirAndFilenameWhenFileIsLocatedThere)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))

@@ -1,5 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
+#include <prism/tests/global>
 #include <prism/FileInfo>
 
 PRISM_BEGIN_NAMESPACE
@@ -24,34 +25,34 @@ INSTANTIATE_TEST_CASE_P(
         )
 );
 
-TEST_P(FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpectLastSuffixWhenFilenameContainsMultipleSuffixes)
+GROUP_TEST_P(Unit, FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpectLastSuffixWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filepath = GetParam();
         cut.setFile(filepath);
         EXPECT_THAT(cut.entireBasename(), Eq("file.tar"));
 }
 
-TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
-TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameContainsNoBasenameAndOnlyOneSuffix)
+GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameContainsNoBasenameAndOnlyOneSuffix)
 {
         const std::string filenameWithNoBasenameAndOnlyOneSuffix = ".txt";
         FileInfo cut(filenameWithNoBasenameAndOnlyOneSuffix);
         EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
-TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsNoSuffixes)
+GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsNoSuffixes)
 {
         const std::string filenameWithBasenameAndNoSuffixes = "file";
         FileInfo cut(filenameWithBasenameAndNoSuffixes);
         EXPECT_THAT(cut.entireBasename(), Eq("file"));
 }
 
-TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsBasenameAndOneSuffix)
+GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsBasenameAndOneSuffix)
 {
         const std::string filenameWithBasenameAndOneSuffix = "file.txt";
         FileInfo cut(filenameWithBasenameAndOneSuffix);
