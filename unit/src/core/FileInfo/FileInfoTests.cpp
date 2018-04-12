@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include "FileInfoAbsolutePathTests.h"
 #include "FileInfoBasenameTests.h"
@@ -16,7 +16,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoTestss, WhenModifyingCopyOfFileInfoExpectOriginalToRetainState)
+GROUP_TEST(Unit, FileInfoTests, WhenModifyingCopyOfFileInfoExpectOriginalToRetainState)
 {
         FileInfo cut("file.txt");
         FileInfo fi = cut;
@@ -24,7 +24,7 @@ TEST(FileInfoTestss, WhenModifyingCopyOfFileInfoExpectOriginalToRetainState)
         EXPECT_THAT(cut.file(), Eq("file.txt"));
 }
 
-TEST(FileInfoTestss, WhenModifyingCopyAssignedFileInfoExpectOriginalToRetainState)
+GROUP_TEST(Unit, FileInfoTests, WhenModifyingCopyAssignedFileInfoExpectOriginalToRetainState)
 {
         FileInfo cut("file.txt");
         FileInfo fi;

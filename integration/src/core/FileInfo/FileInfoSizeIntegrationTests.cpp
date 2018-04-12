@@ -1,13 +1,13 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/SystemTempDir>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoSizeIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
+GROUP_TEST(Integration, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileExists)
 {
         const std::string newFile = "file.tmp";
         const std::string content = "some content...";
@@ -25,7 +25,7 @@ TEST(FileInfoSizeIntegrationTests, ShouldReturnSizeOfFileWhenFileExists)
 
 }
 
-TEST(FileInfoSizeIntegrationTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
+GROUP_TEST(Integration, FileInfoSizeTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.size(), Eq(-1));

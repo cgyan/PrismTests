@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <vector>
 #include <utility>
@@ -8,7 +8,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEmpty)
+GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEmpty)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(""),
@@ -16,7 +16,7 @@ TEST(FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEmpty)
         );
 }
 
-TEST(FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlash)
+GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlash)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(R"(\)"),
@@ -24,7 +24,7 @@ TEST(FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlash)
         );
 }
 
-TEST(FileInfoPathSeparatorTests, ShouldConvertAllBackSlashesToForwardSlashesWhenPathIsNativeWindows)
+GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldConvertAllBackSlashesToForwardSlashesWhenPathIsNativeWindows)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(R"(C:\windows\system32)"),

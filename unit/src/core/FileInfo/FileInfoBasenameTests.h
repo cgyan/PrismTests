@@ -1,6 +1,6 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 
 PRISM_BEGIN_NAMESPACE
@@ -27,14 +27,14 @@ INSTANTIATE_TEST_CASE_P(
         )
 );
 
-TEST_P(FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
+GROUP_TEST_P(Unit, FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
 {
         std::string testFilePath = GetParam();
         cut.setFile(testFilePath);
         EXPECT_THAT(cut.basename(), Eq("file"));
 }
 
-TEST(FileInfoBasenameTests, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
+GROUP_TEST(Unit, FileInfoBasenameTests, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
 {
         const std::string filenameContainingOnlySuffix = ".bat";
         FileInfo cut(filenameContainingOnlySuffix);

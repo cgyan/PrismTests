@@ -1,13 +1,13 @@
 #include <gmock/gmock.h>
 using namespace ::testing;
-#include <prism/global>
+#include <prism/tests/global>
 #include <prism/FileInfo>
 #include <prism/tests/SystemTempDir>
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-TEST(FileInfoExistsIntegrationTests, ShouldReturnTrueWhenFileExists)
+GROUP_TEST(Integration, FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", ""))
         {
@@ -19,7 +19,7 @@ TEST(FileInfoExistsIntegrationTests, ShouldReturnTrueWhenFileExists)
                 << "Could not create file in temp dir for test";
 }
 
-TEST(FileInfoExistsIntegrationTests, ShouldReturnFalseWhenFileDoesNotExist)
+GROUP_TEST(Integration, FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.exists(), Eq(false));
