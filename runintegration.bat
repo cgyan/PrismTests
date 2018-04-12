@@ -1,1 +1,1 @@
-gtpp.py ./runner --gtest_filter=*Integration*
+gtpp.py ./runner --gtest_filter=Integration* --gtest_shuffle

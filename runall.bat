@@ -1,1 +1,1 @@
-gtpp.py ./runner
+gtpp.py ./runner --gtest_shuffle

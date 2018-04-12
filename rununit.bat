@@ -1,1 +1,1 @@
-gtpp.py ./runner --gtest_filter=*Unit*
+gtpp.py ./runner --gtest_filter=Unit* --gtest_shuffle
