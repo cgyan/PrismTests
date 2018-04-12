@@ -7,15 +7,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoFilenameParamTests : public TestWithParam<std::string>
+class UNIT_TEST(FileInfoFilenameParamTests) : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
 };
 
-INSTANTIATE_TEST_CASE_P(
+GROUP_INSTANTIATE_TEST_CASE_P(
         ,
-        FileInfoFilenameParamTests,
+        UNIT_TEST(FileInfoFilenameParamTests),
         Values(
                 "file.txt",
                 "./file.txt",

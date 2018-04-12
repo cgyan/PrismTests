@@ -6,15 +6,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoEntireSuffixParamTests : public TestWithParam<std::string>
+class UNIT_TEST(FileInfoEntireSuffixParamTests) : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
 };
 
-INSTANTIATE_TEST_CASE_P(
+GROUP_INSTANTIATE_TEST_CASE_P(
         ,
-        FileInfoEntireSuffixParamTests,
+        UNIT_TEST(FileInfoEntireSuffixParamTests),
         Values(
                 ".tar.gz",
                 "file.tar.gz",

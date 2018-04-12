@@ -6,14 +6,14 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoBasenameParamTests : public TestWithParam<std::string> {
+class UNIT_TEST(FileInfoBasenameParamTests) : public TestWithParam<std::string> {
 public:
         FileInfo cut;
 };
 
-INSTANTIATE_TEST_CASE_P(
+GROUP_INSTANTIATE_TEST_CASE_P(
         ,
-        FileInfoBasenameParamTests,
+        UNIT_TEST(FileInfoBasenameParamTests),
         Values(
                 "file",
                 "file.txt",

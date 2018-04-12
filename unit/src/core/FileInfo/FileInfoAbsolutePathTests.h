@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class FileInfoAbsolutePathParamTests : public TestWithParam<std::string>
+class UNIT_TEST(FileInfoAbsolutePathParamTests) : public TestWithParam<std::string>
 {
 public:
         void SetUp()
@@ -20,9 +20,9 @@ public:
         std::shared_ptr<MockFileSystem> mockFileSystem;
 };
 
-INSTANTIATE_TEST_CASE_P(
+GROUP_INSTANTIATE_TEST_CASE_P(
         ,
-        FileInfoAbsolutePathParamTests,
+        UNIT_TEST(FileInfoAbsolutePathParamTests),
         Values(
                 "file",
                 ".txt"
