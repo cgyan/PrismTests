@@ -10,8 +10,8 @@ using namespace ::testing;
 #include "FileInfoExistsTests.h"
 #include "FileInfoFilenameTests.h"
 #include "FileInfoPathSeparatorTests.h"
-#include "FileInfoSuffixTests.h"
 #include "FileInfoSizeTests.h"
+#include "FileInfoSuffixTests.h"
 
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
