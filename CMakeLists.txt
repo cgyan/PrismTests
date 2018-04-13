@@ -101,31 +101,3 @@ elseif(APPLE)
                 objc
         )
 endif()
-
-
-# cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
-#
-# project(PrismTests)
-#
-# # pass arg from cmd line with -Dunit=ON
-# option(integration "BuildIntegrationTests" OFF)
-# option(unit "BuildUnitTests" ON)
-#
-# if (integration AND unit)
-#     message("PrismTests: include integration tests = YES")
-#     message("PrismTests: include unit tests = YES")
-#     add_subdirectory(integration)
-#     add_subdirectory(unit)
-# elseif(integration)
-#     message("PrismTests: include integration tests = YES")
-#     message("PrismTests: include unit tests = NO")
-#     add_subdirectory(integration)
-# elseif(unit)
-#     message("PrismTests: include integration tests = NO")
-#     message("PrismTests: include unit tests = YES")
-#     add_subdirectory(unit)
-# else()
-#     message("PrismTests: include integration tests = NO")
-#     message("PrismTests: include unit tests = NO")
-#     message("PrismTests: NO TESTS INCLUDED IN BUILD!!")
-# endif()
