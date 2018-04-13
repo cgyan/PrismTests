@@ -1,3 +1,6 @@
 #!/usr/bin/env python3
+import sys
 import subprocess
-subprocess.call('gtpp.py ./runner --gtest_filter=%1 --gtest_shuffle', shell=True)
+filter_statement = sys.argv[1]
+shell_statement = 'gtpp.py ./runner --gtest_filter=' + filter_statement + ' --gtest_shuffle'
+subprocess.call(shell_statement, shell=True)
