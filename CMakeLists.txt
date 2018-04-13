@@ -11,7 +11,7 @@ project(runner)
 
 if (WIN32)
 
-        set(PRISM_LIB_NAME libprism)
+        set(PRISM_LIB_NAME libprism_d)
         set(PRISM_INC_PATH C:/Users/Iain/GitHub/prism/inc)
         set(PRISM_LIB_PATH C:/Users/Iain/GitHub/prism/build)
 
@@ -28,7 +28,7 @@ if (WIN32)
 
 elseif(APPLE)
 
-        set(PRISM_LIB_NAME prism)
+        set(PRISM_LIB_NAME prism_d)
         set(PRISM_INC_PATH /Users/iainhemstock/GitHub/prism/inc)
         set(PRISM_LIB_PATH /Users/iainhemstock/GitHub/prism/build)
 
