@@ -1,4 +1,4 @@
 #include <prism/tests/global>
-#include "FileInfoAbsolutePathIntegrationTests.h"
-#include "FileInfoExistsIntegrationTests.h"
-#include "FileInfoSizeIntegrationTests.h"
+#include "FileInfoAbsolutePathTests.h"
+#include "FileInfoExistsTests.h"
+#include "FileInfoSizeTests.h"
