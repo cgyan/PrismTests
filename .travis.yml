@@ -1,2 +1,7 @@
 language: cpp
-compiler: gcc 
+compiler: gcc
+script:
+        - mkdir build
+        - cd build
+        - cmake .. -G "Unix Makefiles"
+        - make 
