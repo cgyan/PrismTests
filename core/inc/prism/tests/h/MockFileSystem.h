@@ -15,6 +15,7 @@ public:
         MOCK_CONST_METHOD1(exists, const bool(const std::string&));
         MOCK_CONST_METHOD1(fileSizeInBytes, const int(const std::string&));
         MOCK_CONST_METHOD1(absolutePath, const std::string(const std::string&));
+        MOCK_CONST_METHOD1(creationDate, const std::string(const std::string&));
 };
 
 PRISM_END_TEST_NAMESPACE

@@ -47,7 +47,12 @@ public:
 
         static void deleteFile(const std::string& filename)
         {
-                const std::string pathFilename = SystemTempDir::path() + "\\" + filename;
+                #if defined _Win32
+                        const std::string sep = "\\"
+                #elif defined __APPLE__
+                        const std::string sep = "/";
+                #endif
+                const std::string pathFilename = SystemTempDir::path() + sep + filename;
                 std::remove(pathFilename.c_str());
         }
 };
