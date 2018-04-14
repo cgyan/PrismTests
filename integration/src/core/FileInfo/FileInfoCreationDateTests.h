@@ -14,20 +14,20 @@ todaysDate()
 {
         time_t t = time(0);   // get time now
         struct tm * now = localtime( & t );
-        std::string ret;
-        ret.append(std::to_string(now->tm_year + 1900));
-        ret.append("-");
-        if (std::to_string(now->tm_mon + 1).length() == 1)
-                ret.append("0");
-        ret.append(std::to_string(now->tm_mon + 1));
-        ret.append("-");
-        ret.append(std::to_string(now->tm_mday));
-        return ret;
+
+        std::string year = std::to_string(now->tm_year + 1900);
+        std::string month = std::to_string(now->tm_mon + 1);
+        std::string day = std::to_string(now->tm_mday);
+
+        if (month.length() == 1) month = std::string("0").append(month);
+        if (day.length() == 1) day = std::string("0").append(day);
+
+        return year + "-" + month + "-" + day;
 }
 
-GROUP_TEST(Integration, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+GROUP_TEST(Integration, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
-        FileInfo cut;
+        FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.creationDate(), Eq(""));
 }
 
