@@ -9,11 +9,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
+//==================================================================================================
+// NOTE:
+// United Kingdom operates on GMT in winter and BST in summer
+//==================================================================================================
 const std::string
 todaysDate()
 {
         time_t t = time(0);   // get time now
-        struct tm * now = localtime( & t );
+        struct tm * now = gmtime( & t );
 
         std::string year = std::to_string(now->tm_year + 1900);
         std::string month = std::to_string(now->tm_mon + 1);
