@@ -6,15 +6,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class UNIT_TEST(FileInfoEntireBasenameParamTests) : public TestWithParam<std::string>
+class UNIT_TEST_CLASS(FileInfoEntireBasenameParamTests) : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
 };
 
-GROUP_INSTANTIATE_TEST_CASE_P(
+UNIT_INSTANTIATE_TEST_CASE_P(
         ,
-        UNIT_TEST(FileInfoEntireBasenameParamTests),
+        UNIT_TEST_CLASS(FileInfoEntireBasenameParamTests),
         Values(
                 "file.tar.gz",
                 "./file.tar.gz",
@@ -25,34 +25,34 @@ GROUP_INSTANTIATE_TEST_CASE_P(
         )
 );
 
-GROUP_TEST_P(Unit, FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpectLastSuffixWhenFilenameContainsMultipleSuffixes)
+UNIT_TEST_P(FileInfoEntireBasenameParamTests, ShouldReturnBasenameAndAllSuffixesExpectLastSuffixWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filepath = GetParam();
         cut.setFile(filepath);
         EXPECT_THAT(cut.entireBasename(), Eq("file.tar"));
 }
 
-GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameContainsNoBasenameAndOnlyOneSuffix)
+UNIT_TEST(FileInfoEntireBasenameTests, ShouldReturnEmptyStringWhenFilenameContainsNoBasenameAndOnlyOneSuffix)
 {
         const std::string filenameWithNoBasenameAndOnlyOneSuffix = ".txt";
         FileInfo cut(filenameWithNoBasenameAndOnlyOneSuffix);
         EXPECT_THAT(cut.entireBasename(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsNoSuffixes)
+UNIT_TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsNoSuffixes)
 {
         const std::string filenameWithBasenameAndNoSuffixes = "file";
         FileInfo cut(filenameWithBasenameAndNoSuffixes);
         EXPECT_THAT(cut.entireBasename(), Eq("file"));
 }
 
-GROUP_TEST(Unit, FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsBasenameAndOneSuffix)
+UNIT_TEST(FileInfoEntireBasenameTests, ShouldReturnBasenameWhenFilenameContainsBasenameAndOneSuffix)
 {
         const std::string filenameWithBasenameAndOneSuffix = "file.txt";
         FileInfo cut(filenameWithBasenameAndOneSuffix);

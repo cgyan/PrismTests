@@ -16,7 +16,7 @@ const std::string normalizePath(const std::string& path)
         return ret;
 }
 
-GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
+INTEGRATION_TEST(FileInfoAbsolutePathTests, ShouldReturnAbsolutePathOfTempDirWhenFileIsLocatedThere)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))
         {
@@ -28,32 +28,32 @@ GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnAbsolutePathOfTem
                 << "Could not create file in temp dir for test";
 }
 
-GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+INTEGRATION_TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut("");
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 
-GROUP_TEST(Integration, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+INTEGRATION_TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 //==============================================================================
 //==============================================================================
-GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+INTEGRATION_TEST(FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.absolutePathWithFilename(), Eq(""));
 }
 
-GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+INTEGRATION_TEST(FileInfoAbsolutePathWithFilenameTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.absolutePathWithFilename(), Eq(""));
 }
 
-GROUP_TEST(Integration, FileInfoAbsolutePathWithFilenameTests,
+INTEGRATION_TEST(FileInfoAbsolutePathWithFilenameTests,
 ShouldReturnAbsolutePathOfTempDirAndFilenameWhenFileIsLocatedThere)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", "some temp content..."))

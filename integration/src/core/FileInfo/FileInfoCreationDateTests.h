@@ -29,13 +29,13 @@ todaysDate()
         return year + "-" + month + "-" + day;
 }
 
-GROUP_TEST(Integration, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+INTEGRATION_TEST(FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.creationDate(), Eq(""));
 }
 
-GROUP_TEST(Integration, FileInfoCreationDateTests, ShouldReturnTodaysDateWhenFileIsCreatedToday)
+INTEGRATION_TEST(FileInfoCreationDateTests, ShouldReturnTodaysDateWhenFileIsCreatedToday)
 {
         const std::string today = todaysDate();
         const std::string filename = "file.txt";

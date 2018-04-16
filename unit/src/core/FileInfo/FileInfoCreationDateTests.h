@@ -7,13 +7,13 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.creationDate(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+UNIT_TEST(FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         const std::string file = "path/to/file/that/does/not/exist";
@@ -23,7 +23,7 @@ GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnEmptyStringWhenFileDoesN
         EXPECT_THAT(cut.creationDate(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnMonthWithLeadingZeroWhenMonthIsEarlierThanMonth10)
+UNIT_TEST(FileInfoCreationDateTests, ShouldReturnMonthWithLeadingZeroWhenMonthIsEarlierThanMonth10)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, exists(_)).WillOnce(Return(true));
@@ -33,7 +33,7 @@ GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnMonthWithLeadingZeroWhen
         EXPECT_THAT(cut.creationDate(), Eq("2018-01-21"));
 }
 
-GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnDayWithLeadingZeroWhenDayIsEarlierThanDay10)
+UNIT_TEST(FileInfoCreationDateTests, ShouldReturnDayWithLeadingZeroWhenDayIsEarlierThanDay10)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, exists(_)).WillOnce(Return(true));
@@ -43,7 +43,7 @@ GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnDayWithLeadingZeroWhenDa
         EXPECT_THAT(cut.creationDate(), Eq("2018-12-01"));
 }
 
-GROUP_TEST(Unit, FileInfoCreationDateTests, ShouldReturnChristmasDayWhenFileWasCreatedOnChristmasDay)
+UNIT_TEST(FileInfoCreationDateTests, ShouldReturnChristmasDayWhenFileWasCreatedOnChristmasDay)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, exists(_)).WillOnce(Return(true));

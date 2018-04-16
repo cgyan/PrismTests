@@ -6,14 +6,14 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class UNIT_TEST(FileInfoBasenameParamTests) : public TestWithParam<std::string> {
+class UNIT_TEST_CLASS(FileInfoBasenameParamTests) : public TestWithParam<std::string> {
 public:
         FileInfo cut;
 };
 
-GROUP_INSTANTIATE_TEST_CASE_P(
+UNIT_INSTANTIATE_TEST_CASE_P(
         ,
-        UNIT_TEST(FileInfoBasenameParamTests),
+        UNIT_TEST_CLASS(FileInfoBasenameParamTests),
         Values(
                 "file",
                 "file.txt",
@@ -27,14 +27,14 @@ GROUP_INSTANTIATE_TEST_CASE_P(
         )
 );
 
-GROUP_TEST_P(Unit, FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
+UNIT_TEST_P(FileInfoBasenameParamTests, ShouldReturnBasenameComponentFromFilePath)
 {
         std::string testFilePath = GetParam();
         cut.setFile(testFilePath);
         EXPECT_THAT(cut.basename(), Eq("file"));
 }
 
-GROUP_TEST(Unit, FileInfoBasenameTests, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
+UNIT_TEST(FileInfoBasenameTests, ShouldReturnEmptyStringWhenFilenameOnlyContainsSuffix)
 {
         const std::string filenameContainingOnlySuffix = ".bat";
         FileInfo cut(filenameContainingOnlySuffix);

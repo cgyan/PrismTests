@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
 {
         const std::string filePath = "";
         auto mfs = std::make_shared<MockFileSystem>();
@@ -16,7 +16,7 @@ GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFilenameIsEmpty)
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
+UNIT_TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         const std::string filePath = "path/to/file/that/does/not/exist";
         auto mfs = std::make_shared<MockFileSystem>();
@@ -25,7 +25,7 @@ GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
         EXPECT_THAT(cut.exists(), Eq(false));
 }
 
-GROUP_TEST(Unit, FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
+UNIT_TEST(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         const std::string filePath = "file.txt";
         auto mfs = std::make_shared<MockFileSystem>();

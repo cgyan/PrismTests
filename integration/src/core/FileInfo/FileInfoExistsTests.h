@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Integration, FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
+INTEGRATION_TEST(FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
 {
         if (SystemTempDir::newFileWithContent("file.tmp", ""))
         {
@@ -19,7 +19,7 @@ GROUP_TEST(Integration, FileInfoExistsTests, ShouldReturnTrueWhenFileExists)
                 << "Could not create file in temp dir for test";
 }
 
-GROUP_TEST(Integration, FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
+INTEGRATION_TEST(FileInfoExistsTests, ShouldReturnFalseWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.exists(), Eq(false));

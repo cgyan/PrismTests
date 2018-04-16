@@ -6,15 +6,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class UNIT_TEST(FileInfoEntireSuffixParamTests) : public TestWithParam<std::string>
+class UNIT_TEST_CLASS(FileInfoEntireSuffixParamTests) : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
 };
 
-GROUP_INSTANTIATE_TEST_CASE_P(
+UNIT_INSTANTIATE_TEST_CASE_P(
         ,
-        UNIT_TEST(FileInfoEntireSuffixParamTests),
+        UNIT_TEST_CLASS(FileInfoEntireSuffixParamTests),
         Values(
                 ".tar.gz",
                 "file.tar.gz",
@@ -26,27 +26,27 @@ GROUP_INSTANTIATE_TEST_CASE_P(
         )
 );
 
-GROUP_TEST_P(Unit, FileInfoEntireSuffixParamTests, ShouldReturnEntireSuffixWhenFilenameIsNotEmpty)
+UNIT_TEST_P(FileInfoEntireSuffixParamTests, ShouldReturnEntireSuffixWhenFilenameIsNotEmpty)
 {
         const std::string filename = GetParam();
         cut.setFile(filename);
         EXPECT_THAT(cut.entireSuffix(), Eq("tar.gz"));
 }
 
-GROUP_TEST(Unit, FileInfoEntireSuffixTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoEntireSuffixTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.entireSuffix(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoEntireSuffixTests, ShouldReturnEmptyStringWhenFilenameContainsNoSuffixs)
+UNIT_TEST(FileInfoEntireSuffixTests, ShouldReturnEmptyStringWhenFilenameContainsNoSuffixs)
 {
         const std::string filenameWithNoSuffixes = "file";
         FileInfo cut(filenameWithNoSuffixes);
         EXPECT_THAT(cut.entireSuffix(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoEntireSuffixTests, ShouldReturnAllSuffixesWhenFilenameContainsMultipleSuffixes)
+UNIT_TEST(FileInfoEntireSuffixTests, ShouldReturnAllSuffixesWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filenameWithMultipleSuffixes = "file.tar.gz";
         FileInfo cut(filenameWithMultipleSuffixes);

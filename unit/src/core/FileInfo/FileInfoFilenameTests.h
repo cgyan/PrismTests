@@ -7,15 +7,15 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class UNIT_TEST(FileInfoFilenameParamTests) : public TestWithParam<std::string>
+class UNIT_TEST_CLASS(FileInfoFilenameParamTests) : public TestWithParam<std::string>
 {
 public:
         FileInfo cut;
 };
 
-GROUP_INSTANTIATE_TEST_CASE_P(
+UNIT_INSTANTIATE_TEST_CASE_P(
         ,
-        UNIT_TEST(FileInfoFilenameParamTests),
+        UNIT_TEST_CLASS(FileInfoFilenameParamTests),
         Values(
                 "file.txt",
                 "./file.txt",
@@ -28,34 +28,34 @@ GROUP_INSTANTIATE_TEST_CASE_P(
         )
 );
 
-GROUP_TEST_P(Unit, FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
+UNIT_TEST_P(FileInfoFilenameParamTests, ShouldExtractFilenameFromPath)
 {
         std::string filePath = GetParam();
         cut.setFile(filePath);
         EXPECT_THAT(cut.filename(), "file.txt");
 }
 
-GROUP_TEST(Unit, FileInfoFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoFilenameTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.filename(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoFilenameTests, ShouldReturnBasenameAndAllSuffixesWhenFilenameContainsMultipleSuffixes)
+UNIT_TEST(FileInfoFilenameTests, ShouldReturnBasenameAndAllSuffixesWhenFilenameContainsMultipleSuffixes)
 {
         const std::string filenameContainingMultipleSuffixes = "files/compressed/file.tar.gz";
         FileInfo cut(filenameContainingMultipleSuffixes);
         EXPECT_THAT(cut.filename(), Eq("file.tar.gz"));
 }
 
-GROUP_TEST(Unit, FileInfoFilenameTests, ShouldReturnSuffixWhenFilenameHasNoBasename)
+UNIT_TEST(FileInfoFilenameTests, ShouldReturnSuffixWhenFilenameHasNoBasename)
 {
         const std::string filenameWithoutBasename = ".txt";
         FileInfo cut(filenameWithoutBasename);
         EXPECT_THAT(cut.filename(), Eq(filenameWithoutBasename));
 }
 
-GROUP_TEST(Unit, FileInfoFilenameTests,  ShouldReturnBasenameWhenFilenameHasNoSuffix)
+UNIT_TEST(FileInfoFilenameTests,  ShouldReturnBasenameWhenFilenameHasNoSuffix)
 {
         const std::string filenameWithoutSuffix = "file";
         FileInfo cut(filenameWithoutSuffix);

@@ -8,7 +8,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEmpty)
+UNIT_TEST(FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEmpty)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(""),
@@ -16,7 +16,7 @@ GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldReturnEmptyStringWhenPathIsEm
         );
 }
 
-GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlash)
+UNIT_TEST(FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlash)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(R"(\)"),
@@ -24,7 +24,7 @@ GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldConvertBackSlashToForwardSlas
         );
 }
 
-GROUP_TEST(Unit, FileInfoPathSeparatorTests, ShouldConvertAllBackSlashesToForwardSlashesWhenPathIsNativeWindows)
+UNIT_TEST(FileInfoPathSeparatorTests, ShouldConvertAllBackSlashesToForwardSlashesWhenPathIsNativeWindows)
 {
         EXPECT_THAT(
                 FileInfo::toNormalizedSeparators(R"(C:\windows\system32)"),

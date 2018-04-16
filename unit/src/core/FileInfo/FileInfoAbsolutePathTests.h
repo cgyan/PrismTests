@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-class UNIT_TEST(FileInfoAbsolutePathParamTests) : public TestWithParam<std::string>
+class UNIT_TEST_CLASS(FileInfoAbsolutePathParamTests) : public TestWithParam<std::string>
 {
 public:
         void SetUp()
@@ -20,9 +20,9 @@ public:
         std::shared_ptr<MockFileSystem> mockFileSystem;
 };
 
-GROUP_INSTANTIATE_TEST_CASE_P(
+UNIT_INSTANTIATE_TEST_CASE_P(
         ,
-        UNIT_TEST(FileInfoAbsolutePathParamTests),
+        UNIT_TEST_CLASS(FileInfoAbsolutePathParamTests),
         Values(
                 "file",
                 ".txt"
@@ -34,20 +34,20 @@ GROUP_INSTANTIATE_TEST_CASE_P(
         )
 );
 
-GROUP_TEST_P(Unit, FileInfoAbsolutePathParamTests, ShouldReturnAbsolutePathWhenFilenameIsNotEmpty)
+UNIT_TEST_P(FileInfoAbsolutePathParamTests, ShouldReturnAbsolutePathWhenFilenameIsNotEmpty)
 {
         const std::string expectedPath = "/rootfolder";
         EXPECT_CALL(*mockFileSystem, absolutePath(GetParam())).WillOnce(Return(expectedPath));
         EXPECT_THAT(cut.absolutePath(), Eq(expectedPath));
 }
 
-GROUP_TEST(Unit, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFilenameIsEmpty)
 {
         FileInfo cut;
         EXPECT_THAT(cut.absolutePath(), Eq(""));
 }
 
-GROUP_TEST(Unit, FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
+UNIT_TEST(FileInfoAbsolutePathTests, ShouldReturnEmptyStringWhenFileDoesNotExist)
 {
         const std::string path = "path/to/file/that/does/not/exist";
         auto mfs = std::make_shared<MockFileSystem>();

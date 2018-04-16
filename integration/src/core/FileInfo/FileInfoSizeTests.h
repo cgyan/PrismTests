@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Integration, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileExists)
+INTEGRATION_TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileExists)
 {
         const std::string newFile = "file.tmp";
         const std::string content = "some content...";
@@ -25,7 +25,7 @@ GROUP_TEST(Integration, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileExists)
 
 }
 
-GROUP_TEST(Integration, FileInfoSizeTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
+INTEGRATION_TEST(FileInfoSizeTests, ShouldReturnErrorSizeOfNegOneWhenFileDoesNotExist)
 {
         FileInfo cut("path/to/file/that/does/not/exist");
         EXPECT_THAT(cut.size(), Eq(-1));

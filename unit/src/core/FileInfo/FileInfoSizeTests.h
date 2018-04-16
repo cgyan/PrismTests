@@ -7,7 +7,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
+UNIT_TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("")).WillOnce(Return(-1));
@@ -15,7 +15,7 @@ GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnNegativeOneWhenFilenameIsEmpty)
         EXPECT_THAT(cut.size(), Eq(-1));
 }
 
-GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
+UNIT_TEST(FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file.txt")).WillOnce(Return(200));
@@ -23,7 +23,7 @@ GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnSizeOfFileWhenFileIsOnDisk)
         EXPECT_THAT(cut.size(), Eq(200));
 }
 
-GROUP_TEST(Unit, FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
+UNIT_TEST(FileInfoSizeTests, ShouldReturnNegativeOneWhenFileIsNotOnDisk)
 {
         auto mfs = std::make_shared<MockFileSystem>();
         EXPECT_CALL(*mfs, fileSizeInBytes("path/to/file/that/does/not/exist")).WillOnce(Return(-1));

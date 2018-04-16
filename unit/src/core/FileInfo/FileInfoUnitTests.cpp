@@ -17,7 +17,7 @@ using namespace ::testing;
 PRISM_BEGIN_NAMESPACE
 PRISM_BEGIN_TEST_NAMESPACE
 
-GROUP_TEST(Unit, FileInfoTests, WhenModifyingCopyOfFileInfoExpectOriginalToRetainState)
+UNIT_TEST(FileInfoTests, WhenModifyingCopyOfFileInfoExpectOriginalToRetainState)
 {
         FileInfo cut("file.txt");
         FileInfo fi = cut;
@@ -25,7 +25,7 @@ GROUP_TEST(Unit, FileInfoTests, WhenModifyingCopyOfFileInfoExpectOriginalToRetai
         EXPECT_THAT(cut.file(), Eq("file.txt"));
 }
 
-GROUP_TEST(Unit, FileInfoTests, WhenModifyingCopyAssignedFileInfoExpectOriginalToRetainState)
+UNIT_TEST(FileInfoTests, WhenModifyingCopyAssignedFileInfoExpectOriginalToRetainState)
 {
         FileInfo cut("file.txt");
         FileInfo fi;
