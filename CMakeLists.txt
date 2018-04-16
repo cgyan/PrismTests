@@ -9,6 +9,8 @@ SET(CMAKE_CXX_FLAGS "-O0")
 
 project(runner)
 
+add_subdirectory(resources/permissions)
+
 if (WIN32)
 
         set(PRISM_LIB_NAME libprism_d)
